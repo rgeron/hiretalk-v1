@@ -1,5 +1,6 @@
 import { TailwindIndicator } from '@/components/utils/TailwindIndicator';
 import { Header } from '@/features/layout/Header';
+import { FloatingLegalFooter } from '@/features/legal/FloatingLegalFooter';
 import { cn } from '@/lib/utils';
 import { SiteConfig } from '@/site-config';
 import type { Metadata } from 'next';
@@ -32,6 +33,7 @@ export default function RootLayout({ children }: PropsWithChildren) {
               <div className="flex-1">{children}</div>
             </div>
             <TailwindIndicator />
+            <FloatingLegalFooter />
           </Providers>
         </body>
       </html>
