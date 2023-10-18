@@ -3,7 +3,7 @@ import { EmailLayout } from './utils/EmailLayout';
 
 export default function MagicLinkMail({ url }: { url: string }) {
   return (
-    <EmailLayout title="🪄 Your magic link">
+    <EmailLayout>
       <Section className="my-6">
         <Text className="text-lg leading-6">
           <Link className="text-sky-500 hover:underline" href={url}>

@@ -1,7 +1,5 @@
-import { Tailwind } from '@react-email/tailwind';
-
-import { SiteConfig } from '@/config';
 import { getServerUrl } from '@/lib/server-url';
+import { SiteConfig } from '@/site-config';
 import {
   Body,
   Container,
@@ -9,15 +7,14 @@ import {
   Hr,
   Html,
   Img,
+  Link,
   Preview,
   Text,
 } from '@react-email/components';
+import { Tailwind } from '@react-email/tailwind';
 import type { PropsWithChildren } from 'react';
 
-export const EmailLayout = ({
-  children,
-  title,
-}: PropsWithChildren<{ title?: string }>) => {
+export const EmailLayout = ({ children }: PropsWithChildren) => {
   const baseUrl = getServerUrl();
   return (
     <Tailwind
@@ -25,7 +22,7 @@ export const EmailLayout = ({
         theme: {
           extend: {
             colors: {
-              brand: SiteConfig.brand.primary,
+              brand: '#007291',
             },
           },
         },
@@ -40,7 +37,7 @@ export const EmailLayout = ({
               <tr>
                 <td className="pr-2">
                   <Img
-                    src={`${baseUrl}/images/logo.png`}
+                    src={`${baseUrl}${SiteConfig.appIcon}`}
                     width={32}
                     height={32}
                     className="inline"
@@ -55,12 +52,13 @@ export const EmailLayout = ({
             {children}
             <Hr className="mt-12 border-gray-300" />
             <Img
-              src={`${baseUrl}/images/logo.png`}
+              src={`${baseUrl}${SiteConfig.appIcon}`}
               width={32}
               height={32}
               className="inline"
               alt="Codeline"
             />
+            <Link href={`${baseUrl}/api/emails/unsubscribe`}>Unsubscribe</Link>
             <Text className="ml-1 text-sm text-gray-500">
               {SiteConfig.company.name}
             </Text>

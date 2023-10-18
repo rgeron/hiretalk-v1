@@ -1,4 +1,4 @@
-import { SiteConfig } from '@/config';
+import { SiteConfig } from '@/site-config';
 
 export const getServerUrl = () => {
   if (process.env.IS_PRODUCTION) {
@@ -13,5 +13,5 @@ export const getServerUrl = () => {
     return `https://${process.env.VERCEL_URL}`;
   }
 
-  return 'http://127.0.0.1:3000/';
+  return 'http://127.0.0.1:3000';
 };

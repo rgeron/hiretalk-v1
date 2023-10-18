@@ -1,7 +1,9 @@
+import { sendVerificationRequest } from '@/lib/email-auth';
 import { env } from '@/lib/env';
 import prisma from '@/lib/prisma';
 import { PrismaAdapter } from '@auth/prisma-adapter';
 import NextAuth, { AuthOptions } from 'next-auth';
+import EmailProvider from 'next-auth/providers/email';
 import GithubProvider from 'next-auth/providers/github';
 
 export const authOptions: AuthOptions = {
@@ -10,6 +12,11 @@ export const authOptions: AuthOptions = {
     GithubProvider({
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
+    }),
+    EmailProvider({
+      from: 'not-used@gmail.com', // BTW : Not used
+      server: 'smtp://username:password@smtp.example.com:587', // BTW : Not used
+      sendVerificationRequest,
     }),
   ],
   callbacks: {
@@ -23,6 +30,4 @@ export const authOptions: AuthOptions = {
   },
 };
 
-const handler = NextAuth(authOptions);
-
-export { handler as GET, handler as POST };
+export default NextAuth(authOptions);

@@ -1,7 +1,7 @@
-import { Header } from '@/features/layout/Header';
 import { TailwindIndicator } from '@/components/utils/TailwindIndicator';
-import { SiteConfig } from '@/config';
+import { Header } from '@/features/layout/Header';
 import { cn } from '@/lib/utils';
+import { SiteConfig } from '@/site-config';
 import type { Metadata } from 'next';
 import { Inter } from 'next/font/google';
 import { PropsWithChildren } from 'react';
