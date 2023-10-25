@@ -19,7 +19,9 @@ import Link from 'next/link';
 
 export const LoggedInButton = ({ user }: { user: Session['user'] }) => {
   const logout = useMutation({
-    mutationFn: () => signOut(),
+    mutationFn: async () => {
+      signOut();
+    },
   });
 
   return (
@@ -56,7 +58,13 @@ export const LoggedInButton = ({ user }: { user: Session['user'] }) => {
           </Link>
         </DropdownMenuItem>
         <DropdownMenuGroup>
-          <DropdownMenuItem onClick={() => logout.mutate()}>
+          <DropdownMenuItem
+            onClick={(e) => {
+              e.stopPropagation();
+              e.preventDefault();
+              logout.mutate();
+            }}
+          >
             {logout.isPending ? (
               <Loader className="mr-2 h-4 w-4" />
             ) : (

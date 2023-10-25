@@ -2,6 +2,7 @@ export const SiteConfig = {
   title: 'ReadyNow',
   description: 'A template description for ReadyNow',
   prodUrl: 'https://readynow.com',
+  domain: 'readynow.com',
   appIcon: '/images/icon.png',
   company: {
     name: 'ReadyNow Inc.',
