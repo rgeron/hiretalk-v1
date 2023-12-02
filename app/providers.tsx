@@ -1,5 +1,6 @@
 'use client';
 
+import { DialogRenderer } from '@/components/providers/DialogProvider';
 import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
 import { SessionProvider } from 'next-auth/react';
 import { ThemeProvider } from 'next-themes';
@@ -14,6 +15,7 @@ export const Providers = ({ children }: PropsWithChildren) => {
       <SessionProvider>
         <QueryClientProvider client={queryClient}>
           <Toaster />
+          <DialogRenderer />
           {children}
         </QueryClientProvider>
       </SessionProvider>

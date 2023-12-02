@@ -3,12 +3,14 @@ import { Header } from '@/features/layout/Header';
 import { FloatingLegalFooter } from '@/features/legal/FloatingLegalFooter';
 import { cn } from '@/lib/utils';
 import { SiteConfig } from '@/site-config';
+import { GeistMono } from 'geist/font/mono';
+import { GeistSans } from 'geist/font/sans';
 import type { Metadata } from 'next';
+import PlausibleProvider from 'next-plausible';
 import { Inter } from 'next/font/google';
 import { PropsWithChildren } from 'react';
 import './globals.css';
 import { Providers } from './providers';
-import PlausibleProvider from 'next-plausible';
 
 const fontSans = Inter({ subsets: ['latin'], variable: '--font-sans' });
 
@@ -27,7 +29,9 @@ export default function RootLayout({ children }: PropsWithChildren) {
         <body
           className={cn(
             'h-full bg-background font-sans antialiased',
-            fontSans.variable
+            fontSans.variable,
+            GeistMono.className,
+            GeistSans.className
           )}
         >
           <Providers>

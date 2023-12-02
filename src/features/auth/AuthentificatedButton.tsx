@@ -8,11 +8,12 @@ import {
   DropdownMenuGroup,
   DropdownMenuItem,
   DropdownMenuLabel,
+  DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from '@/components/ui/dropdown-menu';
 import { Loader } from '@/components/ui/loader';
 import { useMutation } from '@tanstack/react-query';
-import { GraduationCap, LogOut, ShieldCheck, User2 } from 'lucide-react';
+import { LogOut, User2 } from 'lucide-react';
 import { Session } from 'next-auth';
 import { signOut } from 'next-auth/react';
 import Link from 'next/link';
@@ -45,18 +46,9 @@ export const LoggedInButton = ({ user }: { user: Session['user'] }) => {
             My Account
           </Link>
         </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/admin">
-            <ShieldCheck className="mr-2 h-4 w-4" />
-            Admin
-          </Link>
-        </DropdownMenuItem>
-        <DropdownMenuItem asChild>
-          <Link href="/courses">
-            <GraduationCap className="mr-2 h-4 w-4" />
-            Courses
-          </Link>
-        </DropdownMenuItem>
+
+        <DropdownMenuSeparator />
+
         <DropdownMenuGroup>
           <DropdownMenuItem
             onClick={(e) => {
