@@ -1,8 +1,8 @@
 export const SiteConfig = {
-  title: 'ReadyNow',
-  description: 'A template description for ReadyNow',
-  prodUrl: 'https://nowjs.app',
-  domain: 'nowjs.app',
+  title: 'Now.ts',
+  description: 'A template description for Now.ts',
+  prodUrl: 'https://nowts.app',
+  domain: 'nowts.app',
   appIcon: '/images/icon.png',
   company: {
     name: 'ReadyNow Inc.',
@@ -13,5 +13,6 @@ export const SiteConfig = {
   },
   email: {
     from: 'contact@codeline.app',
+    contact: 'contact@codeline.app',
   },
 } as const;

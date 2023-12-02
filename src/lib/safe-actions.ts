@@ -1,8 +1,8 @@
 import { createSafeActionClient } from 'next-safe-action';
 import { getAuthSession } from './auth';
 
-class ActionError extends Error {
-  constructor(message: string, public statusCode: number) {
+export class ActionError extends Error {
+  constructor(message: string) {
     super(message);
   }
 }

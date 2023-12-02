@@ -9,6 +9,8 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
+import { toast } from 'sonner';
+import { deleteAccountAction } from './delete-account.action';
 
 export default function DeleteProfilePage() {
   return (
@@ -31,8 +33,8 @@ export default function DeleteProfilePage() {
               action: {
                 label: 'Delete',
                 onClick: async () => {
-                  await new Promise((resolve) => setTimeout(resolve, 1000));
-                  console.log('Delete');
+                  await deleteAccountAction(null);
+                  toast.success('Your profile has been deleted.');
                 },
               },
             });
