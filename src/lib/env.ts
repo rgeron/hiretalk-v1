@@ -1,19 +1,28 @@
 import { createEnv } from '@t3-oss/env-nextjs';
 import { z } from 'zod';
 
+/**
+ * This is the schema for the environment variables.
+ *
+ * Please import **this** file and use the `env` variable
+ */
 export const env = createEnv({
   server: {
     DATABASE_URL: z.string().url(),
     GITHUB_ID: z.string().min(1),
     GITHUB_SECRET: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
+    STRIPE_SECRET_KEY: z.string().min(1),
   },
+  /**
+   * If you add `client` environment variables, you need to add them to
+   * `experimental__runtimeEnv` as well.
+   */
   client: {
-    // Nothing here yet
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY: z.string().min(1),
   },
-  // Maybe you can use just `runtimeEnv` if there is a MAJ.
-  // Please follow the docs : https://env.t3.gg/docs/nextjs#create-your-schema
   experimental__runtimeEnv: {
-    // Nothing here yet, we just need to put client env here
+    NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY:
+      process.env.NEXT_PUBLIC_STRIPE_PUBLISHABLE_KEY,
   },
 });

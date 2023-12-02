@@ -49,9 +49,11 @@ model User {
   image         String?
   createdAt     DateTime  @default(now())
   updatedAt     DateTime  @updatedAt
-  accounts      Account[]
-  sessions      Session[]
-  unsubscribed  Boolean   @default(false)
+
+  unsubscribed Boolean @default(false)
+
+  sessions Session[]
+  accounts Account[]
 }
 
 model VerificationToken {
