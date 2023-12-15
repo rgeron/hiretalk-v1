@@ -5,7 +5,7 @@ import { sendEmail } from '@/lib/resend';
 import { ActionError, userAction } from '@/lib/safe-actions';
 import { SiteConfig } from '@/site-config';
 import { z } from 'zod';
-import DeleteAccountEmail from '../../../emails/DeleteAccountEmail';
+import DeleteAccountEmail from '../../../../emails/DeleteAccountEmail';
 
 export const deleteAccountAction = userAction(z.any(), async (_, ctx) => {
   const userId = ctx.user.id;
@@ -25,6 +25,8 @@ export const deleteAccountAction = userAction(z.any(), async (_, ctx) => {
       id: userId,
     },
   });
+
+  // TODO : Add delete subscriptions data
 
   await sendEmail({
     from: SiteConfig.email.from,

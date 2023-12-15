@@ -26,11 +26,11 @@ export default async function page() {
           <CardTitle>{displayName(session.user)}</CardTitle>
         </div>
       </CardHeader>
-      <CardContent className="flex flex-col gap-2">
+      <CardContent className="flex flex-col gap-2 divide-y">
         <p className="flex items-center gap-2">
           <Mail size={16} /> {session.user.email}
         </p>
-        <p className="flex items-center gap-2">
+        <p className="flex items-center gap-2 pt-2">
           <Pen size={16} /> {session.user.name}
         </p>
       </CardContent>

@@ -1,30 +1,69 @@
-import { GetServerSidePropsContext, NextApiRequest, NextApiResponse } from 'next';
-import { getServerSession } from 'next-auth';
-import { authOptions } from '../../pages/api/auth/[...nextauth]';
+import { SiteConfig } from '@/site-config';
+import { PrismaAdapter } from '@auth/prisma-adapter';
+import NextAuth from 'next-auth';
+import {
+  EmailConfig,
+  SendVerificationRequestParams,
+} from 'next-auth/providers/email';
+import GitHub from 'next-auth/providers/github';
+import MagicLinkMail from '../../emails/MagicLinkMail';
+import { env } from './env';
+import prisma from './prisma';
+import { sendEmail } from './resend';
 
-type ParametersGetServerSession =
-  | []
-  | [GetServerSidePropsContext['req'], GetServerSidePropsContext['res']]
-  | [NextApiRequest, NextApiResponse];
+export const {
+  handlers: { GET, POST },
+  auth,
+} = NextAuth({
+  pages: {
+    signIn: '/auth/signin',
+    signOut: '/auth/signout',
+    error: '/auth/error', // Error code passed in query string as ?error=
+    verifyRequest: '/auth/verify-request', // (used for check email message)
+    newUser: '/auth/new-user', // New users will be directed here on first sign in (leave the property out if not of interest)
+  },
+  adapter: PrismaAdapter(prisma),
+  providers: [
+    GitHub({
+      clientId: env.GITHUB_ID,
+      clientSecret: env.GITHUB_SECRET,
+    }),
+    {
+      id: 'email' as any,
+      server: '',
+      from: '',
+      maxAge: 0,
+      name: 'Email',
+      options: {},
+      type: 'email' as const,
+      sendVerificationRequest: (async ({
+        identifier: email,
+        url,
+      }: SendVerificationRequestParams) => {
+        const result = await sendEmail({
+          from: SiteConfig.email.from,
+          to: email,
+          subject: `Sign in to ${SiteConfig.domain}`,
+          react: MagicLinkMail({
+            url,
+          }),
+        });
 
-export const getAuthSession = async (...parameters: ParametersGetServerSession) => {
-  const session = await getServerSession(...parameters, authOptions);
-  return session;
-};
+        if (result.error) {
+          throw new Error(`Failed to send email: ${result.error}`);
+        }
 
-export const getRequiredAuthSession = async (
-  ...parameters: ParametersGetServerSession
-) => {
-  const session = await getAuthSession(...parameters);
-  if (!session?.user) {
-    throw new Error('User not authenticated');
-  }
-  return session as {
-    user: {
-      email: string;
-      image?: string;
-      name?: string;
-      id: string;
-    };
-  };
-};
+        return result;
+      }) as any,
+    } as EmailConfig,
+  ],
+  callbacks: {
+    session({ session, user }) {
+      if (!session?.user) return session;
+
+      session.user.id = user.id;
+      session.user.image = user.image;
+      return session;
+    },
+  },
+});
