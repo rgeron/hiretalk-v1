@@ -33,7 +33,7 @@ export default function AccountLayout({ children }: PropsWithChildren) {
         <div className="flex flex-col">
           <Link
             className="px-3 py-2 hover:bg-accent w-full rounded-md text-sm"
-            href="/account/delete"
+            href="/account/email"
           >
             Edit email settings
           </Link>

@@ -60,10 +60,18 @@ export const {
   callbacks: {
     session({ session, user }) {
       if (!session?.user) return session;
-
       session.user.id = user.id;
-      session.user.image = user.image;
       return session;
     },
   },
 });
+
+export const requiredAuth = async () => {
+  const session = await auth();
+
+  if (!session?.user) {
+    throw new Error('You must be authenticated to access this resource.');
+  }
+
+  return session as Required<typeof session>;
+};

@@ -13,6 +13,7 @@ export const env = createEnv({
     GITHUB_SECRET: z.string().min(1),
     RESEND_API_KEY: z.string().min(1),
     STRIPE_SECRET_KEY: z.string().min(1),
+    NODE_ENV: z.enum(['development', 'production', 'test']),
   },
   /**
    * If you add `client` environment variables, you need to add them to

@@ -7,13 +7,13 @@ import {
   CardHeader,
   CardTitle,
 } from '@/components/ui/card';
-import { getRequiredAuthSession } from '@/lib/auth';
+import { requiredAuth } from '@/lib/auth';
 import { displayName } from '@/lib/format/displayName';
 import { Mail, Pen } from 'lucide-react';
 import Link from 'next/link';
 
 export default async function page() {
-  const session = await getRequiredAuthSession();
+  const session = await requiredAuth();
   return (
     <Card className="w-full">
       <CardHeader>

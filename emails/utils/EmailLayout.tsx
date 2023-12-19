@@ -18,15 +18,11 @@ export const EmailLayout = ({ children }: PropsWithChildren) => {
   const baseUrl = getServerUrl();
   return (
     <Tailwind
-      config={{
-        theme: {
-          extend: {
-            colors: {
-              brand: '#007291',
-            },
-          },
-        },
-      }}
+      config={
+        {
+          // Theme can go here
+        }
+      }
     >
       <Html>
         <Head />
@@ -56,7 +52,7 @@ export const EmailLayout = ({ children }: PropsWithChildren) => {
               width={32}
               height={32}
               className="inline"
-              alt="Codeline"
+              alt={`${SiteConfig.company.name}'s logo`}
             />
             <Link href={`${baseUrl}/api/emails/unsubscribe`}>Unsubscribe</Link>
             <Text className="ml-1 text-sm text-gray-500">

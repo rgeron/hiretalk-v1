@@ -1,5 +1,5 @@
 import { createSafeActionClient } from 'next-safe-action';
-import { getAuthSession } from './auth';
+import { auth } from './auth';
 
 export class ActionError extends Error {
   constructor(message: string) {
@@ -28,7 +28,7 @@ export const action = createSafeActionClient({
 export const userAction = createSafeActionClient({
   handleReturnedServerError,
   async middleware() {
-    const session = await getAuthSession();
+    const session = await auth();
 
     if (!session) {
       throw new Error('Session not found!');
