@@ -1,24 +1,43 @@
+import { env } from "@/lib/env";
+import { logger } from "@/lib/logger";
+import { stripe } from "@/lib/stripe";
+import { headers } from "next/dist/client/components/headers";
 import { NextRequest, NextResponse } from "next/server";
 import Stripe from "stripe";
-import { z } from "zod";
 import { findUserFromCustomer } from "./findUserFromCustomer";
 import {
-  downgradeUserFromPremium,
+  downgradeUserFromPlan,
+  getPlanFromLineItem,
   notifyUserOfPaymentFailure,
   notifyUserOfPremiumDowngrade,
   notifyUserOfPremiumUpgrade,
-  upgradeUserToPremium,
+  upgradeUserToPlan,
 } from "./premium.helper";
 
-const StripeWebhookSchema = z.object({
-  type: z.string(),
-  data: z.any(),
-});
-
 export const POST = async (req: NextRequest) => {
-  const body = await req.json();
+  const body = await req.text();
+  const headerList = headers();
 
-  const event = StripeWebhookSchema.parse(body);
+  logger.debug("Request ");
+
+  const stripeSignature = headerList.get("stripe-signature");
+
+  let event: Stripe.Event | null = null;
+  try {
+    event = stripe.webhooks.constructEvent(
+      body,
+      stripeSignature ?? "",
+      env.STRIPE_WEBHOOK_SECRET
+    );
+  } catch {
+    logger.debug("Request FAILED - TRY");
+    return NextResponse.json({ error: "invalid" }, { status: 400 });
+  }
+
+  if (!event) {
+    logger.debug("Request FAILED - EVENT");
+    return NextResponse.json({ error: "invalid" }, { status: 400 });
+  }
 
   switch (event.type) {
     case "checkout.session.completed":
@@ -53,7 +72,12 @@ async function onCheckoutSessionCompleted(object: Stripe.Checkout.Session) {
   // ✅ Provision access to your service
   const user = await findUserFromCustomer(object.customer);
 
-  await upgradeUserToPremium(user.id);
+  const lineItems = await stripe.checkout.sessions.listLineItems(object.id, {
+    limit: 1,
+  });
+  logger.debug("Line-items", lineItems);
+
+  await upgradeUserToPlan(user.id, await getPlanFromLineItem(lineItems.data));
   await notifyUserOfPremiumUpgrade(user);
 }
 
@@ -67,7 +91,11 @@ async function onInvoicePaid(object: Stripe.Invoice) {
   // ✅ Provision access to your service
   const user = await findUserFromCustomer(object.customer);
 
-  await upgradeUserToPremium(user.id);
+  await upgradeUserToPlan(
+    user.id,
+    // TODO :Verify if it's right values
+    await getPlanFromLineItem(object.lines?.data)
+  );
 }
 
 async function onInvoicePaymentFailed(object: Stripe.Invoice) {
@@ -78,7 +106,7 @@ async function onInvoicePaymentFailed(object: Stripe.Invoice) {
 
   const user = await findUserFromCustomer(object.customer);
 
-  await downgradeUserFromPremium(user.id);
+  await downgradeUserFromPlan(user.id);
   await notifyUserOfPaymentFailure(user);
 }
 
@@ -87,6 +115,6 @@ async function onCustomerSubscriptionDeleted(object: Stripe.Subscription) {
   // ❌ Revoke access to your service
 
   const user = await findUserFromCustomer(object.customer);
-  await downgradeUserFromPremium(user.id);
+  await downgradeUserFromPlan(user.id);
   await notifyUserOfPremiumDowngrade(user);
 }

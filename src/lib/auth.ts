@@ -30,7 +30,7 @@ export const {
       clientSecret: env.GITHUB_SECRET,
     }),
     {
-      id: "email" as any,
+      id: "email" as never,
       server: "",
       from: "",
       maxAge: 0,
@@ -55,7 +55,7 @@ export const {
         }
 
         return result;
-      }) as any,
+      }) as never,
     } as EmailConfig,
   ],
   callbacks: {
@@ -98,4 +98,16 @@ export const requiredAuth = async () => {
   }
 
   return session as Required<typeof session>;
+};
+
+export const requiredFullAuth = async () => {
+  const session = await requiredAuth();
+
+  const user = await prisma.user.findUniqueOrThrow({
+    where: {
+      id: session.user.id,
+    },
+  });
+
+  return user;
 };

@@ -3,9 +3,11 @@
 import confetti from "canvas-confetti";
 import { useEffect, useRef } from "react";
 import ReactDOM from "react-dom";
+import { useIsClient } from "usehooks-ts";
 
 export const CanvasConfettiBySide = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
+  const isClient = useIsClient;
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -48,6 +50,10 @@ export const CanvasConfettiBySide = () => {
       myConfetti.reset();
     };
   }, []);
+
+  if (!isClient) {
+    return null;
+  }
 
   return ReactDOM.createPortal(
     <canvas

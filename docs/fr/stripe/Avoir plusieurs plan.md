@@ -35,4 +35,8 @@ Puis migrer ta base de données :
 prisma migrate dev
 ```
 
-## 2.
+## 2. Créer des prices Stripe
+
+Sur Stripe, tu vas pouvoir créer des `Price` pour chaque catégorie de plan.
+
+Puis tu vas pouvoir récupérer l'`id` de chaque `Price` et venir le stocker dans ton application.

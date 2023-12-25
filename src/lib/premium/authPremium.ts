@@ -20,7 +20,7 @@ export const authPremium = async () => {
     return null;
   }
 
-  if (!user.isPremium) {
+  if (user.plan === "FREE") {
     return null;
   }
 

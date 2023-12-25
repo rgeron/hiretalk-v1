@@ -22,12 +22,12 @@ export type BuyButtonProps = {
  * @param props.priceId This is the Stripe price ID to use for the checkout session
  * @returns
  */
-export const BuyButton = (props: BuyButtonProps) => {
+export const BuyButton = ({ priceId, ...props }: BuyButtonProps) => {
   const router = useRouter();
   const mutation = useMutation({
     mutationFn: async () => {
       const { data, serverError } = await buyButtonAction({
-        priceId: props.priceId,
+        priceId: priceId,
       });
 
       if (data) {

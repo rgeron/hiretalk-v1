@@ -9,11 +9,13 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu";
+import { Separator } from "@/components/ui/separator";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { Menu } from "lucide-react";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
+import { Fragment } from "react";
 
 interface NavLink {
   href: string;
@@ -31,6 +33,7 @@ const navLinkGroups: NavLinkGroup[] = [
     links: [
       { href: "/account/edit", label: "Edit profile" },
       { href: "/account/delete", label: "Delete profile" },
+      { href: "/account/billing", label: "Billing" },
     ],
   },
   {
@@ -52,12 +55,13 @@ const AccountNavigationDesktop = () => {
   const pathname = usePathname();
   return (
     <div className="flex flex-col gap-2 border-r-2 border-accent pr-4 pt-4 max-md:hidden">
-      {navLinkGroups.map((group) => {
+      {navLinkGroups.map((group, i) => {
         return (
           <>
+            {i !== 0 && <Separator className="my-1" />}
             <Typography
               variant="small"
-              className="uppercase font-bold ml-2.5 text-xs"
+              className="ml-2.5 text-xs font-bold uppercase"
             >
               {group.title}
             </Typography>
@@ -106,7 +110,7 @@ const AccountNavigationMobile = () => {
         <DropdownMenuContent className="">
           {navLinkGroups.map((group, i) => {
             return (
-              <>
+              <Fragment key={group.title + i}>
                 {i !== 0 && <DropdownMenuSeparator />}
                 <DropdownMenuLabel>{group.title}</DropdownMenuLabel>
                 <div className="flex flex-col">
@@ -116,7 +120,7 @@ const AccountNavigationMobile = () => {
                     </DropdownMenuItem>
                   ))}
                 </div>
-              </>
+              </Fragment>
             );
           })}
         </DropdownMenuContent>

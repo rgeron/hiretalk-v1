@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Divider } from '@/components/ui/divider';
+import { Button } from "@/components/ui/button";
+import { Divider } from "@/components/ui/divider";
 import {
   Form,
   FormControl,
@@ -9,16 +9,16 @@ import {
   FormItem,
   FormMessage,
   useZodForm,
-} from '@/components/ui/form';
-import { Input } from '@/components/ui/input';
-import { Loader } from '@/components/ui/loader';
-import { Typography } from '@/components/ui/typography';
-import { getServerUrl } from '@/lib/server-url';
-import { useMutation } from '@tanstack/react-query';
-import { Github } from 'lucide-react';
-import { signIn } from 'next-auth/react';
-import { useRouter, useSearchParams } from 'next/navigation';
-import { z } from 'zod';
+} from "@/components/ui/form";
+import { Input } from "@/components/ui/input";
+import { Loader } from "@/components/ui/loader";
+import { Typography } from "@/components/ui/typography";
+import { getServerUrl } from "@/lib/server-url";
+import { useMutation } from "@tanstack/react-query";
+import { Github } from "lucide-react";
+import { signIn } from "next-auth/react";
+import { useRouter, useSearchParams } from "next/navigation";
+import { z } from "zod";
 
 export type RenderProvidersProps = {
   providers: Record<string, unknown>;
@@ -28,8 +28,8 @@ export const RenderProviders = ({ providers }: RenderProvidersProps) => {
   const searchParams = useSearchParams();
   const githubSignInMutation = useMutation({
     mutationFn: () =>
-      signIn('github', {
-        callbackUrl: searchParams?.get('callbackUrl') ?? undefined,
+      signIn("github", {
+        callbackUrl: searchParams?.get("callbackUrl") ?? undefined,
       }),
   });
 
@@ -49,18 +49,18 @@ export const RenderProviders = ({ providers }: RenderProvidersProps) => {
       <div className="flex flex-col gap-2">
         {providers.github ? (
           <Button
-            className="bg-black border-gray-500 text-white hover:bg-gray-950"
+            className="border-gray-500 bg-black text-white hover:bg-gray-950"
             size="lg"
             onClick={() => {
               githubSignInMutation.mutate();
             }}
           >
             {githubSignInMutation.isPending ? (
-              <Loader size={24} className="mr-2" />
+              <Loader size={16} className="mr-2" />
             ) : (
-              <Github size={24} className="mr-2" />
+              <Github size={16} className="mr-2" />
             )}
-            <span className="text-lg">Sign in with Github</span>
+            <span className="text-base">Sign in with Github</span>
           </Button>
         ) : null}
       </div>
@@ -80,8 +80,8 @@ const EmailForm = () => {
   const router = useRouter();
   const emailSignInMutation = useMutation({
     mutationFn: async (email: string) => {
-      await signIn('email', {
-        callbackUrl: searchParams?.get('callbackUrl') ?? `${getServerUrl()}/`,
+      await signIn("email", {
+        callbackUrl: searchParams?.get("callbackUrl") ?? `${getServerUrl()}/`,
         redirect: true,
         email,
       });
@@ -95,7 +95,7 @@ const EmailForm = () => {
         onSubmit={async (values) => {
           await emailSignInMutation.mutateAsync(values.email);
         }}
-        className="flex items-center gap-2 w-full"
+        className="flex w-full items-center gap-2"
       >
         <FormField
           control={form.control}

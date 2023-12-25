@@ -1,4 +1,3 @@
-import { CanvasConfettiBySide } from "@/components/animations/CanvasConfettiSide";
 import {
   Layout,
   LayoutContent,
@@ -7,7 +6,6 @@ import {
   LayoutTitle,
 } from "@/components/page/layout";
 import { buttonVariants } from "@/components/ui/button";
-import { ContactSupportDialog } from "@/features/contact/support/ContactSupportDialog";
 import Link from "next/link";
 
 export default function SuccessPaymentPage() {
@@ -27,7 +25,7 @@ export default function SuccessPaymentPage() {
           </Link>
         </LayoutContent>
       </Layout>
-      <CanvasConfettiBySide />
+      {/* <CanvasConfettiBySide /> */}
     </>
   );
 }
