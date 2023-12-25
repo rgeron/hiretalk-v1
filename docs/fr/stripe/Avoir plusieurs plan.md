@@ -35,8 +35,18 @@ Puis migrer ta base de données :
 prisma migrate dev
 ```
 
-## 2. Créer des prices Stripe
+## 2. Créer des Product et des Price
 
-Sur Stripe, tu vas pouvoir créer des `Price` pour chaque catégorie de plan.
+Sur Stripe, tu vas pouvoir créer des `Product` et des `Price` pour chaque élément. Je te laisse suivre leur documentation pour le faire.
+
+- [Documentation Stripe](https://stripe.com/docs/invoicing/products-prices)
+
+**Ce qui est important c'est que pour chaque product** tu définissent le plan correspondant dans les `metadata` :
+
+![](/docs/images/stripe-product-metadata.png)
+
+Attention à bien utiliser **la même string** qu'on a défini dans le fichier `prisma.schema`.
 
 Puis tu vas pouvoir récupérer l'`id` de chaque `Price` et venir le stocker dans ton application.
+
+Dans les **webhooks** je récupères de manière automatique les metadata des `products` afin de mettre à jour le plan de l'utilisateur.

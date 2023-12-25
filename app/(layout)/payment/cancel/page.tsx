@@ -5,7 +5,7 @@ import {
   LayoutHeader,
   LayoutTitle,
 } from "@/components/page/layout";
-import { ContactFeedbackDialog } from "@/features/contact/feedback/ContactFeedbackDialog";
+import { ContactFeedbackPopover } from "@/features/contact/feedback/ContactFeedbackPopover";
 import { ContactSupportDialog } from "@/features/contact/support/ContactSupportDialog";
 
 export default function CancelPaymentPage() {
@@ -23,7 +23,7 @@ export default function CancelPaymentPage() {
         </LayoutHeader>
         <LayoutContent>
           <ContactSupportDialog />
-          <ContactFeedbackDialog />
+          <ContactFeedbackPopover />
         </LayoutContent>
       </Layout>
     </>

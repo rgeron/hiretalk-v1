@@ -29,9 +29,9 @@ import {
   ContactFeedbackSchemaType,
 } from "./contact-feedback.schema";
 
-export type ContactFeedbackDialogProps = PropsWithChildren<{}>;
+export type ContactFeedbackPopoverProps = PropsWithChildren<{}>;
 
-export const ContactFeedbackDialog = (props: ContactFeedbackDialogProps) => {
+export const ContactFeedbackPopover = (props: ContactFeedbackPopoverProps) => {
   const [open, setOpen] = useState(false);
   const session = useSession();
   const email = session?.data?.user?.email ?? "";
