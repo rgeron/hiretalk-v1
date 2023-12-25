@@ -63,11 +63,12 @@ model User {
   stripeCustomerId String?
   plan             UserPlan @default(FREE)
 
+  // Mailing list
   unsubscribed Boolean @default(false)
 
-  sessions Session[]
-  accounts Account[]
-  Feedback Feedback[]
+  sessions  Session[]
+  accounts  Account[]
+  feedbacks Feedback[]
 }
 
 model Feedback {
