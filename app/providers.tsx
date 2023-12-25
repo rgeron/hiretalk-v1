@@ -1,11 +1,11 @@
-'use client';
+"use client";
 
-import { DialogRenderer } from '@/components/providers/DialogProvider';
-import { QueryClient, QueryClientProvider } from '@tanstack/react-query';
-import { SessionProvider } from 'next-auth/react';
-import { ThemeProvider } from 'next-themes';
-import { PropsWithChildren } from 'react';
-import { Toaster } from 'sonner';
+import { DialogRenderer } from "@/components/providers/DialogProvider";
+import { Toaster } from "@/components/ui/sonner";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import { SessionProvider } from "next-auth/react";
+import { ThemeProvider } from "next-themes";
+import { PropsWithChildren } from "react";
 
 const queryClient = new QueryClient();
 

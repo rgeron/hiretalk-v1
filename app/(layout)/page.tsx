@@ -5,9 +5,10 @@ import {
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from '@/components/page/layout';
-import { Button } from '@/components/ui/button';
-import { Typography } from '@/components/ui/typography';
+} from "@/components/page/layout";
+import { BuyButton } from "@/components/stripe/BuyButton";
+import { Button } from "@/components/ui/button";
+import { Typography } from "@/components/ui/typography";
 
 export default function HomePage() {
   return (
@@ -22,6 +23,7 @@ export default function HomePage() {
         </Button>
       </LayoutActions>
       <LayoutContent>
+        <BuyButton priceId="price_1O37EFGPhxExaYaQWQK1Gm97">Buy now</BuyButton>
         <Typography>Some content</Typography>
       </LayoutContent>
     </Layout>
