@@ -1,12 +1,12 @@
 // TODO : S'inspirer du floater de v0.dev pour faire celui-ci
 
-import { SiteConfig } from '@/site-config';
-import Image from 'next/image';
-import Link from 'next/link';
+import { SiteConfig } from "@/site-config";
+import Image from "next/image";
+import Link from "next/link";
 
 export const FloatingLegalFooter = () => {
   return (
-    <div className="absolute items-center bottom-2 right-2 flex gap-2">
+    <div className="fixed bottom-2 right-2 flex items-center gap-2">
       <Link
         className="text-xs text-muted-foreground hover:underline"
         href="/legal/privacy"

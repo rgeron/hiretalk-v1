@@ -59,3 +59,33 @@
     @apply bg-background text-foreground;
   }
 }
+
+.citation {
+  position: relative;
+  display: inline-block;
+  padding: 4px;
+  border-radius: 0.5rem;
+  color: var(--foreground);
+  font-style: italic;
+  --gap: -16px;
+}
+
+.citation::before {
+  content: "“";
+  font-size: 3rem;
+  position: absolute;
+  top: -12px;
+  left: -12px;
+  line-height: 1;
+  color: hsl(var(--primary));
+}
+
+.citation::after {
+  content: "”";
+  font-size: 3rem;
+  position: absolute;
+  bottom: -16px;
+  right: -4px;
+  line-height: 1;
+  color: hsl(var(--primary));
+}
