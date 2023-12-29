@@ -9,7 +9,16 @@
   "rules": {
     "react/no-unescaped-entities": 0,
     "@typescript-eslint/ban-types": 0,
-    "@typescript-eslint/no-unused-vars": 1,
+    "@typescript-eslint/no-unused-vars": [
+      1,
+      {
+        "vars": "all",
+        "args": "after-used",
+        "ignoreRestSiblings": true,
+        "argsIgnorePattern": "props",
+        "varsIgnorePattern": "^_"
+      }
+    ],
     "tailwindcss/no-custom-classname": 0,
     "@next/next/no-img-element": 0,
     "@typescript-eslint/consistent-type-imports": "error"
