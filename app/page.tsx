@@ -1,5 +1,6 @@
-import { Faq } from "@/features/landing/Faq";
-import { FeaturesPreview } from "@/features/landing/FeaturesPreview";
+import { CTASection } from "@/features/landing/CTASection";
+import { FAQSection } from "@/features/landing/FAQSection";
+import { FeaturesPreviewSection } from "@/features/landing/FeaturesPreviewSection";
 import { Hero } from "@/features/landing/Hero";
 import { SectionDivider } from "@/features/landing/SectionDivider";
 import { Footer } from "@/features/layout/Footer";
@@ -22,7 +23,14 @@ export default function HomePage() {
         review={`I really like this template, it's really easy to use and it's really fast to create a new page with it.`}
       />
       <SectionDivider />
-      <Faq
+      <CTASection
+        ctaHref="/"
+        backgroundImage="https://images.unsplash.com/photo-1682687982502-1529b3b33f85"
+        ctaLabel="Rejoindre"
+        subtitle="Tu le mérites."
+        title="C'est le moment de passer à l'action."
+      />
+      <FAQSection
         faq={[
           {
             question: "How can I integrate your form product with my website?",
@@ -43,7 +51,7 @@ export default function HomePage() {
           },
         ]}
       />
-      <FeaturesPreview
+      <FeaturesPreviewSection
         features={[
           {
             label: "Email",

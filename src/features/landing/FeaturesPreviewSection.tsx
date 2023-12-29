@@ -4,7 +4,8 @@ import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
-import { ReactNode, useState } from "react";
+import type { ReactNode } from "react";
+import { useState } from "react";
 import { SectionLayout } from "./SectionLayout";
 
 type Feature = {
@@ -18,7 +19,7 @@ export type FeaturesPreviewProps = {
   features: Feature[];
 };
 
-export const FeaturesPreview = (props: FeaturesPreviewProps) => {
+export const FeaturesPreviewSection = (props: FeaturesPreviewProps) => {
   const [currentFeature, setCurrentFeature] = useState<number>(0);
 
   return (

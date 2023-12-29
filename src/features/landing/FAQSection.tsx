@@ -18,7 +18,7 @@ export type FeaturesPreviewProps = {
   faq: Faq[];
 };
 
-export const Faq = (props: FeaturesPreviewProps) => {
+export const FAQSection = (props: FeaturesPreviewProps) => {
   return (
     <SectionLayout size="lg" className="flex max-lg:flex-col">
       <div className="flex-1 space-y-2">
