@@ -1,11 +1,11 @@
 "use client";
 
-import { Layout } from "@/components/page/layout";
 import { AspectRatio } from "@/components/ui/aspect-ratio";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { AnimatePresence, motion } from "framer-motion";
 import { ReactNode, useState } from "react";
+import { SectionLayout } from "./SectionLayout";
 
 type Feature = {
   label: string;
@@ -22,12 +22,16 @@ export const FeaturesPreview = (props: FeaturesPreviewProps) => {
   const [currentFeature, setCurrentFeature] = useState<number>(0);
 
   return (
-    <Layout className="max-w-5xl flex-col">
+    <SectionLayout
+      size="lg"
+      variant="card"
+      className="flex flex-col gap-8 lg:gap-16"
+    >
       <Typography variant="h2" className="text-5xl">
         Tout ce qu'il te faut pour créer une application rapidement
       </Typography>
       <div
-        className="mt-4 flex flex-1 gap-4 max-lg:flex-col"
+        className="mt-4 flex flex-1 gap-4 px-2 max-lg:flex-col"
         style={{ height: 500 }}
       >
         <div className="flex flex-1 flex-col gap-8 lg:gap-12">
@@ -81,6 +85,6 @@ export const FeaturesPreview = (props: FeaturesPreviewProps) => {
           </AspectRatio>
         </div>
       </div>
-    </Layout>
+    </SectionLayout>
   );
 };

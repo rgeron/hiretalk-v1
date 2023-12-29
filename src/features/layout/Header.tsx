@@ -1,15 +1,20 @@
-import { SiteConfig } from '@/site-config';
-import Image from 'next/image';
-import Link from 'next/link';
-import { AuthButton } from '../auth/HeaderAuthButton';
-import { ThemeToggle } from '../theme/ThemeToggle';
+import { SiteConfig } from "@/site-config";
+import Image from "next/image";
+import Link from "next/link";
+import { AuthButton } from "../auth/HeaderAuthButton";
+import { ThemeToggle } from "../theme/ThemeToggle";
 
 export function Header() {
   return (
-    <header className="bg-background sticky top-0 z-40 w-full border-b">
+    <header className="sticky top-0 z-40 w-full border-b bg-background">
       <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
-        <div className="flex gap-2 items-center">
-          <Image src={SiteConfig.appIcon} alt="app logo" width={32} height={32} />
+        <div className="flex items-center gap-2">
+          <Image
+            src={SiteConfig.appIcon}
+            alt="app logo"
+            width={32}
+            height={32}
+          />
           <Link href="/" className="text-xl font-bold">
             {SiteConfig.title}
           </Link>

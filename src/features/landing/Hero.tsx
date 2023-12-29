@@ -1,7 +1,7 @@
 import { Rocket } from "lucide-react";
 import Image from "next/image";
-import { Button } from "../../ui/button";
-import { Typography } from "../../ui/typography";
+import { Button } from "../../components/ui/button";
+import { Typography } from "../../components/ui/typography";
 import { ReviewSmall } from "../review/ReviewSmall";
 
 export const Hero = () => {
@@ -33,7 +33,7 @@ export const Hero = () => {
           <b>100 applications</b> créer
         </ReviewSmall>
       </div>
-      <div className="flex-1">
+      <div className="flex flex-1 justify-end">
         <Image
           src="/images/nowts.png"
           width={500}

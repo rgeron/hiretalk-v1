@@ -1,14 +1,18 @@
-import { FeaturesPreview } from "@/components/features/landing/FeaturesPreview";
-import { Hero } from "@/components/features/landing/Hero";
-import { SectionDivider } from "@/components/features/landing/SectionDivider";
-import { ReviewGrid } from "@/components/features/review/ReviewGrid";
-import { ReviewSingle } from "@/components/features/review/ReviewSingle";
-import { ReviewTriple } from "@/components/features/review/ReviewTriple";
+import { Faq } from "@/features/landing/Faq";
+import { FeaturesPreview } from "@/features/landing/FeaturesPreview";
+import { Hero } from "@/features/landing/Hero";
+import { SectionDivider } from "@/features/landing/SectionDivider";
+import { Footer } from "@/features/layout/Footer";
+import { Header } from "@/features/layout/Header";
+import { ReviewGrid } from "@/features/review/ReviewGrid";
+import { ReviewSingle } from "@/features/review/ReviewSingle";
+import { ReviewTriple } from "@/features/review/ReviewTriple";
 import { Coins, KeyIcon, Mail } from "lucide-react";
 
 export default function HomePage() {
   return (
     <div className="flex h-fit flex-col gap-2">
+      <Header />
       <Hero />
 
       <ReviewSingle
@@ -18,6 +22,27 @@ export default function HomePage() {
         review={`I really like this template, it's really easy to use and it's really fast to create a new page with it.`}
       />
       <SectionDivider />
+      <Faq
+        faq={[
+          {
+            question: "How can I integrate your form product with my website?",
+            answer:
+              "Easily! Just copy the embed code from the form's settings and paste it into your website's HTML. It's compatible with most web platforms.",
+          },
+          {
+            question:
+              "Can I customize the design of the form to match my brand?",
+            answer:
+              "Absolutely! Our form builder allows you to customize colors, fonts, and layouts to align with your brand's aesthetic.",
+          },
+          {
+            question:
+              "Is there a way to receive notifications when someone submits a form?",
+            answer:
+              "Yes, you can set up email notifications or integrate with your preferred CRM to get real-time updates on form submissions.",
+          },
+        ]}
+      />
       <FeaturesPreview
         features={[
           {
@@ -143,6 +168,7 @@ export default function HomePage() {
         ]}
       />
       <SectionDivider />
+      <Footer />
     </div>
   );
 }
