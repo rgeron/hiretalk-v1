@@ -2,8 +2,9 @@ import { env } from "@/lib/env";
 import { logger } from "@/lib/logger";
 import { stripe } from "@/lib/stripe";
 import { headers } from "next/dist/client/components/headers";
-import { NextRequest, NextResponse } from "next/server";
-import Stripe from "stripe";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import type Stripe from "stripe";
 import { findUserFromCustomer } from "./findUserFromCustomer";
 import {
   downgradeUserFromPlan,

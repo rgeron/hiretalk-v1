@@ -2,9 +2,13 @@ import prisma from "@/lib/prisma";
 import { sendEmail } from "@/lib/resend";
 import { stripe } from "@/lib/stripe";
 import { SiteConfig } from "@/site-config";
-import { User, UserPlan } from "@prisma/client";
-import Stripe from "stripe";
+import type { User } from "@prisma/client";
+import { UserPlan } from "@prisma/client";
+import type Stripe from "stripe";
 import { z } from "zod";
+import SubscribtionDowngradeEmail from "../../../../emails/SubscribtionDowngradeEmail";
+import SubscribtionFailedEmail from "../../../../emails/SubscribtionFailedEmail";
+import SuccessUpgradeEmail from "../../../../emails/SuccessUpgradeEmail";
 
 export const upgradeUserToPlan = async (
   userId: string,
@@ -32,32 +36,29 @@ export const downgradeUserFromPlan = async (userId: string) => {
 };
 
 export const notifyUserOfPremiumUpgrade = async (user: User) => {
-  // TODO : Update premium email
   await sendEmail({
     from: SiteConfig.email.from,
     to: user.email,
-    subject: `You are now a premium member of ${SiteConfig.domain}`,
-    text: "You are now a premium member of " + SiteConfig.domain,
+    subject: `Success! You've Unlocked Full Access to Our Features`,
+    react: SuccessUpgradeEmail(),
   });
 };
 
 export const notifyUserOfPremiumDowngrade = async (user: User) => {
-  // TODO : Update premium email
   await sendEmail({
     from: SiteConfig.email.from,
     to: user.email,
-    subject: `You are no longer a premium member of ${SiteConfig.domain}`,
-    text: "You are no longer a premium member of " + SiteConfig.domain,
+    subject: `Important Update: Changes to Your Account Status`,
+    react: SubscribtionDowngradeEmail(),
   });
 };
 
 export const notifyUserOfPaymentFailure = async (user: User) => {
-  // TODO : Update premium email
   await sendEmail({
     from: SiteConfig.email.from,
     to: user.email,
-    subject: `Your payment for ${SiteConfig.domain} failed`,
-    text: "Your payment for " + SiteConfig.domain + " failed",
+    subject: `Action Needed: Update Your Payment to Continue Enjoying Our Services`,
+    react: SubscribtionFailedEmail(),
   });
 };
 

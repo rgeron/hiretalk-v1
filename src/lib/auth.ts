@@ -6,7 +6,7 @@ import {
   SendVerificationRequestParams,
 } from "next-auth/providers/email";
 import GitHub from "next-auth/providers/github";
-import MagicLinkMail from "../../emails/MagicLinkMail";
+import MagicLinkMail from "../../emails/MagicLinkEmail";
 import { env } from "./env";
 import prisma from "./prisma";
 import { sendEmail } from "./resend";

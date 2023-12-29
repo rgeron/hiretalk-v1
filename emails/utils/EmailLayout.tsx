@@ -1,5 +1,5 @@
-import { getServerUrl } from '@/lib/server-url';
-import { SiteConfig } from '@/site-config';
+import { getServerUrl } from "@/lib/server-url";
+import { SiteConfig } from "@/site-config";
 import {
   Body,
   Container,
@@ -8,11 +8,10 @@ import {
   Html,
   Img,
   Link,
-  Preview,
   Text,
-} from '@react-email/components';
-import { Tailwind } from '@react-email/tailwind';
-import type { PropsWithChildren } from 'react';
+} from "@react-email/components";
+import { Tailwind } from "@react-email/tailwind";
+import type { PropsWithChildren } from "react";
 
 export const EmailLayout = ({ children }: PropsWithChildren) => {
   const baseUrl = getServerUrl();
@@ -26,7 +25,6 @@ export const EmailLayout = ({ children }: PropsWithChildren) => {
     >
       <Html>
         <Head />
-        <Preview>Log in with this magic link.</Preview>
         <Body className="bg-white font-sans">
           <Container className="mx-auto bg-contain bg-bottom bg-no-repeat p-6">
             <table cellPadding={0} cellSpacing={0}>

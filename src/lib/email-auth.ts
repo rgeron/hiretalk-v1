@@ -1,13 +1,13 @@
-import { SiteConfig } from '@/site-config';
-import { SendVerificationRequestParams } from 'next-auth/providers/email';
-import MagicLinkMail from '../../emails/MagicLinkMail';
-import { resend } from './resend';
-import { getServerUrl } from './server-url';
+import { SiteConfig } from "@/site-config";
+import { SendVerificationRequestParams } from "next-auth/providers/email";
+import MagicLinkMail from "../../emails/MagicLinkEmail";
+import { resend } from "./resend";
+import { getServerUrl } from "./server-url";
 
 const replaceOrigin = (url: string) => {
   const regex =
     /^(?:https?:\/\/)?(?:[^\n@]+@)?(?:www\.)?([^\n/:]+)(?::\d+)?(\/[^#?]*)?/gim;
-  const link = url.replace(regex, '$2');
+  const link = url.replace(regex, "$2");
 
   return getServerUrl() + link;
 };
@@ -17,7 +17,7 @@ export const sendVerificationRequest = async (
 ) => {
   const { identifier, url, provider } = params;
 
-  console.log('SEND EMAIL', identifier);
+  console.log("SEND EMAIL", identifier);
 
   const result = await resend.emails.send({
     from: SiteConfig.email.from,
