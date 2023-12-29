@@ -1,8 +1,9 @@
-'use client'; // Error components must be Client Components
+"use client";
 
-import { Card, CardFooter, CardHeader, CardTitle } from '@/components/ui/card';
-import { LoginButton } from '@/features/auth/LoginButton';
-import { useEffect } from 'react';
+import { Button } from "@/components/ui/button";
+import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { logger } from "@/lib/logger";
+import { useEffect } from "react";
 
 export default function Error({
   error,
@@ -12,17 +13,18 @@ export default function Error({
   reset: () => void;
 }) {
   useEffect(() => {
-    // Log the error to an error reporting service
-    console.error(error);
+    logger.error(error);
   }, [error]);
 
   return (
     <Card>
       <CardHeader>
-        <CardTitle>Please login to continue</CardTitle>
+        <CardTitle>
+          Sorry, something went wrong. Please try again later.
+        </CardTitle>
       </CardHeader>
       <CardFooter>
-        <LoginButton />
+        <Button onClick={reset}>Try again</Button>
       </CardFooter>
     </Card>
   );

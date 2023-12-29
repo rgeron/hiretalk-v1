@@ -2,12 +2,12 @@ import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { FloatingLegalFooter } from "@/features/legal/FloatingLegalFooter";
 import { cn } from "@/lib/utils";
 import { SiteConfig } from "@/site-config";
+import type { LayoutParams } from "@/types/next";
 import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
 import { Inter } from "next/font/google";
-import { PropsWithChildren } from "react";
 import "./globals.css";
 import { Providers } from "./providers";
 
@@ -18,7 +18,7 @@ export const metadata: Metadata = {
   description: SiteConfig.description,
 };
 
-export default function RootLayout({ children }: PropsWithChildren) {
+export default function RootLayout({ children }: LayoutParams<{}>) {
   return (
     <>
       <html lang="en" className="h-full" suppressHydrationWarning>
