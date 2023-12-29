@@ -5,6 +5,7 @@ import { Hero } from "@/features/landing/Hero";
 import { SectionDivider } from "@/features/landing/SectionDivider";
 import { Footer } from "@/features/layout/Footer";
 import { Header } from "@/features/layout/Header";
+import { Pricing } from "@/features/pricing/PricingSection";
 import { ReviewGrid } from "@/features/review/ReviewGrid";
 import { ReviewSingle } from "@/features/review/ReviewSingle";
 import { ReviewTriple } from "@/features/review/ReviewTriple";
@@ -48,6 +49,44 @@ export default function HomePage() {
               "Is there a way to receive notifications when someone submits a form?",
             answer:
               "Yes, you can set up email notifications or integrate with your preferred CRM to get real-time updates on form submissions.",
+          },
+        ]}
+      />
+      <Pricing
+        cards={[
+          {
+            isPopular: true,
+            type: "monthly",
+            id: "basic-monthly",
+            title: "Basic Plan",
+            subtitle: "Perfect for individuals",
+            price: 9.99,
+            barredPrice: 12.99,
+            currency: "USD",
+            features: ["Feature 1", "Feature 2", "Feature 3"],
+            cta: "Subscribe Now",
+            ctaSubtitle: "Billed monthly",
+          },
+          {
+            type: "yearly",
+            id: "pro-yearly",
+            title: "Pro Plan",
+            subtitle: "Ideal for professionals",
+            price: 99.99,
+            currency: "USD",
+            features: ["Feature A", "Feature B", "Feature C", "Feature D"],
+            cta: "Get Started",
+            ctaSubtitle: "Billed yearly",
+          },
+          {
+            type: "onetime",
+            id: "enterprise",
+            title: "Enterprise Package",
+            subtitle: "For large scale businesses",
+            price: 499,
+            features: ["Advanced Feature 1", "Advanced Feature 2"],
+            cta: "Contact Us",
+            ctaSubtitle: "Custom pricing",
           },
         ]}
       />
