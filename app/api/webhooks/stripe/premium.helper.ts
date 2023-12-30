@@ -6,8 +6,8 @@ import type { User } from "@prisma/client";
 import { UserPlan } from "@prisma/client";
 import type Stripe from "stripe";
 import { z } from "zod";
-import SubscribtionDowngradeEmail from "../../../../emails/SubscribtionDowngradeEmail";
-import SubscribtionFailedEmail from "../../../../emails/SubscribtionFailedEmail";
+import SubscriptionDowngradeEmail from "../../../../emails/SubscriptionDowngradeEmail";
+import SubscriptionFailedEmail from "../../../../emails/SubscribtionFailedEmail";
 import SuccessUpgradeEmail from "../../../../emails/SuccessUpgradeEmail";
 
 export const upgradeUserToPlan = async (
@@ -49,7 +49,7 @@ export const notifyUserOfPremiumDowngrade = async (user: User) => {
     from: SiteConfig.email.from,
     to: user.email,
     subject: `Important Update: Changes to Your Account Status`,
-    react: SubscribtionDowngradeEmail(),
+    react: SubscriptionDowngradeEmail(),
   });
 };
 
@@ -58,7 +58,7 @@ export const notifyUserOfPaymentFailure = async (user: User) => {
     from: SiteConfig.email.from,
     to: user.email,
     subject: `Action Needed: Update Your Payment to Continue Enjoying Our Services`,
-    react: SubscribtionFailedEmail(),
+    react: SubscriptionFailedEmail(),
   });
 };
 

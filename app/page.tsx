@@ -1,3 +1,4 @@
+import { BuyButton } from "@/components/stripe/BuyButton";
 import { CTASection } from "@/features/landing/CTASection";
 import { FAQSection } from "@/features/landing/FAQSection";
 import { FeaturesPreviewSection } from "@/features/landing/FeaturesPreviewSection";
@@ -14,6 +15,7 @@ import { Coins, KeyIcon, Mail } from "lucide-react";
 export default function HomePage() {
   return (
     <div className="flex h-fit flex-col gap-2">
+      <BuyButton priceId="price_1O37EFGPhxExaYaQWQK1Gm97">Join now</BuyButton>
       <Header />
       <Hero />
 

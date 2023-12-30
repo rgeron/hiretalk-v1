@@ -39,6 +39,7 @@ export const BuyButton = ({ priceId, ...props }: BuyButtonProps) => {
       toast.error(serverError ?? "Something went wrong");
     },
   });
+
   return (
     <Button
       onClick={() => mutation.mutate()}
