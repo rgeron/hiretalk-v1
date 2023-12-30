@@ -1,7 +1,7 @@
 import { SiteConfig } from "@/site-config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
-import {
+import type {
   EmailConfig,
   SendVerificationRequestParams,
 } from "next-auth/providers/email";

@@ -85,6 +85,7 @@ async function onCheckoutSessionCompleted(object: Stripe.Checkout.Session) {
 async function onCheckoutSessionExpired(object: Stripe.Checkout.Session) {
   // The user didn't complete the transaction
   // 📧 (optional) Send an abandoned cart email
+  console.log("Checkout session expired", object);
 }
 
 async function onInvoicePaid(object: Stripe.Invoice) {

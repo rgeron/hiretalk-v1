@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { Button } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -10,15 +10,15 @@ import {
   DropdownMenuLabel,
   DropdownMenuSeparator,
   DropdownMenuTrigger,
-} from '@/components/ui/dropdown-menu';
-import { Loader } from '@/components/ui/loader';
-import { useMutation } from '@tanstack/react-query';
-import { LogOut, User2 } from 'lucide-react';
-import { Session } from 'next-auth';
-import { signOut } from 'next-auth/react';
-import Link from 'next/link';
+} from "@/components/ui/dropdown-menu";
+import { Loader } from "@/components/ui/loader";
+import { useMutation } from "@tanstack/react-query";
+import { LogOut, User2 } from "lucide-react";
+import type { Session } from "next-auth";
+import { signOut } from "next-auth/react";
+import Link from "next/link";
 
-export const LoggedInButton = ({ user }: { user: Session['user'] }) => {
+export const LoggedInButton = ({ user }: { user: Session["user"] }) => {
   const logout = useMutation({
     mutationFn: async () => {
       signOut();
@@ -29,9 +29,9 @@ export const LoggedInButton = ({ user }: { user: Session['user'] }) => {
     <DropdownMenu>
       <DropdownMenuTrigger asChild>
         <Button variant="outline" size="sm">
-          <Avatar className="h-6 w-6 mr-2">
+          <Avatar className="mr-2 h-6 w-6">
             <AvatarFallback>
-              {user.email ? user.email.slice(0, 2) : '??'}
+              {user.email ? user.email.slice(0, 2) : "??"}
             </AvatarFallback>
             {user.image && <AvatarImage src={user.image} />}
           </Avatar>

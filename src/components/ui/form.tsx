@@ -1,8 +1,8 @@
-import { cn } from '@/lib/utils';
-import { zodResolver } from '@hookform/resolvers/zod';
-import type * as LabelPrimitive from '@radix-ui/react-label';
-import { Slot } from '@radix-ui/react-slot';
-import * as React from 'react';
+import { cn } from "@/lib/utils";
+import { zodResolver } from "@hookform/resolvers/zod";
+import type * as LabelPrimitive from "@radix-ui/react-label";
+import { Slot } from "@radix-ui/react-slot";
+import * as React from "react";
 import type {
   ControllerProps,
   FieldPath,
@@ -10,14 +10,19 @@ import type {
   SubmitHandler,
   UseFormProps,
   UseFormReturn,
-} from 'react-hook-form';
-import { Controller, FormProvider, useForm, useFormContext } from 'react-hook-form';
-import type { TypeOf, ZodSchema } from 'zod';
-import { Label } from './label';
+} from "react-hook-form";
+import {
+  Controller,
+  FormProvider,
+  useForm,
+  useFormContext,
+} from "react-hook-form";
+import type { TypeOf, ZodSchema } from "zod";
+import { Label } from "./label";
 
 type FormProps<T extends FieldValues> = Omit<
-  React.ComponentProps<'form'>,
-  'onSubmit'
+  React.ComponentProps<"form">,
+  "onSubmit"
 > & {
   form: UseFormReturn<T>;
   onSubmit: SubmitHandler<T>;
@@ -31,7 +36,11 @@ const Form = <T extends FieldValues>({
   ...props
 }: FormProps<T>) => (
   <FormProvider {...form}>
-    <form onSubmit={form.handleSubmit(onSubmit)} {...props} className={className}>
+    <form
+      onSubmit={form.handleSubmit(onSubmit)}
+      {...props}
+      className={className}
+    >
       <fieldset disabled={form.formState.isSubmitting} className={className}>
         {children}
       </fieldset>
@@ -71,7 +80,7 @@ const useFormField = () => {
   const fieldState = getFieldState(fieldContext.name, formState);
 
   if (!fieldContext) {
-    throw new Error('useFormField should be used within <FormField>');
+    throw new Error("useFormField should be used within <FormField>");
   }
 
   const { id } = itemContext;
@@ -102,11 +111,11 @@ const FormItem = React.forwardRef<
 
   return (
     <FormItemContext.Provider value={{ id }}>
-      <div ref={ref} className={cn('space-y-2', className)} {...props} />
+      <div ref={ref} className={cn("space-y-2", className)} {...props} />
     </FormItemContext.Provider>
   );
 });
-FormItem.displayName = 'FormItem';
+FormItem.displayName = "FormItem";
 
 const FormLabel = React.forwardRef<
   React.ElementRef<typeof LabelPrimitive.Root>,
@@ -117,19 +126,20 @@ const FormLabel = React.forwardRef<
   return (
     <Label
       ref={ref}
-      className={cn(error && 'text-destructive', className)}
+      className={cn(error && "text-destructive", className)}
       htmlFor={formItemId}
       {...props}
     />
   );
 });
-FormLabel.displayName = 'FormLabel';
+FormLabel.displayName = "FormLabel";
 
 const FormControl = React.forwardRef<
   React.ElementRef<typeof Slot>,
   React.ComponentPropsWithoutRef<typeof Slot>
 >(({ ...props }, ref) => {
-  const { error, formItemId, formDescriptionId, formMessageId } = useFormField();
+  const { error, formItemId, formDescriptionId, formMessageId } =
+    useFormField();
 
   return (
     <Slot
@@ -143,7 +153,7 @@ const FormControl = React.forwardRef<
     />
   );
 });
-FormControl.displayName = 'FormControl';
+FormControl.displayName = "FormControl";
 
 const FormDescription = React.forwardRef<
   HTMLParagraphElement,
@@ -155,12 +165,12 @@ const FormDescription = React.forwardRef<
     <p
       ref={ref}
       id={formDescriptionId}
-      className={cn('text-sm text-muted-foreground', className)}
+      className={cn("text-sm text-muted-foreground", className)}
       {...props}
     />
   );
 });
-FormDescription.displayName = 'FormDescription';
+FormDescription.displayName = "FormDescription";
 
 const FormMessage = React.forwardRef<
   HTMLParagraphElement,
@@ -177,18 +187,18 @@ const FormMessage = React.forwardRef<
     <p
       ref={ref}
       id={formMessageId}
-      className={cn('text-sm font-medium text-destructive', className)}
+      className={cn("text-sm font-medium text-destructive", className)}
       {...props}
     >
       {body}
     </p>
   );
 });
-FormMessage.displayName = 'FormMessage';
+FormMessage.displayName = "FormMessage";
 
 type UseZodFormProps<Z extends ZodSchema> = Exclude<
   UseFormProps<TypeOf<Z>>,
-  'resolver'
+  "resolver"
 > & {
   schema: Z;
 };

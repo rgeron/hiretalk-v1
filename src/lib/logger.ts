@@ -1,7 +1,7 @@
-import { Logger } from 'tslog';
-import { env } from './env';
+import { Logger } from "tslog";
+import { env } from "./env";
 
 export const logger = new Logger({
-  name: 'AppLogger',
-  minLevel: env.NODE_ENV === 'production' ? 3 : 0,
+  name: "AppLogger",
+  minLevel: env.NODE_ENV === "production" ? 3 : 0,
 });

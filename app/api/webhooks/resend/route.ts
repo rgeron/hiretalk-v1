@@ -1,54 +1,36 @@
-import { NextRequest, NextResponse } from 'next/server';
-import Stripe from 'stripe';
-import { z } from 'zod';
+import { logger } from "@/lib/logger";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import { z } from "zod";
 
 const StripeWebhookSchema = z.object({
   type: z.string(),
+  created_at: z.string(),
   data: z.any(),
 });
+
+/**
+ * Resends webhooks
+ *
+ * @docs How it work https://resend.com/docs/dashboard/webhooks/introduction
+ * @docs Event type https://resend.com/docs/dashboard/webhooks/event-types
+ */
 
 export const POST = async (req: NextRequest) => {
   const body = await req.json();
 
   const event = StripeWebhookSchema.parse(body);
 
-  if (event.type === 'checkout.session.completed') {
-    const object = event.data.object as Stripe.Checkout.Session;
-    // The user paid successfully and the subscription is created (if any)
-    // ✅ Provision access to your service
-    return;
+  switch (event.type) {
+    case "email.complained":
+      logger.warn("Email complained", event.data);
+      break;
+    case "email.bounced":
+      logger.warn("Email bounced", event.data);
+      break;
   }
 
-  if (event.type === 'checkout.session.expired') {
-    const object = event.data.object as Stripe.Checkout.Session;
-    // The user didn't complete the transaction
-    // 📧 (optional) Send an abandoned cart email
-    return;
-  }
-
-  if (event.type === 'invoice.paid') {
-    const object = event.data.object as Stripe.Invoice;
-    // A payment was made, usually a recurring payments for a subscription
-    // ✅ Provision access to your service
-    return;
-  }
-
-  if (event.type === 'invoice.payment_failed') {
-    const object = event.data.object as Stripe.Invoice;
-    // A payment failed, usually a recurring payment for a subscription
-    // ❌ Revoke access to your service
-    // OR send email to user to pay/update payment method
-    // and wait for 'customer.subscription.deleted' event to revoke access
-    return;
-  }
-
-  if (event.type === 'customer.subscription.deleted') {
-    const object = event.data.object as Stripe.Subscription;
-    // The subscription was canceled
-    // ❌ Revoke access to your service
-    return;
-  }
-
+  NextResponse.redirect("");
   return NextResponse.json({
     ok: true,
   });

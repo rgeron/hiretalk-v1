@@ -1,6 +1,6 @@
-import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
-import { requiredAuth } from '@/lib/auth';
-import { EditProfileForm } from './EditProfileForm';
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { requiredAuth } from "@/lib/auth";
+import { EditProfileForm } from "./EditProfileForm";
 
 export default async function DeleteProfilePage() {
   const session = await requiredAuth();

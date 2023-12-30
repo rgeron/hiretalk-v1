@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Star } from "lucide-react";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 
 export type ReviewSmallProps = PropsWithChildren<{
   // A array of images url

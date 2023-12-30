@@ -1,18 +1,20 @@
-'use client';
+"use client";
 
-import { Checkbox } from '@/components/ui/checkbox';
-import { Label } from '@/components/ui/label';
-import { Typography } from '@/components/ui/typography';
-import { cn } from '@/lib/utils';
-import { useMutation } from '@tanstack/react-query';
-import { toast } from 'sonner';
-import { toggleSubscribedAction } from './mail-account.action';
+import { Checkbox } from "@/components/ui/checkbox";
+import { Label } from "@/components/ui/label";
+import { Typography } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
+import { useMutation } from "@tanstack/react-query";
+import { toast } from "sonner";
+import { toggleSubscribedAction } from "./mail-account.action";
 
 type ToggleEmailCheckboxProps = {
   unsubscribed: boolean;
 };
 
-export const ToggleEmailCheckbox = ({ unsubscribed }: ToggleEmailCheckboxProps) => {
+export const ToggleEmailCheckbox = ({
+  unsubscribed,
+}: ToggleEmailCheckboxProps) => {
   const mutation = useMutation({
     mutationFn: async (unsubscribed: boolean) => {
       const { data, serverError } = await toggleSubscribedAction({
@@ -31,9 +33,9 @@ export const ToggleEmailCheckbox = ({ unsubscribed }: ToggleEmailCheckboxProps) 
   return (
     <div
       className={cn(
-        'flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4',
+        "flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4",
         {
-          'bg-muted': mutation.isPending,
+          "bg-muted": mutation.isPending,
         }
       )}
     >
@@ -50,8 +52,8 @@ export const ToggleEmailCheckbox = ({ unsubscribed }: ToggleEmailCheckboxProps) 
       <div className="space-y-1 leading-none">
         <Label htmlFor="unsubscribed-checkbox">Unsubscribed</Label>
         <Typography variant="muted">
-          If enabled, you will not receive any marketing or promotional emails from
-          us.
+          If enabled, you will not receive any marketing or promotional emails
+          from us.
         </Typography>
       </div>
     </div>

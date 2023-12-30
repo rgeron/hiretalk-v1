@@ -1,16 +1,16 @@
-'use client';
+"use client";
 
-import { enqueueDialog } from '@/components/providers/DialogProvider';
-import { Button } from '@/components/ui/button';
+import { enqueueDialog } from "@/components/providers/DialogProvider";
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { toast } from 'sonner';
-import { deleteAccountAction } from './delete-account.action';
+} from "@/components/ui/card";
+import { toast } from "sonner";
+import { deleteAccountAction } from "./delete-account.action";
 
 export default function DeleteProfilePage() {
   return (
@@ -18,9 +18,9 @@ export default function DeleteProfilePage() {
       <CardHeader>
         <CardTitle>Delete your profile</CardTitle>
         <CardDescription>
-          Deleting your account means that all your personal data will be permanently
-          erased and your ongoing subscription will be terminated. Please be aware
-          that this action is irreversible.
+          Deleting your account means that all your personal data will be
+          permanently erased and your ongoing subscription will be terminated.
+          Please be aware that this action is irreversible.
         </CardDescription>
       </CardHeader>
       <CardContent>
@@ -28,13 +28,13 @@ export default function DeleteProfilePage() {
           variant="destructive"
           onClick={() => {
             enqueueDialog({
-              title: 'Delete your profile',
-              description: 'Are you sure you want to delete your profile?',
+              title: "Delete your profile",
+              description: "Are you sure you want to delete your profile?",
               action: {
-                label: 'Delete',
+                label: "Delete",
                 onClick: async () => {
                   await deleteAccountAction(null);
-                  toast.success('Your profile has been deleted.');
+                  toast.success("Your profile has been deleted.");
                 },
               },
             });

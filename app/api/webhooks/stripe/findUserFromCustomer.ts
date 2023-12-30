@@ -1,6 +1,6 @@
 import prisma from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
-import Stripe from "stripe";
+import type Stripe from "stripe";
 
 export const findUserFromCustomer = async (
   stripeCustomer: string | Stripe.Customer | Stripe.DeletedCustomer | null

@@ -1,9 +1,10 @@
-'use client';
+"use client";
 
-import type { ComponentPropsWithoutRef } from 'react';
-import { useFormStatus } from 'react-dom';
-import { Button, ButtonProps } from '../ui/button';
-import { Loader } from '../ui/loader';
+import type { ComponentPropsWithoutRef } from "react";
+import { useFormStatus } from "react-dom";
+import type { ButtonProps } from "../ui/button";
+import { Button } from "../ui/button";
+import { Loader } from "../ui/loader";
 
 export const SubmitButton = (props: ButtonProps) => {
   const { pending } = useFormStatus();
@@ -20,13 +21,15 @@ export const SubmitButton = (props: ButtonProps) => {
     </Button>
   );
 };
-export const SubmitButtonUnstyled = (props: ComponentPropsWithoutRef<'button'>) => {
+export const SubmitButtonUnstyled = (
+  props: ComponentPropsWithoutRef<"button">
+) => {
   const { pending } = useFormStatus();
 
   return (
     <button
       {...props}
-      type={props.type ?? 'submit'}
+      type={props.type ?? "submit"}
       disabled={props.disabled ?? pending}
     />
   );

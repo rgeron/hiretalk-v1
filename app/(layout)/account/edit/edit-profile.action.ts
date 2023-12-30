@@ -1,8 +1,8 @@
-'use server';
+"use server";
 
-import prisma from '@/lib/prisma';
-import { userAction } from '@/lib/safe-actions';
-import { ProfileFormSchema } from './edit-profile.schema';
+import prisma from "@/lib/prisma";
+import { userAction } from "@/lib/safe-actions";
+import { ProfileFormSchema } from "./edit-profile.schema";
 
 export const updateProfileAction = userAction(
   ProfileFormSchema,

@@ -1,4 +1,4 @@
-'use client';
+"use client";
 
 import {
   AlertDialog,
@@ -9,8 +9,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from '../ui/alert-dialog';
-import { Loader } from '../ui/loader';
+} from "../ui/alert-dialog";
+import { Loader } from "../ui/loader";
 
 export type ConfirmationDialogProps = {
   title: string;
@@ -44,7 +44,7 @@ export const ProviderConfirmationDialog = ({
         </AlertDialogHeader>
         <AlertDialogFooter>
           <AlertDialogCancel disabled={loading} onClick={cancel?.onClick}>
-            {cancel?.label ?? 'Cancel'}
+            {cancel?.label ?? "Cancel"}
           </AlertDialogCancel>
           <AlertDialogAction disabled={loading} onClick={action.onClick}>
             {loading ? <Loader /> : action.label}

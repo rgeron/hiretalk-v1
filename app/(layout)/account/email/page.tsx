@@ -4,10 +4,10 @@ import {
   CardDescription,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { requiredAuth } from '@/lib/auth';
-import prisma from '@/lib/prisma';
-import { ToggleEmailCheckbox } from './ToggleEmailCheckbox';
+} from "@/components/ui/card";
+import { requiredAuth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
+import { ToggleEmailCheckbox } from "./ToggleEmailCheckbox";
 
 export default async function MailProfilePage() {
   const session = await requiredAuth();

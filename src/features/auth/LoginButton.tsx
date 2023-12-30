@@ -1,9 +1,9 @@
-'use client';
+"use client";
 
-import { Button } from '@/components/ui/button';
-import { Loader } from '@/components/ui/loader';
-import { useMutation } from '@tanstack/react-query';
-import { signIn } from 'next-auth/react';
+import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
+import { useMutation } from "@tanstack/react-query";
+import { signIn } from "next-auth/react";
 
 export const LoginButton = () => {
   const login = useMutation({

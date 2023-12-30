@@ -17,7 +17,7 @@ import { getServerUrl } from "@/lib/server-url";
 import { useMutation } from "@tanstack/react-query";
 import { Github } from "lucide-react";
 import { signIn } from "next-auth/react";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { z } from "zod";
 
 export type RenderProvidersProps = {
@@ -77,7 +77,6 @@ const EmailForm = () => {
     schema: FormSchema,
   });
   const searchParams = useSearchParams();
-  const router = useRouter();
   const emailSignInMutation = useMutation({
     mutationFn: async (email: string) => {
       await signIn("email", {

@@ -23,12 +23,14 @@ import { Textarea } from "@/components/ui/textarea";
 import { SiteConfig } from "@/site-config";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import { PropsWithChildren, useState } from "react";
+import type { PropsWithChildren} from "react";
+import { useState } from "react";
 import { toast } from "sonner";
 import { contactSupportAction } from "./contact-support.action";
+import type {
+  ContactSupportSchemaType} from "./contact-support.schema";
 import {
-  ContactSupportSchema,
-  ContactSupportSchemaType,
+  ContactSupportSchema
 } from "./contact-support.schema";
 
 export type ContactSupportDialogProps = PropsWithChildren<{}>;

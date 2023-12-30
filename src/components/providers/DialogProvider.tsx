@@ -1,11 +1,12 @@
-'use client';
+"use client";
 
-import { toast } from 'sonner';
-import { create } from 'zustand';
+import { toast } from "sonner";
+import { create } from "zustand";
+import type {
+  ConfirmationDialogProps} from "./DialogProviderDialog";
 import {
-  ConfirmationDialogProps,
   ProviderConfirmationDialog,
-} from './DialogProviderDialog';
+} from "./DialogProviderDialog";
 
 type DialogType = ConfirmationDialogProps & {
   id: string;
@@ -26,7 +27,7 @@ const useDialogStore = create<DialogStore>((set, get) => ({
     const newDialog: DialogType = {
       ...dialog,
       cancel: {
-        label: dialog.cancel?.label ?? 'Cancel',
+        label: dialog.cancel?.label ?? "Cancel",
         onClick: () => {
           removeDialog(id);
           dialog.cancel?.onClick?.();
@@ -53,7 +54,7 @@ const useDialogStore = create<DialogStore>((set, get) => ({
                 removeDialog(id);
               })
               .catch((e) => {
-                toast.error('Some error occurred', {
+                toast.error("Some error occurred", {
                   description: e.message,
                 });
               });

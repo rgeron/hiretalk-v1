@@ -1,5 +1,5 @@
 import { Layout } from "@/components/page/layout";
-import { PropsWithChildren } from "react";
+import type { PropsWithChildren } from "react";
 import { AccountNavigation } from "./AccountNavigation";
 
 export default function AccountLayout({ children }: PropsWithChildren) {

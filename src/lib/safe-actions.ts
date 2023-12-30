@@ -1,5 +1,5 @@
-import { createSafeActionClient } from 'next-safe-action';
-import { auth } from './auth';
+import { createSafeActionClient } from "next-safe-action";
+import { auth } from "./auth";
 
 export class ActionError extends Error {
   constructor(message: string) {
@@ -17,7 +17,7 @@ const handleReturnedServerError: HandleReturnedServerError = (e) => {
   }
 
   return {
-    serverError: 'An unexpected error occurred.',
+    serverError: "An unexpected error occurred.",
   };
 };
 
@@ -31,7 +31,7 @@ export const userAction = createSafeActionClient({
     const session = await auth();
 
     if (!session) {
-      throw new Error('Session not found!');
+      throw new Error("Session not found!");
     }
 
     // In the real world, you would check if the session is valid by querying a database.
@@ -39,7 +39,7 @@ export const userAction = createSafeActionClient({
     const user = session.user;
 
     if (!user.id || !user.email) {
-      throw new Error('Session is not valid!');
+      throw new Error("Session is not valid!");
     }
 
     return {

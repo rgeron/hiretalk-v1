@@ -1,16 +1,16 @@
-import { Avatar, AvatarFallback, AvatarImage } from '@/components/ui/avatar';
-import { buttonVariants } from '@/components/ui/button';
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
+import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
   CardContent,
   CardFooter,
   CardHeader,
   CardTitle,
-} from '@/components/ui/card';
-import { requiredAuth } from '@/lib/auth';
-import { displayName } from '@/lib/format/displayName';
-import { Mail, Pen } from 'lucide-react';
-import Link from 'next/link';
+} from "@/components/ui/card";
+import { requiredAuth } from "@/lib/auth";
+import { displayName } from "@/lib/format/displayName";
+import { Mail, Pen } from "lucide-react";
+import Link from "next/link";
 
 export default async function page() {
   const session = await requiredAuth();
@@ -20,7 +20,9 @@ export default async function page() {
         <div className="flex items-center gap-2">
           <Avatar>
             <AvatarFallback>{session.user.email.slice(0, 2)}</AvatarFallback>
-            {session.user.image ? <AvatarImage src={session.user.image} /> : null}
+            {session.user.image ? (
+              <AvatarImage src={session.user.image} />
+            ) : null}
           </Avatar>
 
           <CardTitle>{displayName(session.user)}</CardTitle>
@@ -35,7 +37,10 @@ export default async function page() {
         </p>
       </CardContent>
       <CardFooter>
-        <Link href="/account/edit" className={buttonVariants({ variant: 'link' })}>
+        <Link
+          href="/account/edit"
+          className={buttonVariants({ variant: "link" })}
+        >
           Edit profile
         </Link>
       </CardFooter>

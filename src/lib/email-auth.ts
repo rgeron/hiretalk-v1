@@ -1,5 +1,5 @@
 import { SiteConfig } from "@/site-config";
-import { SendVerificationRequestParams } from "next-auth/providers/email";
+import type { SendVerificationRequestParams } from "next-auth/providers/email";
 import MagicLinkMail from "../../emails/MagicLinkEmail";
 import { resend } from "./resend";
 import { getServerUrl } from "./server-url";
@@ -15,7 +15,7 @@ const replaceOrigin = (url: string) => {
 export const sendVerificationRequest = async (
   params: SendVerificationRequestParams
 ) => {
-  const { identifier, url, provider } = params;
+  const { identifier, url } = params;
 
   console.log("SEND EMAIL", identifier);
 
