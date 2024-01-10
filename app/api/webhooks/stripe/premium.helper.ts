@@ -7,7 +7,7 @@ import { UserPlan } from "@prisma/client";
 import type Stripe from "stripe";
 import { z } from "zod";
 import SubscriptionDowngradeEmail from "../../../../emails/SubscriptionDowngradeEmail";
-import SubscriptionFailedEmail from "../../../../emails/SubscribtionFailedEmail";
+import SubscriptionFailedEmail from "../../../../emails/SubscriptionFailedEmail";
 import SuccessUpgradeEmail from "../../../../emails/SuccessUpgradeEmail";
 
 export const upgradeUserToPlan = async (

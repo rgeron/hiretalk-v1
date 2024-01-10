@@ -1,10 +1,10 @@
-import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { Loader } from "@/components/ui/loader";
 import { Typography } from "@/components/ui/typography";
-import { getServerUrl } from "@/lib/server-url";
 import { SiteConfig } from "@/site-config";
 import Image from "next/image";
-import { RenderProviders } from "./RenderProviders";
+import { Suspense } from "react";
+import { SignInProviders } from "./RenderProviders";
 
 export default async function AuthNewUserPage() {
   return (
@@ -19,28 +19,12 @@ export default async function AuthNewUserPage() {
             <CardTitle>Sign in</CardTitle>
           </CardHeader>
           <CardContent>
-            <SignInProviders />
+            <Suspense fallback={<Loader />}>
+              <SignInProviders />
+            </Suspense>
           </CardContent>
         </Card>
       </div>
     </div>
   );
 }
-
-export const SignInProviders = async () => {
-  const providers = await fetch(`${getServerUrl()}/api/auth/providers`).then(
-    (res) => res.json()
-  );
-
-  if (!providers) {
-    return (
-      <Alert>
-        <AlertTitle>
-          Sorry, we are unable to sign you in at this time.
-        </AlertTitle>
-      </Alert>
-    );
-  }
-
-  return <RenderProviders providers={providers} />;
-};
