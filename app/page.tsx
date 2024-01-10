@@ -2,20 +2,73 @@ import { CTASection } from "@/features/landing/CTASection";
 import { FAQSection } from "@/features/landing/FAQSection";
 import { FeaturesPreviewSection } from "@/features/landing/FeaturesPreviewSection";
 import { Hero } from "@/features/landing/Hero";
+import { Pain } from "@/features/landing/Pain";
 import { SectionDivider } from "@/features/landing/SectionDivider";
+import { Solution } from "@/features/landing/Solution";
 import { Footer } from "@/features/layout/Footer";
 import { Header } from "@/features/layout/Header";
 import { Pricing } from "@/features/pricing/PricingSection";
 import { ReviewGrid } from "@/features/review/ReviewGrid";
 import { ReviewSingle } from "@/features/review/ReviewSingle";
 import { ReviewTriple } from "@/features/review/ReviewTriple";
-import { Coins, KeyIcon, Mail } from "lucide-react";
+import { Brush, Coins, KeyIcon, Mail, Stamp, User2 } from "lucide-react";
 
 export default function HomePage() {
   return (
     <div className="flex h-fit flex-col gap-2">
       <Header />
       <Hero />
+
+      <Pain />
+      <Solution />
+
+      <FeaturesPreviewSection
+        features={[
+          {
+            label: "Stripe",
+            icon: <Coins />,
+            description:
+              "Les paiements, les abonnements, le checkout etc... tout est déjà prêt. Il te suffit de faire les configurations nécessaires dans les paramètres et voir la magie opérer.",
+            gif: "/images/stripe.gif",
+          },
+          {
+            label: "Authentification",
+            icon: <KeyIcon />,
+            description:
+              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
+            gif: "/images/authentification.gif",
+          },
+          {
+            label: "User management",
+            icon: <User2 />,
+            description:
+              "Payer pour Clerk ? Non. J'ai déjà préparer tous le desgin qui permet à l'utilisateur de facilement modifier ses informations, supprimer son compte etc...",
+            gif: "/images/user-management.gif",
+          },
+          {
+            label: "Email",
+            icon: <Mail />,
+            description:
+              "L'envoie d'email n'a jamais été aussi simple. J'ai mis en place Resend et React-email pour offrir à tes utilisateur et au dévleoppeur la meilleur expérience d'email.",
+            gif: "https://i.pinimg.com/originals/a0/02/a3/a002a3e51a2adc85d6c0a4684892e743.gif",
+          },
+
+          {
+            label: "Style et design",
+            icon: <Brush />,
+            description:
+              "J'ai préparer tous les compsoants nécessaires pour créer une landing page, un dashboard etc... afin de m'assurer que ton application semble professionnel.",
+            gif: "https://i.pinimg.com/originals/87/87/b4/8787b48e6e7f084b71cff1fd11cc5e73.gif",
+          },
+          {
+            label: "Marketing",
+            icon: <Stamp />,
+            description:
+              "Pour finir, tu peux avoir accès au cours complet pour apprendre à créer ton SaaS en partant de l'idée jusqu'au lancement et la vente de ton application.",
+            gif: "https://i.pinimg.com/originals/87/87/b4/8787b48e6e7f084b71cff1fd11cc5e73.gif",
+          },
+        ]}
+      />
 
       <ReviewSingle
         image="https://i.pravatar.cc/300?u=s1"
@@ -87,31 +140,6 @@ export default function HomePage() {
             features: ["Advanced Feature 1", "Advanced Feature 2"],
             cta: "Contact Us",
             ctaSubtitle: "Custom pricing",
-          },
-        ]}
-      />
-      <FeaturesPreviewSection
-        features={[
-          {
-            label: "Email",
-            icon: <Mail />,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            gif: "https://i.pinimg.com/originals/a0/02/a3/a002a3e51a2adc85d6c0a4684892e743.gif",
-          },
-          {
-            label: "Stripe",
-            icon: <Coins />,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            gif: "https://media3.giphy.com/media/WXB88TeARFVvi/200w.gif?cid=6c09b952bov2swd3to4vav7bsgrkxkivmgjepx3kz7kvxh8v&ep=v1_gifs_search&rid=200w.gif&ct=g",
-          },
-          {
-            label: "Authentification",
-            icon: <KeyIcon />,
-            description:
-              "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Lorem ipsum dolor sit amet, consectetur adipiscing elit.",
-            gif: "https://i.pinimg.com/originals/87/87/b4/8787b48e6e7f084b71cff1fd11cc5e73.gif",
           },
         ]}
       />

@@ -8,16 +8,18 @@ export const Hero = () => {
   return (
     <main className="m-auto flex min-h-[90vh] max-w-7xl items-center gap-4 px-8 max-lg:flex-col">
       <div className="flex flex-1 flex-col gap-6 lg:gap-8 xl:gap-12">
-        <Typography variant="h1">
-          Crée ton application en quelques jours avec{" "}
-          <span className="bg-foreground text-background">la stack ULTIME</span>
+        <Typography variant="h1" className="!leading-tight">
+          Crée une application de <b>PRO</b>{" "}
+          <span className="bg-foreground text-background">
+            peu importe tes compétences
+          </span>
         </Typography>
         <Typography variant={"large"}>
-          Après avoir créé plus de 7 applications avec Next.JS, je pense avoir
-          trouvé LA stack ultime pour créer des applications en quelques jours.
+          Arrête de perdre du temps à configurer ton projet, choisir les bonnes
+          bibliothèques, etc... commence dès maintenant ta future application.
         </Typography>
         <Button size="lg" className="w-fit">
-          <Rocket size={24} className="mr-2" />
+          <Rocket size={20} className="mr-2" />
           <span className="text-base">Rejoins maintenant</span>
         </Button>
         <ReviewSmall
@@ -35,7 +37,7 @@ export const Hero = () => {
       </div>
       <div className="flex flex-1 justify-end">
         <Image
-          src="/images/nowts.png"
+          src="/images/nowts-2.png"
           width={500}
           height={500}
           alt="now-explanation"
