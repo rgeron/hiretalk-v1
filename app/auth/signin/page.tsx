@@ -4,7 +4,7 @@ import { Typography } from "@/components/ui/typography";
 import { SiteConfig } from "@/site-config";
 import Image from "next/image";
 import { Suspense } from "react";
-import { SignInProviders } from "./RenderProviders";
+import { SignInProviders } from "./SignInProviders";
 
 export default async function AuthNewUserPage() {
   return (

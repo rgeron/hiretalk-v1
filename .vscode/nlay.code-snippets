@@ -6,7 +6,7 @@
     "body": [
       "import type { LayoutParams } from \"@/types/next\";",
       "",
-      "export default function RouteLayout(props: LayoutProps<{ $1 }>) {",
+      "export default function RouteLayout(props: LayoutParams<{ $1 }>) {",
       "  return $2",
       "}"
     ]

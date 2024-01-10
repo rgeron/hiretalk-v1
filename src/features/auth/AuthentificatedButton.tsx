@@ -1,7 +1,5 @@
 "use client";
 
-import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
-import { Button } from "@/components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -13,12 +11,12 @@ import {
 } from "@/components/ui/dropdown-menu";
 import { Loader } from "@/components/ui/loader";
 import { useMutation } from "@tanstack/react-query";
-import { LogOut, User2 } from "lucide-react";
-import type { Session } from "next-auth";
+import { LayoutDashboard, LogOut, User2 } from "lucide-react";
 import { signOut } from "next-auth/react";
 import Link from "next/link";
+import type { PropsWithChildren } from "react";
 
-export const LoggedInButton = ({ user }: { user: Session["user"] }) => {
+export const LoggedInButton = ({ children }: PropsWithChildren) => {
   const logout = useMutation({
     mutationFn: async () => {
       signOut();
@@ -27,23 +25,19 @@ export const LoggedInButton = ({ user }: { user: Session["user"] }) => {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger asChild>
-        <Button variant="outline" size="sm">
-          <Avatar className="mr-2 h-6 w-6">
-            <AvatarFallback>
-              {user.email ? user.email.slice(0, 2) : "??"}
-            </AvatarFallback>
-            {user.image && <AvatarImage src={user.image} />}
-          </Avatar>
-          {user.name}
-        </Button>
-      </DropdownMenuTrigger>
+      <DropdownMenuTrigger asChild>{children}</DropdownMenuTrigger>
       <DropdownMenuContent className="w-56">
         <DropdownMenuLabel>Accounts</DropdownMenuLabel>
         <DropdownMenuItem asChild>
           <Link href="/account">
             <User2 className="mr-2 h-4 w-4" />
             My Account
+          </Link>
+        </DropdownMenuItem>
+        <DropdownMenuItem asChild>
+          <Link href="/dashboard">
+            <LayoutDashboard className="mr-2 h-4 w-4" />
+            Dashboard
           </Link>
         </DropdownMenuItem>
 
