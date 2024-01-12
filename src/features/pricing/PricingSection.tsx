@@ -20,7 +20,8 @@ export const Pricing = (props: PricingProps) => {
           Pricing
         </Typography>
         <Typography variant="h2">
-          Stop wasting time, start building your app today
+          Arrête de perdre du temps
+          <br /> et commence à créer des applications maintenant.
         </Typography>
       </div>
       <div className="flex w-full justify-center gap-4 max-md:flex-col">

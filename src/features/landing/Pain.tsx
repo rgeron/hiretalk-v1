@@ -17,7 +17,7 @@ export const Pain = () => {
     <SectionLayout
       variant="card"
       size="base"
-      className="m-auto flex max-w-7xl flex-col items-center gap-4 px-8"
+      className=" flex flex-col items-center gap-4"
     >
       <div className="flex w-full flex-col gap-3 lg:gap-4 xl:gap-6">
         <Typography variant="h1">

@@ -16,7 +16,7 @@ import { Check } from "lucide-react";
 
 export type PricingCardProps = {
   isPopular?: boolean;
-  type: "monthly" | "yearly" | "onetime";
+  type: "monthly" | "yearly" | "one-time";
   id: string;
   title: string;
   subtitle: string;
