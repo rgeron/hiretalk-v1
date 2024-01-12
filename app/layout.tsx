@@ -7,11 +7,9 @@ import { GeistMono } from "geist/font/mono";
 import { GeistSans } from "geist/font/sans";
 import type { Metadata } from "next";
 import PlausibleProvider from "next-plausible";
-import { Inter } from "next/font/google";
-import "./globals.css";
+import "./code-theme.scss";
+import "./globals.scss";
 import { Providers } from "./providers";
-
-const fontSans = Inter({ subsets: ["latin"], variable: "--font-sans" });
 
 export const metadata: Metadata = {
   title: SiteConfig.title,
@@ -28,9 +26,8 @@ export default function RootLayout({ children }: LayoutParams<{}>) {
         <body
           className={cn(
             "h-full bg-background font-sans antialiased",
-            fontSans.variable,
-            GeistMono.className,
-            GeistSans.className
+            GeistMono.variable,
+            GeistSans.variable
           )}
         >
           <Providers>

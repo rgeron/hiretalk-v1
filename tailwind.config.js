@@ -19,7 +19,7 @@ module.exports = {
       fontFamily: {
         caption: ["var(--font-geist-sans)", "sans-serif"],
         mono: ["var(--font-geist-mono)", "monospace"],
-        sans: ["var(--font-sans)", "sans-serif"],
+        sans: ["var(--font-geist-sans)", "sans-serif"],
       },
       colors: {
         border: "hsl(var(--border))",
@@ -82,5 +82,5 @@ module.exports = {
       },
     },
   },
-  plugins: [require("tailwindcss-animate")],
+  plugins: [require("tailwindcss-animate"), require("@tailwindcss/typography")],
 };

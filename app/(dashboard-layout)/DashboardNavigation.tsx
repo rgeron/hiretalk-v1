@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { LoggedInButton } from "@/features/auth/AuthentificatedButton";
 import { AuthButton } from "@/features/auth/HeaderAuthButton";
+import { UserDropdown } from "@/features/auth/UserDropdown";
 import { ContactFeedbackPopover } from "@/features/contact/feedback/ContactFeedbackPopover";
 import { ThemeToggle } from "@/features/theme/ThemeToggle";
 import { requiredAuth } from "@/lib/auth";
@@ -71,7 +71,7 @@ const DashboardDesktop = async (props: PropsWithChildren) => {
         <div className="h-10" />
         <DashboardDesktopMenu />
         <div className="flex-1" />
-        <LoggedInButton>
+        <UserDropdown>
           <Button variant="outline" size="sm">
             <Avatar className="mr-2 h-6 w-6">
               <AvatarFallback>
@@ -81,7 +81,7 @@ const DashboardDesktop = async (props: PropsWithChildren) => {
             </Avatar>
             <span className="max-lg:hidden">{session.user.name}</span>
           </Button>
-        </LoggedInButton>
+        </UserDropdown>
       </div>
       <main className="flex-1">
         <header className="w-full border-b bg-background">

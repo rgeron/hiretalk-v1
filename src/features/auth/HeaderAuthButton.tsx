@@ -1,15 +1,15 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth";
-import { LoggedInButton } from "./AuthentificatedButton";
 import { LoginButton } from "./LoginButton";
+import { UserDropdown } from "./UserDropdown";
 
 export const AuthButton = async () => {
   const session = await auth();
 
   if (session?.user) {
     return (
-      <LoggedInButton>
+      <UserDropdown>
         <Button variant="outline" size="sm">
           <Avatar className="mr-2 h-6 w-6">
             <AvatarFallback>
@@ -19,7 +19,7 @@ export const AuthButton = async () => {
           </Avatar>
           <span className="max-lg:hidden">{session.user.name}</span>
         </Button>
-      </LoggedInButton>
+      </UserDropdown>
     );
   }
 

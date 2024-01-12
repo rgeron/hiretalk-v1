@@ -96,7 +96,7 @@ export default function HomePage() {
             currency: "EUR",
             features: [
               "Template Now.ts à vie",
-              "Mise à jour pendant 1 an",
+              "Mise à jour à vie",
               "Rejoins la communauté Discord",
             ],
             cta: "Crée maintenant",
@@ -113,7 +113,7 @@ export default function HomePage() {
             currency: "EUR",
             features: [
               "Template Now.ts à vie",
-              "Mise à jour pendant 1 an",
+              "Mise à jour à vie",
               "Rejoins la communauté Discord",
               "Cours pour apprendre à VENDRE ton SaaS avec des experts",
               "Cours pour avoir des idées",
@@ -130,21 +130,30 @@ export default function HomePage() {
       <FAQSection
         faq={[
           {
-            question: "How can I integrate your form product with my website?",
+            question: "L'accès est-il a vie  ?",
             answer:
-              "Easily! Just copy the embed code from the form's settings and paste it into your website's HTML. It's compatible with most web platforms.",
+              "Une fois rejoins, tu as accès au code à vie et tu peux l'utiliser pour créer une infinité de projet.",
           },
           {
             question:
-              "Can I customize the design of the form to match my brand?",
+              "C'est quoi la différence avec une autre boilerplate gratuite ?",
             answer:
-              "Absolutely! Our form builder allows you to customize colors, fonts, and layouts to align with your brand's aesthetic.",
+              "Le but est de te motiver, te pousser à créer ton application. J'ai écris un code simple de prise en main avec beaucoup d'utilitaire pour allé plus vite. Sans parler des cours que tu peux aussi rejoindre en plus.",
           },
           {
-            question:
-              "Is there a way to receive notifications when someone submits a form?",
+            question: "JavaScript ou TypeScript ?",
             answer:
-              "Yes, you can set up email notifications or integrate with your preferred CRM to get real-time updates on form submissions.",
+              "Ma boilerplate est 'opinionated', c'est à dire que j'ai pris les décisions pour toi. Si tu veux utiliser Supabase ou JavaScript, tu deveras modifié le code toi même.",
+          },
+          {
+            question: "C'est la dernière version de NextJS ?",
+            answer:
+              "Oui, tu ne peux que utiliser l'app directory et le boilerplate prends avantages de toutes les features novatrices de celui-ci.",
+          },
+          {
+            question: "Can I get a refund ?",
+            answer:
+              "Oui, tu peux te faire refund pendant 30 jours uniquement si tu n'as pas téléchargé le code sur ta machine.",
           },
         ]}
       />

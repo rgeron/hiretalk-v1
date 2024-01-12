@@ -1,3 +1,4 @@
+import { ServerMdx } from "@/components/markdown/ServerMdx";
 import {
   Layout,
   LayoutContent,
@@ -6,6 +7,7 @@ import {
 } from "@/components/page/layout";
 import {
   Card,
+  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -26,6 +28,20 @@ export default async function RoutePage(props: PageParams<{}>) {
               Find out how many people are visiting your website, how they found
             </CardDescription>
           </CardHeader>
+          <CardContent>
+            <ServerMdx
+              source={`## Subtitle
+            
+\`\`\`js
+const x = () => {}
+\`\`\`
+
+Please ok. I like https://google.com
+
+I like \`JavaScript\` Code !
+`}
+            />
+          </CardContent>
         </Card>
       </LayoutContent>
     </Layout>

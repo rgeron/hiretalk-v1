@@ -16,7 +16,7 @@ import { signOut } from "next-auth/react";
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
 
-export const LoggedInButton = ({ children }: PropsWithChildren) => {
+export const UserDropdown = ({ children }: PropsWithChildren) => {
   const logout = useMutation({
     mutationFn: async () => {
       signOut();
