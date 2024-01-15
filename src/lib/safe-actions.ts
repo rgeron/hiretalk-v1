@@ -7,18 +7,14 @@ export class ActionError extends Error {
   }
 }
 
-type HandleReturnedServerError = (e: Error) => { serverError: string };
+type HandleReturnedServerError = (e: Error) => string;
 
 const handleReturnedServerError: HandleReturnedServerError = (e) => {
   if (e instanceof ActionError) {
-    return {
-      serverError: e.message,
-    };
+    return e.message;
   }
 
-  return {
-    serverError: "An unexpected error occurred.",
-  };
+  return "An unexpected error occurred.";
 };
 
 export const action = createSafeActionClient({
@@ -27,6 +23,7 @@ export const action = createSafeActionClient({
 
 export const userAction = createSafeActionClient({
   handleReturnedServerError,
+
   async middleware() {
     const session = await auth();
 

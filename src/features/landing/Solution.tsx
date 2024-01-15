@@ -5,13 +5,6 @@ import { ArrowRight, Check, X } from "lucide-react";
 import { useTheme } from "next-themes";
 import { useIsClient } from "usehooks-ts";
 import { SectionLayout } from "./SectionLayout";
-import { BuyButton } from "@/components/stripe/BuyButton";
-
-export type Solution2Props = {};
-
-export const Solution2 = (props: Solution2Props) => {
-  return <BuyButton priceId="price_1O37EFGPhxExaYaQWQK1Gm97" />;
-};
 
 export const Solution = () => {
   const isClient = useIsClient();

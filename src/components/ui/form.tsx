@@ -26,6 +26,7 @@ type FormProps<T extends FieldValues> = Omit<
 > & {
   form: UseFormReturn<T>;
   onSubmit: SubmitHandler<T>;
+  disabled?: boolean;
 };
 
 const Form = <T extends FieldValues>({
@@ -33,6 +34,7 @@ const Form = <T extends FieldValues>({
   onSubmit,
   children,
   className,
+  disabled,
   ...props
 }: FormProps<T>) => (
   <FormProvider {...form}>
@@ -41,7 +43,10 @@ const Form = <T extends FieldValues>({
       {...props}
       className={className}
     >
-      <fieldset disabled={form.formState.isSubmitting} className={className}>
+      <fieldset
+        disabled={disabled || form.formState.isSubmitting}
+        className={className}
+      >
         {children}
       </fieldset>
     </form>

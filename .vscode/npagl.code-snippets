@@ -1,0 +1,29 @@
+{
+  "Next page with layout": {
+    "prefix": "npagl",
+    "description": "Create the base of a next page with the layout",
+    "scope": "typescriptreact",
+    "body": [
+      "import {",
+      "  Layout,",
+      "  LayoutContent,",
+      "  LayoutHeader,",
+      "  LayoutTitle,",
+      "} from \"@/components/page/layout\";",
+      "import type { PageParams } from \"@/types/next\";",
+      "",
+      "export default function RoutePage(props: PageParams<{ $1 }>) {",
+      "  return (",
+      "    <Layout>",
+      "      <LayoutHeader>",
+      "        <LayoutTitle>Conferences</LayoutTitle>",
+      "      </LayoutHeader>",
+      "      <LayoutContent>",
+      "        $2",
+      "      </LayoutContent>",
+      "    </Layout>",
+      "  );",
+      "}"
+    ]
+  }
+}

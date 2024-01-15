@@ -1,3 +1,4 @@
+import { EmailFormSection } from "@/features/email/EmailFormSection";
 import { CTASection } from "@/features/landing/CTASection";
 import { FAQSection } from "@/features/landing/FAQSection";
 import { FeaturesPreviewSection } from "@/features/landing/FeaturesPreviewSection";
@@ -17,6 +18,8 @@ export default function HomePage() {
     <div className="flex h-fit flex-col gap-2">
       <Header />
       <Hero />
+      <SectionDivider />
+      <EmailFormSection />
 
       <Pain />
       <Solution />
