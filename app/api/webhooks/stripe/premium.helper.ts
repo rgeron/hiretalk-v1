@@ -1,5 +1,5 @@
+import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
-import { sendEmail } from "@/lib/resend";
 import { stripe } from "@/lib/stripe";
 import { SiteConfig } from "@/site-config";
 import type { User } from "@prisma/client";

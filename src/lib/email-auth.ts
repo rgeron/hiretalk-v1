@@ -1,7 +1,7 @@
 import { SiteConfig } from "@/site-config";
 import type { SendVerificationRequestParams } from "next-auth/providers/email";
 import MagicLinkMail from "../../emails/MagicLinkEmail";
-import { resend } from "./resend";
+import { resend } from "./mail/resend";
 import { getServerUrl } from "./server-url";
 
 const replaceOrigin = (url: string) => {

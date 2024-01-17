@@ -12,57 +12,18 @@ import type { PropsWithChildren } from "react";
 import { DashboardDesktopMenu } from "./DashboardDesktopMenu";
 import { DashboardMobileMenu } from "./DashboardMobileMenu";
 
-export const DashboardNavigation = (props: PropsWithChildren) => {
-  return (
-    <>
-      <DashboardMobile>{props.children}</DashboardMobile>
-      <DashboardDesktop>{props.children}</DashboardDesktop>
-    </>
-  );
-};
-
-const DashboardMobile = (props: PropsWithChildren) => {
-  return (
-    <div className="flex h-full flex-col lg:hidden">
-      <header className="sticky top-0 z-40 w-full border-b bg-background">
-        <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
-          <div className="flex items-center gap-2">
-            <Image
-              src={SiteConfig.appIcon}
-              alt="app logo"
-              width={32}
-              height={32}
-            />
-            <Link href="/" className="text-xl font-bold">
-              {SiteConfig.title}
-            </Link>
-          </div>
-
-          <div className="flex flex-1 items-center justify-end space-x-4">
-            <nav className="flex items-center space-x-1">
-              <AuthButton />
-              <ThemeToggle />
-              <DashboardMobileMenu />
-            </nav>
-          </div>
-        </div>
-      </header>
-      <div className="container flex-1 pt-4">{props.children}</div>
-    </div>
-  );
-};
-
-const DashboardDesktop = async (props: PropsWithChildren) => {
+export const DashboardNavigation = async (props: PropsWithChildren) => {
   const session = await requiredAuth();
   return (
-    <div className="flex h-full flex-row max-lg:hidden">
-      <div className="flex h-full w-full max-w-[240px] flex-col border-r border-border px-2 py-4">
+    <div className="flex h-full flex-col lg:flex-row lg:overflow-hidden">
+      {/* Desktop ONLY Navigation bar */}
+      <div className="flex h-full w-full max-w-[240px] flex-col border-r border-border px-2 py-4 max-lg:hidden">
         <div className="flex items-center gap-2">
           <Image
             src={SiteConfig.appIcon}
             alt="app logo"
-            width={32}
-            height={32}
+            width={24}
+            height={24}
           />
           <Link href="/" className="text-xl font-bold">
             {SiteConfig.title}
@@ -83,11 +44,30 @@ const DashboardDesktop = async (props: PropsWithChildren) => {
           </Button>
         </UserDropdown>
       </div>
-      <main className="flex-1">
-        <header className="w-full border-b bg-background">
+      {/* Main container */}
+      <div className="flex-1">
+        {/* Header */}
+        <header className="w-full border-b bg-background max-lg:sticky max-lg:top-0 max-lg:z-40">
           <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
+            <div className="flex items-center gap-2 lg:hidden">
+              <Image
+                src={SiteConfig.appIcon}
+                alt="app logo"
+                width={32}
+                height={32}
+              />
+              <Link href="/" className="text-lg font-bold ">
+                {SiteConfig.title}
+              </Link>
+            </div>
+
             <div className="flex flex-1 items-center justify-end space-x-4">
-              <nav className="flex items-center space-x-1">
+              <nav className="flex items-center space-x-1 lg:hidden">
+                <AuthButton />
+                <ThemeToggle />
+                <DashboardMobileMenu />
+              </nav>
+              <nav className="flex items-center space-x-1 max-lg:hidden">
                 <ContactFeedbackPopover>
                   <Button variant="outline" size="sm">
                     Feedback
@@ -98,10 +78,12 @@ const DashboardDesktop = async (props: PropsWithChildren) => {
             </div>
           </div>
         </header>
-        <div className="m-auto max-w-4xl flex-1 px-2 py-8">
+
+        {/* Content of the page */}
+        <main className="py-4 lg:max-h-[calc(100vh_-_64px)] lg:flex-1 lg:overflow-auto lg:py-8">
           {props.children}
-        </div>
-      </main>
+        </main>
+      </div>
     </div>
   );
 };

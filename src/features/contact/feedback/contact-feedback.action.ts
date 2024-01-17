@@ -1,8 +1,8 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
-import { sendEmail } from "@/lib/resend";
 import { action } from "@/lib/safe-actions";
 import { SiteConfig } from "@/site-config";
 import { ContactFeedbackSchema } from "./contact-feedback.schema";

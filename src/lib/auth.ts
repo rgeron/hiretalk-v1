@@ -1,3 +1,4 @@
+import { sendEmail } from "@/lib/mail/sendEmail";
 import { SiteConfig } from "@/site-config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import NextAuth from "next-auth";
@@ -9,7 +10,6 @@ import GitHub from "next-auth/providers/github";
 import MagicLinkMail from "../../emails/MagicLinkEmail";
 import { env } from "./env";
 import prisma from "./prisma";
-import { sendEmail } from "./resend";
 import { stripe } from "./stripe";
 
 export const {

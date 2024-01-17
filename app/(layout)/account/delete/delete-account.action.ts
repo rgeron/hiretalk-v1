@@ -1,7 +1,7 @@
 "use server";
 
+import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
-import { sendEmail } from "@/lib/resend";
 import { ActionError, userAction } from "@/lib/safe-actions";
 import { SiteConfig } from "@/site-config";
 import { z } from "zod";

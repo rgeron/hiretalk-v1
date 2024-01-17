@@ -14,7 +14,7 @@ import { useState } from "react";
 import { DashboardLinks } from "./dashboard-links";
 
 export const DashboardMobileMenu = () => {
-  const [open, setOpen] = useState(false);
+  const [open, setOpen] = useState(true);
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
@@ -28,10 +28,12 @@ export const DashboardMobileMenu = () => {
             <Typography
               as={Link}
               variant="large"
-              className="text-base"
+              className="flex items-center gap-2 text-base"
               href={link.url}
+              onClick={() => setOpen(false)}
             >
-              {link.title}
+              <link.icon size={16} />
+              <span>{link.title}</span>
             </Typography>
           </DropdownMenuItem>
         ))}
