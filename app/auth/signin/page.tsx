@@ -6,7 +6,7 @@ import Image from "next/image";
 import { Suspense } from "react";
 import { SignInProviders } from "./SignInProviders";
 
-export default async function AuthNewUserPage() {
+export default async function AuthSignInPage() {
   return (
     <div className="flex h-full flex-col">
       <header className="flex items-center gap-2 px-4 pt-4">
@@ -15,7 +15,7 @@ export default async function AuthNewUserPage() {
       </header>
       <div className="flex flex-1 items-center justify-center">
         <Card className="w-full max-w-md">
-          <CardHeader>
+          <CardHeader className="flex flex-col items-center justify-center">
             <CardTitle>Sign in</CardTitle>
           </CardHeader>
           <CardContent>

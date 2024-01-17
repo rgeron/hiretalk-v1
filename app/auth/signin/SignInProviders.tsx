@@ -1,30 +1,36 @@
 "use client";
 
 import { Divider } from "@/components/ui/divider";
-import { Loader } from "@/components/ui/loader";
+import { Skeleton } from "@/components/ui/skeleton";
 import { Typography } from "@/components/ui/typography";
 import { useQuery } from "@tanstack/react-query";
 import { MagicLinkForm } from "./MagicLinkForm";
 import { ProviderButton } from "./ProviderButton";
 
 export const SignInProviders = () => {
-  const { data: providers } = useQuery({
+  const { data: providers, isPending } = useQuery({
     queryFn: () => fetch(`/api/auth/providers`).then((res) => res.json()),
     queryKey: ["providers"],
   });
 
-  if (!providers) {
-    return <Loader />;
+  if (isPending) {
+    return (
+      <div className="flex flex-col gap-4">
+        <Skeleton className="h-3 w-12" />
+        <Skeleton className="h-9" />
+        <Divider>or</Divider>
+        <Skeleton className="h-11" />
+      </div>
+    );
   }
 
   return (
     <div className="flex flex-col gap-4">
       {providers.email ? (
         <>
-          <Typography variant="large">Use your email</Typography>
+          <Typography variant="small">Magic link ✨</Typography>
           <MagicLinkForm />
           <Divider>or</Divider>
-          <Typography variant="large">Use a provider</Typography>
         </>
       ) : null}
 

@@ -1,23 +1,34 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
-import { Loader } from "@/components/ui/loader";
-import { useMutation } from "@tanstack/react-query";
-import { signIn } from "next-auth/react";
+import { buttonVariants } from "@/components/ui/button";
+import Link from "next/link";
+import { usePathname } from "next/navigation";
+import { useIsClient } from "usehooks-ts";
+
+const useHost = () => {
+  const isClient = useIsClient();
+
+  if (!isClient) {
+    return "";
+  }
+
+  const host = window.location.href;
+
+  return `${host}`;
+};
 
 export const LoginButton = () => {
-  const login = useMutation({
-    mutationFn: () => signIn(),
-  });
+  const host = useHost();
+  const pathname = usePathname();
+
+  const currentUrl = `${host}${pathname}`;
+
   return (
-    <Button
-      size="sm"
-      onClick={() => {
-        login.mutate();
-      }}
+    <Link
+      className={buttonVariants({ size: "sm", variant: "ghost" })}
+      href={`/auth/signin?callbackUrl=${currentUrl}`}
     >
-      {login.isPending ? <Loader className="mr-2 h-4 w-4" /> : null}
-      Login
-    </Button>
+      Sign in
+    </Link>
   );
 };
