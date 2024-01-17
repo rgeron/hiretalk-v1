@@ -9,7 +9,7 @@
       "import { logger } from \"@/lib/logger\";",
       "import { useEffect } from \"react\";",
       "",
-      "export default function RouteError({",
+      "export default async function RouteError({",
       "  error,",
       "  reset,",
       "}: {",

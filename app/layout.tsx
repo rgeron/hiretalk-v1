@@ -1,3 +1,4 @@
+import { NextTopLoader } from "@/components/page/NextTopLoader";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { FloatingLegalFooter } from "@/features/legal/FloatingLegalFooter";
 import { cn } from "@/lib/utils";
@@ -31,6 +32,11 @@ export default function RootLayout({ children }: LayoutParams<{}>) {
           )}
         >
           <Providers>
+            <NextTopLoader
+              delay={100}
+              showSpinner={false}
+              color="hsl(var(--primary))"
+            />
             {children}
             <TailwindIndicator />
             <FloatingLegalFooter />
