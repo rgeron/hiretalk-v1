@@ -4,7 +4,7 @@ import { SiteConfig } from "@/site-config";
 import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
-import { SignInProviders } from "./SignInProviders";
+import { SignUpCredentialsForm } from "./SignUpCredentialsForm";
 
 export default async function AuthSignInPage() {
   return (
@@ -25,11 +25,11 @@ export default async function AuthSignInPage() {
       <div className="flex flex-1 items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader className="flex flex-col items-center justify-center">
-            <CardTitle>Sign in</CardTitle>
+            <CardTitle>Sign up</CardTitle>
           </CardHeader>
           <CardContent>
             <Suspense fallback={<Loader />}>
-              <SignInProviders />
+              <SignUpCredentialsForm />
             </Suspense>
           </CardContent>
         </Card>

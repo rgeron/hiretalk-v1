@@ -27,7 +27,7 @@ const TooltipContent = React.forwardRef<
 ));
 TooltipContent.displayName = TooltipPrimitive.Content.displayName;
 
-const Tooltip = ({
+const InlineTooltip = ({
   children,
   title,
   delayDuration = 200,
@@ -40,7 +40,9 @@ const Tooltip = ({
   return (
     <TooltipProvider>
       <TooltipRoot delayDuration={delayDuration}>
-        <TooltipTrigger asChild>{children}</TooltipTrigger>
+        <TooltipTrigger asChild={typeof children !== "string"}>
+          {children}
+        </TooltipTrigger>
         <TooltipContent className={cn("max-w-md", className)}>
           <p className="text-center">{title}</p>
         </TooltipContent>
@@ -49,7 +51,16 @@ const Tooltip = ({
   );
 };
 
+const Tooltip = (props: React.ComponentPropsWithoutRef<typeof TooltipRoot>) => {
+  return (
+    <TooltipProvider>
+      <TooltipRoot {...props} />
+    </TooltipProvider>
+  );
+};
+
 export {
+  InlineTooltip,
   Tooltip,
   TooltipContent,
   TooltipProvider,

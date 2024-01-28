@@ -66,6 +66,9 @@ model User {
   // Mailing list
   unsubscribed Boolean @default(false)
 
+  // For the Credentials provider
+  passwordHash String?
+
   sessions  Session[]
   accounts  Account[]
   feedbacks Feedback[]

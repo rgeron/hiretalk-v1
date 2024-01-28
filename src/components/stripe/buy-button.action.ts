@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/auth";
 import prisma from "@/lib/prisma";
 import { ActionError, action } from "@/lib/safe-actions";
 import { getServerUrl } from "@/lib/server-url";

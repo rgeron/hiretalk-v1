@@ -8,32 +8,32 @@ import { usePathname } from "next/navigation";
 import { Fragment } from "react";
 import { DashboardLinks } from "./dashboard-links";
 
-const isCurrentPath = (pathname: string, url: string) => {
-  // split the pathame and url with / and compare the length and the matching parts
-  const pathnameParts = pathname.split("/");
-  const urlParts = url.split("/");
+const useCurrentPath = () => {
+  const currentPath = usePathname() ?? "";
+  const pathSegments = currentPath.split("/");
+  const allDashboardLinks = DashboardLinks.flatMap((section) => section.links);
 
-  if (pathnameParts.length !== urlParts.length) {
-    return false;
-  }
+  const linkMatchCounts = allDashboardLinks.map((link) => ({
+    url: link.url,
+    matchCount: link.url
+      .split("/")
+      .filter((segment, index) => segment === pathSegments[index]).length,
+  }));
 
-  let isMatch = true;
+  const mostMatchingLink = linkMatchCounts.reduce(
+    (maxMatchLink, currentLink) =>
+      currentLink.matchCount > maxMatchLink.matchCount
+        ? currentLink
+        : maxMatchLink,
+    { url: "", matchCount: 0 }
+  );
 
-  for (const [i, pathnamePart] of pathnameParts.entries()) {
-    if (pathnamePart !== urlParts[i]) {
-      if (pathnamePart.startsWith("?")) {
-        break;
-      }
-      isMatch = false;
-      break;
-    }
-  }
-
-  return isMatch;
+  return mostMatchingLink.url;
 };
 
 export const DashboardDesktopMenu = () => {
-  const pathname = usePathname() ?? "";
+  const currentPath = useCurrentPath();
+
   return (
     <nav className="flex flex-col gap-4">
       {DashboardLinks.map((section, index) => (
@@ -45,7 +45,7 @@ export const DashboardDesktopMenu = () => {
           ) : null}
           <div className="flex flex-col gap-2">
             {section.links.map((link) => {
-              const isCurrent = isCurrentPath(pathname, link.url);
+              const isCurrent = currentPath === link.url;
 
               return (
                 <Link

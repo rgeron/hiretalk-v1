@@ -5,7 +5,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { requiredAuth } from "@/lib/auth";
+import { requiredAuth } from "@/lib/auth/helper";
 import prisma from "@/lib/prisma";
 import { ToggleEmailCheckbox } from "./ToggleEmailCheckbox";
 

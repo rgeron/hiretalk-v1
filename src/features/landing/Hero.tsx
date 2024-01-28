@@ -6,7 +6,7 @@ import { ReviewSmall } from "../review/ReviewSmall";
 
 export const Hero = () => {
   return (
-    <main className="m-auto flex min-h-[90vh] max-w-7xl items-center gap-4 px-8 max-lg:flex-col">
+    <main className="container m-auto flex min-h-[90vh] items-center gap-4 max-lg:flex-col">
       <div className="flex flex-1 flex-col gap-6 lg:gap-8 xl:gap-12">
         <Typography variant="h1" className="!leading-tight">
           Crée une application de <b>PRO</b>{" "}

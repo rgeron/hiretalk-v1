@@ -1,6 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/auth";
 import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
 import { action } from "@/lib/safe-actions";

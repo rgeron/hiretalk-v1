@@ -20,7 +20,7 @@ export default function MagicLinkMail({ url }: { url: string }) {
       </Section>
       <Text className="text-lg leading-6">
         Best,
-        <br />- ${SiteConfig.maker.name} from ${SiteConfig.title}
+        <br />- {SiteConfig.maker.name} from {SiteConfig.title}
       </Text>
     </EmailLayout>
   );

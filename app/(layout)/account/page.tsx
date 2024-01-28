@@ -7,7 +7,7 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { requiredAuth } from "@/lib/auth";
+import { requiredAuth } from "@/lib/auth/helper";
 import { displayName } from "@/lib/format/displayName";
 import { Mail, Pen } from "lucide-react";
 import Link from "next/link";

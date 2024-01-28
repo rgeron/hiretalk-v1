@@ -1,4 +1,4 @@
-import { auth } from "../auth";
+import { auth } from "../auth/auth";
 import prisma from "../prisma";
 
 export const authPremium = async () => {

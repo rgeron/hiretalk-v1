@@ -1,7 +1,7 @@
 "use client";
 
+import { BuyButton } from "@/components/stripe/BuyButton";
 import { Badge } from "@/components/ui/badge";
-import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -26,7 +26,7 @@ export type PricingCardProps = {
   features: string[];
   cta: string;
   ctaSubtitle: string;
-  ctaAction?: (id: string) => void;
+  priceId: string;
 };
 
 export const PricingCard = (props: PricingCardProps) => {
@@ -55,17 +55,20 @@ export const PricingCard = (props: PricingCardProps) => {
           <Typography variant="h2">{props.price}</Typography>
           <Typography variant="base">{props.currency ?? "USD"}</Typography>
         </div>
-        <ul>
+        <ul className="flex flex-col gap-2">
           {props.features.map((feature, i) => (
             <li key={i} className="flex items-center gap-1">
               <Check className="text-green-500" />
-              <Typography variant="base">{feature}</Typography>
+              <Typography variant="base" className="flex-1">
+                {" "}
+                {feature}
+              </Typography>
             </li>
           ))}
         </ul>
       </CardContent>
       <CardFooter className="flex flex-col items-stretch gap-2">
-        <Button onClick={() => props.ctaAction?.(props.id)}>{props.cta}</Button>
+        <BuyButton priceId={props.priceId}>{props.cta}</BuyButton>
         <Typography variant="muted">{props.ctaSubtitle}</Typography>
       </CardFooter>
     </Card>

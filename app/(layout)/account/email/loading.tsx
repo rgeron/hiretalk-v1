@@ -5,9 +5,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { requiredAuth } from "@/lib/auth";
-import prisma from "@/lib/prisma";
-import { ToggleEmailCheckbox } from "./ToggleEmailCheckbox";
 import { Skeleton } from "@/components/ui/skeleton";
 
 export default function PageLoading() {

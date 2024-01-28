@@ -1,7 +1,7 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
-import { requiredFullAuth } from "@/lib/auth";
+import { requiredFullAuth } from "@/lib/auth/helper";
 import { getServerUrl } from "@/lib/server-url";
 import { stripe } from "@/lib/stripe";
 import { cn } from "@/lib/utils";

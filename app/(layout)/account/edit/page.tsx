@@ -1,5 +1,5 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { requiredAuth } from "@/lib/auth";
+import { requiredAuth } from "@/lib/auth/helper";
 import { EditProfileForm } from "./EditProfileForm";
 
 export default async function DeleteProfilePage() {

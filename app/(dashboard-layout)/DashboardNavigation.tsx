@@ -4,7 +4,7 @@ import { AuthButton } from "@/features/auth/HeaderAuthButton";
 import { UserDropdown } from "@/features/auth/UserDropdown";
 import { ContactFeedbackPopover } from "@/features/contact/feedback/ContactFeedbackPopover";
 import { ThemeToggle } from "@/features/theme/ThemeToggle";
-import { requiredAuth } from "@/lib/auth";
+import { requiredAuth } from "@/lib/auth/helper";
 import { SiteConfig } from "@/site-config";
 import Image from "next/image";
 import Link from "next/link";

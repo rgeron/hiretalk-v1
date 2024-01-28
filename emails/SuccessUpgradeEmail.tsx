@@ -10,21 +10,21 @@ export default function SuccessUpgradeEmail() {
       </Preview>
       <Section className="my-6">
         <Text className="text-lg leading-6">Hello,</Text>
-        <Text>
+        <Text className="text-lg leading-6">
           Great news! Your payment was successful, and you now have full access
           to all our premium features. Get ready to explore everything we have
           to offer!
         </Text>
-        <Text>
+        <Text className="text-lg leading-6">
           If you have any questions or need assistance as you dive in, feel free
           to reach out to us. We're here to help you make the most of your
           experience.
         </Text>
-        <Text>Happy exploring,</Text>
+        <Text className="text-lg leading-6">Happy exploring,</Text>
       </Section>
       <Text className="text-lg leading-6">
         Best,
-        <br />- ${SiteConfig.maker.name} from ${SiteConfig.title}
+        <br />- {SiteConfig.maker.name} from {SiteConfig.title}
       </Text>
     </EmailLayout>
   );

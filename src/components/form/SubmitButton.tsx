@@ -9,7 +9,11 @@ import { Loader } from "../ui/loader";
 export const SubmitButton = (props: ButtonProps) => {
   const { pending } = useFormStatus();
 
-  return <LoadingButton loading={pending}>{props.children}</LoadingButton>;
+  return (
+    <LoadingButton loading={pending} {...props}>
+      {props.children}
+    </LoadingButton>
+  );
 };
 
 export const LoadingButton = ({

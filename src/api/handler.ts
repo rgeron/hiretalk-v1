@@ -1,4 +1,4 @@
-import { auth } from "@/lib/auth";
+import { auth } from "@/lib/auth/auth";
 import { logger } from "@/lib/logger";
 import type { Session } from "next-auth/types";
 import type { NextRequest } from "next/server";

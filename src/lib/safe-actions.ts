@@ -1,5 +1,5 @@
 import { createSafeActionClient } from "next-safe-action";
-import { auth } from "./auth";
+import { auth } from "./auth/auth";
 
 export class ActionError extends Error {
   constructor(message: string) {

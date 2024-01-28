@@ -66,6 +66,10 @@ export const POST = async (req: NextRequest) => {
         ok: true,
       });
   }
+
+  return NextResponse.json({
+    ok: true,
+  });
 };
 
 async function onCheckoutSessionCompleted(object: Stripe.Checkout.Session) {
