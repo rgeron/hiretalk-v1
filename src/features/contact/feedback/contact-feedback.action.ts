@@ -3,7 +3,7 @@
 import { auth } from "@/lib/auth/auth";
 import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
-import { action } from "@/lib/safe-actions";
+import { action } from "@/lib/server-actions/safe-actions";
 import { SiteConfig } from "@/site-config";
 import { ContactFeedbackSchema } from "./contact-feedback.schema";
 

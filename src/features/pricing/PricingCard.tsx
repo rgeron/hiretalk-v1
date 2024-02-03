@@ -2,14 +2,8 @@
 
 import { BuyButton } from "@/components/stripe/BuyButton";
 import { Badge } from "@/components/ui/badge";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardFooter,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
+import { Card, CardFooter, CardHeader } from "@/components/ui/card";
+import { Separator } from "@/components/ui/separator";
 import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import { Check } from "lucide-react";
@@ -32,8 +26,9 @@ export type PricingCardProps = {
 export const PricingCard = (props: PricingCardProps) => {
   return (
     <Card
-      className={cn("h-fit max-w-md flex-1 relative", {
-        "border-primary": props.isPopular,
+      className={cn("h-fit bg-card max-w-md flex-1 relative", {
+        "border-primary border-2 shadow-lg": props.isPopular,
+        "border-border border-2 shadow-lg": !props.isPopular,
       })}
     >
       {props.isPopular ? (
@@ -41,34 +36,42 @@ export const PricingCard = (props: PricingCardProps) => {
           <Badge className="-translate-y-1/2">Popular</Badge>
         </div>
       ) : null}
-      <CardHeader>
-        <CardTitle>{props.title}</CardTitle>
-        <CardDescription>{props.subtitle}</CardDescription>
-      </CardHeader>
-      <CardContent className="flex flex-col gap-2">
-        <div className="flex items-end gap-2">
-          {props.barredPrice ? (
-            <Typography variant="base" className="line-through">
-              {props.barredPrice}
-            </Typography>
-          ) : null}
-          <Typography variant="h2">{props.price}</Typography>
+      <CardHeader className="flex flex-col items-center gap-6 lg:gap-8">
+        <p className="gap-4 text-lg font-bold uppercase text-primary">
+          {props.title}
+        </p>
+        <div className="flex items-end justify-center gap-2">
+          <p className="text-5xl font-extrabold">${props.price}</p>
           <Typography variant="base">{props.currency ?? "USD"}</Typography>
+
+          {props.barredPrice ? (
+            <div className="relative self-start">
+              <p className="text-lg font-bold">${props.barredPrice}</p>
+              <div className="absolute top-1/2 h-0.5 w-full rotate-45 bg-red-500" />
+            </div>
+          ) : null}
         </div>
-        <ul className="flex flex-col gap-2">
+        <Typography variant="muted">{props.subtitle}</Typography>
+        <Separator />
+        <ul className="flex w-full flex-col gap-3 lg:gap-4">
           {props.features.map((feature, i) => (
             <li key={i} className="flex items-center gap-1">
-              <Check className="text-green-500" />
-              <Typography variant="base" className="flex-1">
+              <Check className="text-green-500" size={20} />
+              <Typography variant="muted" className="flex-1">
                 {" "}
                 {feature}
               </Typography>
             </li>
           ))}
         </ul>
-      </CardContent>
+      </CardHeader>
       <CardFooter className="flex flex-col items-stretch gap-2">
-        <BuyButton priceId={props.priceId}>{props.cta}</BuyButton>
+        <BuyButton
+          variant={props.isPopular ? "default" : "outline"}
+          priceId={props.priceId}
+        >
+          {props.cta}
+        </BuyButton>
         <Typography variant="muted">{props.ctaSubtitle}</Typography>
       </CardFooter>
     </Card>

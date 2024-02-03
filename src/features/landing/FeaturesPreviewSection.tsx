@@ -25,7 +25,7 @@ export const FeaturesPreviewSection = (props: FeaturesPreviewProps) => {
   return (
     <SectionLayout
       size="lg"
-      variant="card"
+      variant="default"
       className="flex flex-col gap-8 lg:gap-16"
     >
       <Typography variant="h2" className="text-5xl">
@@ -80,7 +80,7 @@ export const FeaturesPreviewSection = (props: FeaturesPreviewProps) => {
                 animate={{ opacity: 1 }}
                 alt="feature-preview"
                 src={props.features[currentFeature].gif}
-                className="h-full w-full overflow-hidden rounded-md object-contain"
+                className="size-full overflow-hidden rounded-md object-contain object-center"
               />
             </AnimatePresence>
           </AspectRatio>

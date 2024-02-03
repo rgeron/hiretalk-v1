@@ -1,7 +1,7 @@
 "use server";
 
 import { sendEmail } from "@/lib/mail/sendEmail";
-import { action } from "@/lib/safe-actions";
+import { action } from "@/lib/server-actions/safe-actions";
 import { SiteConfig } from "@/site-config";
 import { ContactSupportSchema } from "./contact-support.schema";
 

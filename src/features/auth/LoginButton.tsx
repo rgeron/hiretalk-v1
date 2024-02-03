@@ -25,7 +25,7 @@ export const LoginButton = () => {
 
   return (
     <Link
-      className={buttonVariants({ size: "sm", variant: "ghost" })}
+      className={buttonVariants({ size: "sm", variant: "outline" })}
       href={`/auth/signin?callbackUrl=${currentUrl}`}
     >
       Sign in

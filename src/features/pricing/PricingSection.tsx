@@ -20,11 +20,10 @@ export const Pricing = (props: PricingProps) => {
           Pricing
         </Typography>
         <Typography variant="h2">
-          Arrête de perdre du temps
-          <br /> et commence à créer des applications maintenant.
+          Try and choose the best plan for your business
         </Typography>
       </div>
-      <div className="flex w-full justify-center gap-4 max-md:flex-col">
+      <div className="flex w-full justify-center gap-4 max-md:flex-col lg:gap-8 xl:gap-12">
         {props.cards.map((card, i) => (
           <PricingCard key={i} {...card} />
         ))}

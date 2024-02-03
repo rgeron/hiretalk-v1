@@ -3,6 +3,7 @@ import type { PropsWithChildren } from "react";
 
 export type SectionLayoutProps = PropsWithChildren<{
   size?: "sm" | "base" | "lg";
+  spacing?: "sm" | "base" | "lg";
   variant?: "default" | "card" | "primary" | "invert" | "image";
   className?: string;
   containerClassName?: string;
@@ -10,6 +11,7 @@ export type SectionLayoutProps = PropsWithChildren<{
 
 export const SectionLayout = ({
   size = "base",
+  spacing = "base",
   variant = "default",
   className,
   containerClassName,
@@ -31,11 +33,16 @@ export const SectionLayout = ({
     >
       <div
         className={cn(
-          "m-auto px-4 py-20 lg:py-28",
+          "m-auto px-4",
           {
             "max-w-4xl": size === "sm",
             "max-w-5xl": size === "base",
             "max-w-6xl": size === "lg",
+          },
+          {
+            "py-4 lg:py-8": spacing === "sm",
+            "py-20 lg:py-28": spacing === "base",
+            "py-32 lg:py-40": spacing === "lg",
           },
           className
         )}

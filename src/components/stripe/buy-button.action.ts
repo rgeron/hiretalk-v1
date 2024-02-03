@@ -2,7 +2,7 @@
 
 import { auth } from "@/lib/auth/auth";
 import prisma from "@/lib/prisma";
-import { ActionError, action } from "@/lib/safe-actions";
+import { ActionError, action } from "@/lib/server-actions/safe-actions";
 import { getServerUrl } from "@/lib/server-url";
 import { stripe } from "@/lib/stripe";
 import { z } from "zod";

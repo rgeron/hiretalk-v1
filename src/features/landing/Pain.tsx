@@ -1,102 +1,44 @@
 "use client";
 
 import { Typography } from "@/components/ui/typography";
-import { X } from "lucide-react";
-import { useTheme } from "next-themes";
-import Image from "next/image";
-import { useIsClient } from "usehooks-ts";
 import { SectionLayout } from "./SectionLayout";
 
-export const Pain = () => {
-  const isClient = useIsClient();
-  const themeObj = useTheme();
-
-  const theme = isClient ? themeObj.theme : "dark";
-
+export const PainSection = () => {
   return (
     <SectionLayout
       variant="card"
       size="base"
-      className=" flex flex-col items-center gap-4"
+      className=" flex flex-col items-center justify-center gap-4"
     >
-      <div className="flex w-full flex-col gap-3 lg:gap-4 xl:gap-6">
-        <Typography variant="h1">
-          95% des projets ne sont jamais mis en prod
-        </Typography>
+      <div className="flex w-full flex-col items-center gap-3 lg:gap-4 xl:gap-6">
+        <Typography variant="h1">I love posting on Threads...</Typography>
         <Typography variant="large">
-          Tous les développeurs veulent créer des projets. Très peu arrives à
-          les terminer !
+          But I loose my time going and publishing each days
         </Typography>
-        <Typography variant="large">Pourquoi ?</Typography>
-        <ul className="flex flex-col gap-2">
-          <Typography
-            as="li"
-            variant="large"
-            className="inline-flex items-center gap-2"
-          >
-            <X className="text-red-500" size={30} />
-            <span className="flex-1">
-              Être perdu dans le <b>"techno hell"</b> à réfléchir à LA
-              meilleures libriarie
-            </span>
-          </Typography>
-          <Typography
-            as="li"
-            variant="large"
-            className="inline-flex items-center gap-2"
-          >
-            <X className="text-red-500" size={30} />
-            <span className="flex-1">
-              Perdes des d'heures à <b>setup le projet</b>
-            </span>
-          </Typography>
-          <Typography
-            as="li"
-            variant="large"
-            className="inline-flex items-center gap-2"
-          >
-            <X className="text-red-500" size={30} />
-            <span className="flex-1">
-              Galérer avec les nombreux bugs{" "}
-              <b>d'authentification, database et j'en passe</b>
-            </span>
-          </Typography>
-          <Typography
-            as="li"
-            variant="large"
-            className="inline-flex items-center gap-2"
-          >
-            <X className="text-red-500" size={30} />
-            <span className="flex-1">
-              Refaire le design 40x tout ça pour avoir <b>un résutlat afreux</b>
-            </span>
-          </Typography>
-
-          <Typography
-            as="li"
-            variant="large"
-            className="inline-flex items-center gap-2"
-          >
-            <X className="text-red-500" size={30} />
-            <span className="flex-1">
-              Ne pas savoir comment <b>vendre</b> ton application
-            </span>
-          </Typography>
-        </ul>
-      </div>
-      <div className="flex w-full justify-end">
-        <Image
-          key={theme}
-          src={
-            theme === "dark"
-              ? "/images/pain-dark.png"
-              : "/images/pain-light.png"
-          }
-          width={750}
-          height={750}
-          className="m-auto w-full max-w-xl"
-          alt="now-explanation"
-        />
+        <div className="flex items-start gap-4">
+          <div className="flex-1 rounded bg-red-500/30 p-4">
+            <Typography variant="h3" className="text-red-500">
+              😞 Posting without Threader
+            </Typography>
+            <ul className="ml-4 mt-4 flex list-disc flex-col gap-2 text-lg text-foreground/80">
+              <li>Going on Thread every day to post</li>
+              <li>Be distracted when I go on the app</li>
+              <li>Losing track of my post</li>
+              <li>Incosistent</li>
+            </ul>
+          </div>
+          <div className="flex-1 rounded bg-green-500/30 p-4">
+            <Typography variant="h3" className="text-green-500">
+              😎 Posting WITH Threader
+            </Typography>
+            <ul className="ml-4 mt-4 flex list-disc flex-col gap-2 text-lg text-foreground/80">
+              <li>Schedule your post on the Threader UI</li>
+              <li>Avoiding opening the app every day</li>
+              <li>See excatly what you have scheduled</li>
+              <li>Be consistent</li>
+            </ul>
+          </div>
+        </div>
       </div>
     </SectionLayout>
   );

@@ -14,7 +14,10 @@ export const ReviewItem = (props: ReviewItemProps) => {
   return (
     <Card {...props}>
       <CardHeader>
-        <Typography variant="quote">{props.review}</Typography>
+        <Typography
+          variant="quote"
+          dangerouslySetInnerHTML={{ __html: props.review }}
+        />
       </CardHeader>
       <CardContent className="flex items-center gap-2 rounded-lg bg-background pt-6">
         <div>

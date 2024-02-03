@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { ActionError, action } from "@/lib/safe-actions";
+import { ActionError, action } from "@/lib/server-actions/safe-actions";
 import { stripe } from "@/lib/stripe";
 import { EmailActionSchema } from "./email.schema";
 

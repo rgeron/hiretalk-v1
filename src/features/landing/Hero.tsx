@@ -1,27 +1,37 @@
+import { CircleSvg } from "@/components/svg/CircleSvg";
+import { buttonVariants } from "@/components/ui/button";
+import { cn } from "@/lib/utils";
 import { Rocket } from "lucide-react";
-import Image from "next/image";
-import { Button } from "../../components/ui/button";
+import Link from "next/link";
 import { Typography } from "../../components/ui/typography";
 import { ReviewSmall } from "../review/ReviewSmall";
 
 export const Hero = () => {
   return (
-    <main className="container m-auto flex min-h-[90vh] items-center gap-4 max-lg:flex-col">
-      <div className="flex flex-1 flex-col gap-6 lg:gap-8 xl:gap-12">
+    <main className="relative m-auto my-12 flex min-h-[700px] max-w-7xl items-center gap-4 px-8 max-lg:flex-col">
+      <div className="relative flex flex-1 flex-col items-start gap-4 lg:gap-6 xl:gap-8">
         <Typography variant="h1" className="!leading-tight">
-          Crée une application de <b>PRO</b>{" "}
-          <span className="bg-foreground text-background">
-            peu importe tes compétences
+          Write the best content and{" "}
+          <span className="inline-block -rotate-2 bg-foreground text-background">
+            Grow your{" "}
+            <span className="relative inline-block">
+              <span>business</span>
+              <CircleSvg className="fill-primary" />
+            </span>
           </span>
         </Typography>
-        <Typography variant={"large"}>
-          Arrête de perdre du temps à configurer ton projet, choisir les bonnes
-          bibliothèques, etc... commence dès maintenant ta future application.
+        <Typography variant="large">
+          Build for Thread, create, schedule and publish your content to your
+          account with AI.
         </Typography>
-        <Button size="lg" className="w-fit">
-          <Rocket size={20} className="mr-2" />
-          <span className="text-base">Rejoins maintenant</span>
-        </Button>
+
+        <Link
+          href="#pricing"
+          className={cn(buttonVariants({ size: "lg", variant: "default" }))}
+        >
+          <Rocket size={20} className="mr-2" /> Rejoins maintenant
+        </Link>
+
         <ReviewSmall
           stars={5}
           avatars={[
@@ -32,15 +42,14 @@ export const Hero = () => {
             "https://i.pravatar.cc/300?u=5",
           ]}
         >
-          <b>100 applications</b> créer
+          1222+ user write with it
         </ReviewSmall>
       </div>
       <div className="flex flex-1 justify-end">
-        <Image
-          src="/images/nowts-2.png"
-          width={500}
-          height={500}
-          alt="now-explanation"
+        <img
+          src="/images/hero.png"
+          className="max-w-lg object-contain max-md:max-w-md"
+          alt="Hero images"
         />
       </div>
     </main>

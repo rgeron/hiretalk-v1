@@ -1,7 +1,7 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { userAction } from "@/lib/safe-actions";
+import { userAction } from "@/lib/server-actions/safe-actions";
 import { z } from "zod";
 
 const ToggleSubscribedActionSchema = z.object({

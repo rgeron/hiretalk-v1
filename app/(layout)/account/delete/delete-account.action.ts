@@ -2,7 +2,7 @@
 
 import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
-import { ActionError, userAction } from "@/lib/safe-actions";
+import { ActionError, userAction } from "@/lib/server-actions/safe-actions";
 import { SiteConfig } from "@/site-config";
 import { z } from "zod";
 import DeleteAccountEmail from "../../../../emails/DeleteAccountEmail";
