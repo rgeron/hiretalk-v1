@@ -1,7 +1,6 @@
 import type { NextRequest } from "next/server";
 import { NextResponse } from "next/server";
-import type { ZodError } from "zod";
-import { type TypeOf, type ZodSchema } from "zod";
+import type { TypeOf, ZodError, ZodSchema } from "zod";
 
 export type HandleReturnedServerErrorFn = (e: unknown) => NextResponse | string;
 
@@ -12,15 +11,19 @@ type CreateHandlerParams<TContext> = {
   handleReturnedServerError?: HandleReturnedServerErrorFn;
 };
 
-type HandlerParams<TBody, TParams> = {
+type HandlerParams<TBody, TParams, TSearchParams> = {
   bodySchema?: TBody;
+  searchSchema?: TSearchParams;
   paramsSchema?: TParams;
 };
 
-type Callback<TContext, TBody, TParams> = (params: {
+type Callback<TContext, TBody, TParams, TSearchParams> = (params: {
   request: NextRequest;
   context: TContext;
   body: TBody extends ZodSchema ? TypeOf<TBody> : undefined;
+  searchParams: TSearchParams extends ZodSchema
+    ? TypeOf<TSearchParams>
+    : undefined;
   params: TParams extends ZodSchema ? TypeOf<TParams> : undefined;
 }) => Promise<unknown>;
 
@@ -42,62 +45,44 @@ export function createHandler<TContext>({
 }: CreateHandlerParams<TContext>) {
   function handler<
     TBody extends ZodSchema | undefined,
-    TParams extends ZodSchema | undefined
+    TParams extends ZodSchema | undefined,
+    TSearchParams extends ZodSchema | undefined
   >(
-    { bodySchema, paramsSchema }: HandlerParams<TBody, TParams>,
-    callback: Callback<TContext, TBody, TParams>
+    {
+      bodySchema,
+      searchSchema,
+      paramsSchema,
+    }: HandlerParams<TBody, TParams, TSearchParams>,
+    callback: Callback<TContext, TBody, TParams, TSearchParams>
   ) {
-    return async (req: NextRequest) => {
+    return async (
+      req: NextRequest,
+      { params: baseParams }: { params: Record<string, string | string[]> }
+    ) => {
       try {
-        let parsedBody: TBody | undefined = undefined;
-
-        if (bodySchema && req.method !== "GET") {
-          const json = await req.json();
-          const bodyParseResult = bodySchema.safeParse(json);
-          if (bodyParseResult.success) {
-            parsedBody = bodyParseResult.data;
-          } else {
-            throw new CustomZodError("body", bodyParseResult.error, json);
-          }
-        }
-
-        const url = new URL(req.url);
-        const searchParams = url.searchParams;
-        const params = {} as Record<string, string | string[]>;
-
-        for (const [key, value] of searchParams.entries()) {
-          params[key] = value;
-        }
-
-        let parsedParams: TParams | undefined = undefined;
-
-        if (paramsSchema) {
-          const paramsParseResult = paramsSchema.safeParse(params);
-          if (paramsParseResult.success) {
-            parsedParams = paramsParseResult.data;
-          } else {
-            throw new CustomZodError("params", paramsParseResult.error, params);
-          }
-        }
+        const body = await parseBody(req, bodySchema);
+        const searchParams = await parseSearchParams(req, searchSchema);
+        const params = await parseParams(baseParams, paramsSchema);
 
         const context = await middleware?.(req);
 
         const response = await callback({
           request: req,
-          body: parsedBody as never,
+          body: body as never,
           context: context as never,
-          params: parsedParams as never,
+          searchParams: searchParams as never,
+          params: params as never,
         });
 
         return response;
-      } catch (e: unknown) {
+      } catch (error: unknown) {
         // check if error is from zod
-        if (e instanceof CustomZodError) {
+        if (error instanceof CustomZodError) {
           return NextResponse.json(
             {
-              error: `Invalid ${e.type}.`,
-              validation: e.zodError.errors,
-              received: e.received,
+              error: `Invalid ${error.type}.`,
+              validation: error.zodError.errors,
+              received: error.received,
             },
             {
               status: 400,
@@ -105,7 +90,7 @@ export function createHandler<TContext>({
           );
         }
 
-        const returnedError = handleReturnedServerError?.(e);
+        const returnedError = handleReturnedServerError?.(error);
 
         if (returnedError && typeof returnedError !== "string") {
           return returnedError;
@@ -113,7 +98,7 @@ export function createHandler<TContext>({
 
         return NextResponse.json(
           {
-            error: returnedError || "An unexpected error occurred.",
+            error: returnedError ?? "An unexpected error occurred.",
           },
           {
             status: 400,
@@ -125,3 +110,61 @@ export function createHandler<TContext>({
 
   return handler;
 }
+
+const parseBody = async <T>(req: NextRequest, schema?: ZodSchema<T>) => {
+  let parsedBody: T | undefined = undefined;
+
+  if (schema && req.method !== "GET") {
+    const json = await req.json();
+    const bodyParseResult = schema.safeParse(json);
+    if (bodyParseResult.success) {
+      parsedBody = bodyParseResult.data;
+    } else {
+      throw new CustomZodError("body", bodyParseResult.error, json);
+    }
+  }
+  return parsedBody;
+};
+
+const parseSearchParams = async <T>(
+  req: NextRequest,
+  schema?: ZodSchema<T>
+) => {
+  const url = new URL(req.url);
+  const searchParams = url.searchParams;
+  const params = {} as Record<string, string | string[]>;
+
+  for (const [key, value] of searchParams.entries()) {
+    params[key] = value;
+  }
+
+  let parsedSearchParams: T | undefined = undefined;
+
+  if (schema) {
+    const paramsParseResult = schema.safeParse(params);
+    if (paramsParseResult.success) {
+      parsedSearchParams = paramsParseResult.data;
+    } else {
+      throw new CustomZodError("params", paramsParseResult.error, params);
+    }
+  }
+
+  return parsedSearchParams;
+};
+
+const parseParams = async <T>(
+  params: Record<string, string | string[]>,
+  schema?: ZodSchema<T>
+) => {
+  let parsedParams: T | undefined = undefined;
+  if (schema) {
+    const paramsParseResult = schema.safeParse(params);
+    if (paramsParseResult.success) {
+      parsedParams = paramsParseResult.data;
+    } else {
+      throw new CustomZodError("params", paramsParseResult.error, params);
+    }
+  }
+
+  return parsedParams;
+};
