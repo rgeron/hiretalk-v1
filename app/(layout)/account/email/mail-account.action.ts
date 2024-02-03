@@ -1,7 +1,9 @@
 "use server";
 
-import prisma from "@/lib/prisma";
-import { userAction } from "@/lib/server-actions/safe-actions";
+import { requiredFullAuth } from "@/lib/auth/helper";
+import { env } from "@/lib/env";
+import { resend } from "@/lib/mail/resend";
+import { ActionError, userAction } from "@/lib/server-actions/safe-actions";
 import { z } from "zod";
 
 const ToggleSubscribedActionSchema = z.object({
@@ -10,18 +12,19 @@ const ToggleSubscribedActionSchema = z.object({
 
 export const toggleSubscribedAction = userAction(
   ToggleSubscribedActionSchema,
-  async (data, ctx) => {
-    const userId = ctx.user.id;
+  async (data) => {
+    const user = await requiredFullAuth();
 
-    const user = await prisma.user.update({
-      where: {
-        id: userId,
-      },
-      data: {
-        unsubscribed: data.unsubscribed,
-      },
+    if (!user.resendContactId) {
+      throw new ActionError("User has no resend contact");
+    }
+
+    const updateContact = await resend.contacts.update({
+      audienceId: env.RESEND_AUDIENCE_ID,
+      id: user.resendContactId,
+      unsubscribed: data.unsubscribed,
     });
 
-    return user;
+    return updateContact;
   }
 );

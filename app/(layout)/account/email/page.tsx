@@ -5,16 +5,26 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { requiredAuth } from "@/lib/auth/helper";
-import prisma from "@/lib/prisma";
+import { requiredFullAuth } from "@/lib/auth/helper";
+import { env } from "@/lib/env";
+import { resend } from "@/lib/mail/resend";
 import { ToggleEmailCheckbox } from "./ToggleEmailCheckbox";
 
 export default async function MailProfilePage() {
-  const session = await requiredAuth();
-  const user = await prisma.user.findUniqueOrThrow({
-    where: { id: session.user.id },
-    select: { unsubscribed: true },
+  const user = await requiredFullAuth();
+
+  if (!user.resendContactId) {
+    return <ErrorComponent />;
+  }
+
+  const { data: resendUser } = await resend.contacts.get({
+    audienceId: env.RESEND_AUDIENCE_ID,
+    id: user.resendContactId,
   });
+
+  if (!resendUser) {
+    return <ErrorComponent />;
+  }
 
   return (
     <Card>
@@ -25,8 +35,21 @@ export default async function MailProfilePage() {
         </CardDescription>
       </CardHeader>
       <CardContent>
-        <ToggleEmailCheckbox unsubscribed={user.unsubscribed} />
+        <ToggleEmailCheckbox unsubscribed={resendUser.unsubscribed} />
       </CardContent>
     </Card>
   );
 }
+
+const ErrorComponent = () => {
+  return (
+    <Card variant="error">
+      <CardHeader>
+        <CardTitle>Resend not found</CardTitle>
+        <CardDescription>
+          We couldn't find your Resend contact. Please contact support.
+        </CardDescription>
+      </CardHeader>
+    </Card>
+  );
+};

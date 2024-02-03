@@ -3,6 +3,7 @@ import type { User } from "next-auth";
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import { env } from "../env";
+import { resend } from "../mail/resend";
 import prisma from "../prisma";
 import { stripe } from "../stripe";
 import {
@@ -50,7 +51,8 @@ export const {
         return;
       }
 
-      setupStripeCustomer(user);
+      await setupStripeCustomer(user);
+      await setupResendCustomer(user);
     },
   },
   // 🔑 Add this line and the import to add credentials provider
@@ -73,6 +75,30 @@ export const setupStripeCustomer = async (user: User) => {
     },
     data: {
       stripeCustomerId: customer.id,
+    },
+  });
+};
+
+export const setupResendCustomer = async (user: User) => {
+  if (!user.email) {
+    return;
+  }
+
+  const contact = await resend.contacts.create({
+    audienceId: env.RESEND_AUDIENCE_ID,
+    email: user.email,
+    firstName: user.name ?? "",
+    unsubscribed: false,
+  });
+
+  if (!contact.data) return;
+
+  await prisma.user.update({
+    where: {
+      id: user.id,
+    },
+    data: {
+      resendContactId: contact.data.id,
     },
   });
 };

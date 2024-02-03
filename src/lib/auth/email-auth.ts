@@ -17,13 +17,10 @@ export const sendVerificationRequest = async (
 ) => {
   const { identifier, url } = params;
 
-  console.log("SEND EMAIL", identifier);
-
-  const result = await resend.emails.send({
+  await resend.emails.send({
     from: SiteConfig.email.from,
     to: identifier,
     subject: `Your magic link 📣`,
     react: MagicLinkMail({ url: replaceOrigin(url) }),
   });
-  console.error(result);
 };
