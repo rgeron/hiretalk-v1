@@ -9,15 +9,16 @@ import { SiteConfig } from "@/site-config";
 import Image from "next/image";
 import Link from "next/link";
 import type { PropsWithChildren } from "react";
-import { DashboardDesktopMenu } from "./DashboardDesktopMenu";
-import { DashboardMobileMenu } from "./DashboardMobileMenu";
+import { DesktopVerticalMenu } from "../../src/features/navigation/DesktopVerticalMenu";
+import { MobileDropdownMenu } from "../../src/features/navigation/MobileDropdownMenu";
+import { DASHBOARD_LINKS } from "./dashboard-links";
 
 export const DashboardNavigation = async (props: PropsWithChildren) => {
   const session = await requiredAuth();
   return (
     <div className="flex h-full flex-col lg:flex-row lg:overflow-hidden">
       {/* Desktop ONLY Navigation bar */}
-      <div className="flex h-full w-full max-w-[240px] flex-col border-r border-border px-2 py-4 max-lg:hidden">
+      <div className="flex size-full max-w-[240px] flex-col border-r border-border px-2 py-4 max-lg:hidden">
         <div className="flex items-center gap-2">
           <Image
             src={SiteConfig.appIcon}
@@ -30,11 +31,11 @@ export const DashboardNavigation = async (props: PropsWithChildren) => {
           </Link>
         </div>
         <div className="h-10" />
-        <DashboardDesktopMenu />
+        <DesktopVerticalMenu links={DASHBOARD_LINKS} />
         <div className="flex-1" />
         <UserDropdown>
           <Button variant="outline" size="sm">
-            <Avatar className="mr-2 h-6 w-6">
+            <Avatar className="mr-2 size-6">
               <AvatarFallback>
                 {session.user.email ? session.user.email.slice(0, 2) : "??"}
               </AvatarFallback>
@@ -65,7 +66,7 @@ export const DashboardNavigation = async (props: PropsWithChildren) => {
               <nav className="flex items-center space-x-1 lg:hidden">
                 <AuthButton />
                 <ThemeToggle />
-                <DashboardMobileMenu />
+                <MobileDropdownMenu links={DASHBOARD_LINKS} />
               </nav>
               <nav className="flex items-center space-x-1 max-lg:hidden">
                 <ContactFeedbackPopover>

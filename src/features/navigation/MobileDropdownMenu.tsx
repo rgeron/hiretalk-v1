@@ -12,24 +12,33 @@ import {
 import { Typography } from "@/components/ui/typography";
 import { Menu, X } from "lucide-react";
 import Link from "next/link";
-import { Fragment, useState } from "react";
-import { DashboardLinks } from "./dashboard-links";
+import { Fragment, cloneElement, useState } from "react";
+import { DASHBOARD_LINKS } from "../../../app/(dashboard-layout)/dashboard-links";
+import type { NavigationLinkGroups } from "./navigation.type";
 
-export const DashboardMobileMenu = () => {
+export const MobileDropdownMenu = ({
+  links,
+  className,
+}: {
+  links: NavigationLinkGroups[];
+  className?: string;
+}) => {
   const [open, setOpen] = useState(false);
 
   return (
     <DropdownMenu open={open} onOpenChange={setOpen}>
       <DropdownMenuTrigger asChild>
-        <Button variant="ghost" size="sm">
+        <Button variant="ghost" size="sm" className={className}>
           {open ? <X /> : <Menu />}
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent className="w-screen">
-        {DashboardLinks.map((section, index) => (
+        {links.map((section, index) => (
           <Fragment key={index}>
             {section.title ? (
-              <DropdownMenuLabel>{section.title}</DropdownMenuLabel>
+              <DropdownMenuLabel className="text-muted-foreground">
+                {section.title}
+              </DropdownMenuLabel>
             ) : null}
             {section.links.map((link) => (
               <DropdownMenuItem key={link.url} asChild>
@@ -40,12 +49,14 @@ export const DashboardMobileMenu = () => {
                   href={link.url}
                   onClick={() => setOpen(false)}
                 >
-                  <link.icon size={16} />
+                  {cloneElement(link.icon, {
+                    className: "h-4 w-4",
+                  })}
                   <span>{link.title}</span>
                 </Typography>
               </DropdownMenuItem>
             ))}
-            {index < DashboardLinks.length - 1 ? (
+            {index < DASHBOARD_LINKS.length - 1 ? (
               <DropdownMenuSeparator />
             ) : null}
           </Fragment>

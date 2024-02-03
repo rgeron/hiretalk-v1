@@ -5,13 +5,14 @@ import { Typography } from "@/components/ui/typography";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { Fragment } from "react";
-import { DashboardLinks } from "./dashboard-links";
+import { Fragment, cloneElement } from "react";
+import { DASHBOARD_LINKS } from "../../../app/(dashboard-layout)/dashboard-links";
+import type { NavigationLinkGroups } from "./navigation.type";
 
 const useCurrentPath = () => {
   const currentPath = usePathname() ?? "";
   const pathSegments = currentPath.split("/");
-  const allDashboardLinks = DashboardLinks.flatMap((section) => section.links);
+  const allDashboardLinks = DASHBOARD_LINKS.flatMap((section) => section.links);
 
   const linkMatchCounts = allDashboardLinks.map((link) => ({
     url: link.url,
@@ -31,12 +32,18 @@ const useCurrentPath = () => {
   return mostMatchingLink.url;
 };
 
-export const DashboardDesktopMenu = () => {
+export const DesktopVerticalMenu = ({
+  links,
+  className,
+}: {
+  links: NavigationLinkGroups[];
+  className?: string;
+}) => {
   const currentPath = useCurrentPath();
 
   return (
-    <nav className="flex flex-col gap-4">
-      {DashboardLinks.map((section, index) => (
+    <nav className={cn("flex flex-col gap-4", className)}>
+      {links.map((section, index) => (
         <Fragment key={index}>
           {section.title ? (
             <Typography variant="muted" className="px-2">
@@ -59,7 +66,9 @@ export const DashboardDesktopMenu = () => {
                   )}
                   href={link.url}
                 >
-                  <link.icon size={16} />
+                  {cloneElement(link.icon, {
+                    className: "h-4 w-4",
+                  })}
                   <span className="flex h-8 items-center gap-2 rounded-md px-2 text-sm">
                     {link.title}
                   </span>
@@ -67,7 +76,7 @@ export const DashboardDesktopMenu = () => {
               );
             })}
           </div>
-          {index < DashboardLinks.length - 1 ? <Separator /> : null}
+          {index < DASHBOARD_LINKS.length - 1 ? <Separator /> : null}
         </Fragment>
       ))}
     </nav>

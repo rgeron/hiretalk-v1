@@ -1,4 +1,4 @@
-import type { LucideIcon } from "lucide-react";
+import type { NavigationLinkGroups } from "@/features/navigation/navigation.type";
 import {
   Box,
   LayoutDashboard,
@@ -10,43 +10,32 @@ import {
   User2,
 } from "lucide-react";
 
-type DashboardLinkItem = {
-  title: string;
-  icon: LucideIcon;
-  url: string;
-};
-
-type DashboardLinkGroups = {
-  title?: string;
-  links: DashboardLinkItem[];
-};
-
-export const DashboardLinks: DashboardLinkGroups[] = [
+export const DASHBOARD_LINKS: NavigationLinkGroups[] = [
   {
     links: [
       {
         title: "Dashboard",
-        icon: LayoutDashboard,
+        icon: <LayoutDashboard />,
         url: "/admin",
       },
       {
         title: "Products",
-        icon: Box,
+        icon: <Box />,
         url: "/admin/products",
       },
       {
         title: "Bundles",
-        icon: ShoppingBasket,
+        icon: <ShoppingBasket />,
         url: "/admin/bundles",
       },
       {
         title: "Coupons",
-        icon: Percent,
+        icon: <Percent />,
         url: "/admin/coupons",
       },
       {
         title: "Users",
-        icon: User2,
+        icon: <User2 />,
         url: "/admin/users",
       },
     ],
@@ -56,17 +45,17 @@ export const DashboardLinks: DashboardLinkGroups[] = [
     links: [
       {
         title: "Schools",
-        icon: School,
+        icon: <School />,
         url: "/admin/schools",
       },
       {
         title: "Products",
-        icon: MessageCircle,
+        icon: <MessageCircle />,
         url: "/admin/comments",
       },
       {
         title: "Reports",
-        icon: MessageSquare,
+        icon: <MessageSquare />,
         url: "/admin/reports",
       },
     ],
