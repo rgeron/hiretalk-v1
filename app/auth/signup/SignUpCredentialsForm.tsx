@@ -25,7 +25,7 @@ export const SignUpCredentialsForm = () => {
 
   const submitMutation = useMutation({
     mutationFn: async (values: LoginCredentialsFormType) => {
-      const { data, serverError } = await signUpAction(values);
+      const { serverError } = await signUpAction(values);
 
       if (serverError) {
         toast.error(serverError);

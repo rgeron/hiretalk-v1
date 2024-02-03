@@ -5,8 +5,16 @@ import Image from "next/image";
 import Link from "next/link";
 import { Suspense } from "react";
 import { SignInProviders } from "./SignInProviders";
+import { auth } from "@/lib/auth/auth";
+import { redirect } from "next/navigation";
 
 export default async function AuthSignInPage() {
+  const session = await auth();
+
+  if (session) {
+    redirect("/");
+  }
+
   return (
     <div className="flex h-full flex-col">
       <header className="sticky top-0 z-40 w-full border-b bg-background">

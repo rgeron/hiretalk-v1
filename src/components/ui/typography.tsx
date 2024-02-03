@@ -1,5 +1,5 @@
 import { cn } from "@/lib/utils";
-import type { VariantProps} from "class-variance-authority";
+import type { VariantProps } from "class-variance-authority";
 import { cva } from "class-variance-authority";
 import type {
   ComponentPropsWithoutRef,
@@ -32,7 +32,7 @@ const typographyVariants = cva("", {
       large: "text-lg font-semibold",
       small: "text-sm font-medium leading-none",
       muted: "text-sm text-muted-foreground",
-      link: "font-medium text-indigo-500 hover:underline",
+      link: "font-medium text-primary hover:underline",
     },
   },
   defaultVariants: {

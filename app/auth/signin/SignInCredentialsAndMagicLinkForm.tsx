@@ -1,23 +1,21 @@
 "use client";
 
 import { Alert, AlertTitle } from "@/components/ui/alert";
+import { Button } from "@/components/ui/button";
 import {
+  Form,
   FormControl,
   FormField,
   FormItem,
   FormLabel,
   FormMessage,
   useZodForm,
-  Form,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
 import { AlertTriangle } from "lucide-react";
-import type { SignInResponse } from "next-auth/react";
 import { signIn } from "next-auth/react";
-import Link from "next/link";
 import { useSearchParams } from "next/navigation";
-import { Button } from "react-day-picker";
 import { useLocalStorage } from "usehooks-ts";
 import { z } from "zod";
 
@@ -37,42 +35,43 @@ export const SignInCredentialsAndMagicLinkForm = () => {
   const form = useZodForm({
     schema: LoginCredentialsFormScheme,
   });
-  const [isWithPassword, setIsWithPassword] = useLocalStorage(
-    "password-sign-in-settings",
+  const [isUsingCredentials, setIsUsingCredentials] = useLocalStorage(
+    "sign-in-with-credentials",
     false
   );
-  const params = useSearchParams();
+  const searchParams = useSearchParams();
 
-  const paramsError = params?.get("error");
+  const paramsError = searchParams?.get("error");
   const error = paramsError ? ErrorMapping[paramsError] : null;
 
   async function onSubmit(values: LoginCredentialsFormType) {
-    let result: SignInResponse | undefined;
-    if (isWithPassword) {
-      result = await signIn("credentials", {
+    if (isUsingCredentials) {
+      await signIn("credentials", {
         email: values.email,
         password: values.password,
-        callbackUrl: `${window.location.origin}/`,
+        callbackUrl: searchParams?.get("callbackUrl") ?? undefined,
       });
     } else {
-      result = await signIn("email", {
+      await signIn("email", {
         email: values.email,
-        callbackUrl: `${window.location}`,
+        callbackUrl: searchParams?.get("callbackUrl") ?? undefined,
       });
     }
   }
 
   return (
     <Form form={form} onSubmit={onSubmit} className="max-w-lg space-y-4">
-      <Typography variant="h3">
-        {isWithPassword ? "Login with Password" : "Login with MagicLink"}
+      <Typography variant="small">
+        {isUsingCredentials
+          ? "Authentificate with credentials"
+          : "Magic link ✨"}
       </Typography>
       <FormField
         control={form.control}
         name="email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Email</FormLabel>
+            {isUsingCredentials ? <FormLabel>Email</FormLabel> : null}
             <FormControl>
               <Input placeholder="john@doe.com" {...field} />
             </FormControl>
@@ -80,7 +79,7 @@ export const SignInCredentialsAndMagicLinkForm = () => {
           </FormItem>
         )}
       />
-      {isWithPassword ? (
+      {isUsingCredentials ? (
         <>
           <FormField
             control={form.control}
@@ -95,17 +94,6 @@ export const SignInCredentialsAndMagicLinkForm = () => {
               </FormItem>
             )}
           />
-          <Typography
-            variant="link"
-            as="button"
-            type="button"
-            className="text-sm"
-            onClick={() => {
-              setIsWithPassword(false);
-            }}
-          >
-            Use magic link
-          </Typography>
         </>
       ) : (
         <Typography
@@ -114,7 +102,7 @@ export const SignInCredentialsAndMagicLinkForm = () => {
           type="button"
           className="text-sm"
           onClick={() => {
-            setIsWithPassword(true);
+            setIsUsingCredentials(true);
           }}
         >
           Use password
@@ -122,7 +110,7 @@ export const SignInCredentialsAndMagicLinkForm = () => {
       )}
 
       <Button type="submit" className="w-full">
-        {isWithPassword ? "Login with Password" : "Login with MagicLink"}
+        {isUsingCredentials ? "Login with Password" : "Login with MagicLink"}
       </Button>
 
       {error && (
@@ -132,15 +120,18 @@ export const SignInCredentialsAndMagicLinkForm = () => {
         </Alert>
       )}
 
-      {isWithPassword && (
+      {isUsingCredentials && (
         <Typography variant="small">
           Forgot password ?{" "}
           <Typography
             variant="link"
-            as={Link}
-            href="/reset-password-magic-link"
+            as="button"
+            type="button"
+            onClick={() => {
+              setIsUsingCredentials(false);
+            }}
           >
-            Reset it
+            Login with magic link
           </Typography>
         </Typography>
       )}

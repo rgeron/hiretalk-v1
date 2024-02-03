@@ -1,6 +1,7 @@
 import { Button } from "@/components/ui/button";
+import { Loader } from "@/components/ui/loader";
 import { useMutation } from "@tanstack/react-query";
-import { Github, Loader } from "lucide-react";
+import { Github } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import type { ReactNode } from "react";
