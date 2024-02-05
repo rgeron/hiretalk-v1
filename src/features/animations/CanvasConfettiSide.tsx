@@ -58,7 +58,7 @@ export const CanvasConfettiBySide = () => {
   return ReactDOM.createPortal(
     <canvas
       ref={canvasRef}
-      className="pointer-events-none fixed left-0 top-0 h-full w-full"
+      className="pointer-events-none fixed left-0 top-0 size-full"
     ></canvas>,
     window.document.body
   );

@@ -84,6 +84,10 @@ export const setupResendCustomer = async (user: User) => {
     return;
   }
 
+  if (!env.RESEND_AUDIENCE_ID) {
+    return;
+  }
+
   const contact = await resend.contacts.create({
     audienceId: env.RESEND_AUDIENCE_ID,
     email: user.email,

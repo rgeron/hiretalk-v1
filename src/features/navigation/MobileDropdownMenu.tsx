@@ -32,7 +32,12 @@ export const MobileDropdownMenu = ({
           {open ? <X /> : <Menu />}
         </Button>
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-screen">
+      <DropdownMenuContent
+        style={{
+          width: "calc(100vw - 2rem)",
+          marginRight: "1rem",
+        }}
+      >
         {links.map((section, index) => (
           <Fragment key={index}>
             {section.title ? (

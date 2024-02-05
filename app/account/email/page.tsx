@@ -17,6 +17,10 @@ export default async function MailProfilePage() {
     return <ErrorComponent />;
   }
 
+  if (!env.RESEND_AUDIENCE_ID) {
+    return <ErrorComponent />;
+  }
+
   const { data: resendUser } = await resend.contacts.get({
     audienceId: env.RESEND_AUDIENCE_ID,
     id: user.resendContactId,

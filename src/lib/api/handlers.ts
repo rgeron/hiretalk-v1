@@ -39,7 +39,7 @@ export const authHandler = createHandler({
     const session = await auth();
 
     if (!session) {
-      throw new Error("Session not found!");
+      throw new HandlerError("Session not found!", 401);
     }
 
     // In the real world, you would check if the session is valid by querying a database.
@@ -47,7 +47,7 @@ export const authHandler = createHandler({
     const user = session.user;
 
     if (!user.id || !user.email) {
-      throw new HandlerError("Session is not valid!");
+      throw new HandlerError("Session is not valid!", 401);
     }
 
     return {

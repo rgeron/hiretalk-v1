@@ -19,6 +19,10 @@ export const toggleSubscribedAction = userAction(
       throw new ActionError("User has no resend contact");
     }
 
+    if (!env.RESEND_AUDIENCE_ID) {
+      throw new ActionError("RESEND_AUDIENCE_ID is not set");
+    }
+
     const updateContact = await resend.contacts.update({
       audienceId: env.RESEND_AUDIENCE_ID,
       id: user.resendContactId,
