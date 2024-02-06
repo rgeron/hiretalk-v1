@@ -2,16 +2,15 @@
 import { SiteConfig } from "@/site-config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import MagicLinkMail from "@email/MagicLinkEmail";
-import type { User } from "next-auth";
+import type { Session, User } from "next-auth";
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 // import Resend from "next-auth/providers/resend";
 import { env } from "../env";
-import { resend } from "../mail/resend";
 import { sendEmail } from "../mail/sendEmail";
 import prisma from "../prisma";
-import { stripe } from "../stripe";
 import TempResendAdapater from "./TempResendAdapter";
+import { setupResendCustomer, setupStripeCustomer } from "./auth-helper";
 
 export const {
   handlers: { GET, POST },
@@ -51,10 +50,18 @@ export const {
     // getCredentialsProvider(),
   ],
   callbacks: {
-    session({ session, user }) {
-      if (!session?.user) return session;
-      session.user.id = user.id;
-      return session;
+    session(params) {
+      if (params.newSession) return params.session;
+
+      const typedParams = params as {
+        session: Session;
+        user?: User;
+      };
+
+      if (!typedParams.user?.id) return params.session;
+
+      typedParams.session.user.id = typedParams.user.id;
+      return typedParams.session;
     },
   },
   events: {
@@ -84,37 +91,3 @@ export const {
   // 🔑 Add this line and the import to add credentials provider
   // jwt: credentialsOverrideJwt,
 });
-
-export const setupStripeCustomer = async (user: User) => {
-  if (!user.email) {
-    return;
-  }
-
-  const customer = await stripe.customers.create({
-    email: user.email,
-    name: user.name ?? undefined,
-  });
-
-  return customer.id;
-};
-
-export const setupResendCustomer = async (user: User) => {
-  if (!user.email) {
-    return;
-  }
-
-  if (!env.RESEND_AUDIENCE_ID) {
-    return;
-  }
-
-  const contact = await resend.contacts.create({
-    audienceId: env.RESEND_AUDIENCE_ID,
-    email: user.email,
-    firstName: user.name ?? "",
-    unsubscribed: false,
-  });
-
-  if (!contact.data) return;
-
-  return contact.data.id;
-};

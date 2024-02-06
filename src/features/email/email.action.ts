@@ -1,6 +1,9 @@
 "use server";
 
-import { setupResendCustomer, setupStripeCustomer } from "@/lib/auth/auth";
+import {
+  setupResendCustomer,
+  setupStripeCustomer,
+} from "@/lib/auth/auth-helper";
 import prisma from "@/lib/prisma";
 import { ActionError, action } from "@/lib/server-actions/safe-actions";
 import { EmailActionSchema } from "./email.schema";

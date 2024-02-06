@@ -1,6 +1,9 @@
 "use server";
 
-import { setupResendCustomer, setupStripeCustomer } from "@/lib/auth/auth";
+import {
+  setupResendCustomer,
+  setupStripeCustomer,
+} from "@/lib/auth/auth-helper";
 import { hashStringWithSalt } from "@/lib/auth/credentials-provider";
 import { env } from "@/lib/env";
 import prisma from "@/lib/prisma";
