@@ -5,7 +5,7 @@ type EmailAdapterType = typeof EmailAdapter;
 type Params = Parameters<EmailAdapterType>[0];
 type Return = ReturnType<EmailAdapterType>;
 
-/** @todo Document this */
+/** @todo Use official Resend Adapter */
 export default function TempResendAdapater(config: Params): Return {
   return {
     id: "resend" as never,

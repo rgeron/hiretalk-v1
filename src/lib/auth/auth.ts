@@ -16,6 +16,7 @@ import TempResendAdapater from "./TempResendAdapter";
 export const {
   handlers: { GET, POST },
   auth,
+  // TODO : Use req callback
 } = NextAuth({
   pages: {
     signIn: "/auth/signin",
