@@ -1,12 +1,15 @@
+import { SiteConfig } from "@/site-config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
+import MagicLinkMail from "@email/MagicLinkEmail";
 import type { User } from "next-auth";
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
+import Resend from "next-auth/providers/resend";
 import { env } from "../env";
 import { resend } from "../mail/resend";
+import { sendEmail } from "../mail/sendEmail";
 import prisma from "../prisma";
 import { stripe } from "../stripe";
-import { getEmailProvider } from "./email-provider";
 
 export const {
   handlers: { GET, POST },
@@ -25,7 +28,22 @@ export const {
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
     }),
-    getEmailProvider(),
+    Resend({
+      apiKey: env.RESEND_API_KEY,
+      sendVerificationRequest: async ({ identifier: email, url }) => {
+        const result = await sendEmail({
+          to: email,
+          subject: `Sign in to ${SiteConfig.domain}`,
+          react: MagicLinkMail({
+            url,
+          }),
+        });
+
+        if (result.error) {
+          throw new Error(`Failed to send email: ${result.error}`);
+        }
+      },
+    }),
     // 🔑 Add this line and the import to add credentials provider
     // getCredentialsProvider(),
   ],
