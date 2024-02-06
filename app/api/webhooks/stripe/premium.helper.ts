@@ -1,7 +1,6 @@
 import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
-import { SiteConfig } from "@/site-config";
 import type { User } from "@prisma/client";
 import { UserPlan } from "@prisma/client";
 import type Stripe from "stripe";
@@ -37,7 +36,6 @@ export const downgradeUserFromPlan = async (userId: string) => {
 
 export const notifyUserOfPremiumUpgrade = async (user: User) => {
   await sendEmail({
-    from: SiteConfig.email.from,
     to: user.email,
     subject: `Success! You've Unlocked Full Access to Our Features`,
     react: SuccessUpgradeEmail(),
@@ -46,7 +44,6 @@ export const notifyUserOfPremiumUpgrade = async (user: User) => {
 
 export const notifyUserOfPremiumDowngrade = async (user: User) => {
   await sendEmail({
-    from: SiteConfig.email.from,
     to: user.email,
     subject: `Important Update: Changes to Your Account Status`,
     react: SubscriptionDowngradeEmail(),
@@ -55,7 +52,6 @@ export const notifyUserOfPremiumDowngrade = async (user: User) => {
 
 export const notifyUserOfPaymentFailure = async (user: User) => {
   await sendEmail({
-    from: SiteConfig.email.from,
     to: user.email,
     subject: `Action Needed: Update Your Payment to Continue Enjoying Our Services`,
     react: SubscriptionFailedEmail(),

@@ -21,4 +21,7 @@ export const SiteConfig = {
     twitter: "https://twitter.com/melvyn_me",
     name: "Melvynx",
   },
+  auth: {
+    password: false,
+  },
 } as const;

@@ -16,6 +16,10 @@ export default async function AuthSignInPage() {
     redirect("/");
   }
 
+  if (!SiteConfig.auth.password) {
+    redirect("/auth/signin");
+  }
+
   return (
     <div className="flex h-full flex-col">
       <header className="sticky top-0 z-40 w-full border-b bg-background">

@@ -6,11 +6,6 @@ import { env } from "../env";
 import { resend } from "../mail/resend";
 import prisma from "../prisma";
 import { stripe } from "../stripe";
-import {
-  credentialsOverrideJwt,
-  credentialsSignInCallback,
-  getCredentialsProvider,
-} from "./credentials-provider";
 import { getEmailProvider } from "./email-provider";
 
 export const {
@@ -32,7 +27,7 @@ export const {
     }),
     getEmailProvider(),
     // 🔑 Add this line and the import to add credentials provider
-    getCredentialsProvider(),
+    // getCredentialsProvider(),
   ],
   callbacks: {
     session({ session, user }) {
@@ -43,7 +38,7 @@ export const {
   },
   events: {
     // 🔑 Add this line and the import to add credentials provider
-    signIn: credentialsSignInCallback,
+    // signIn: credentialsSignInCallback,
     createUser: async (message) => {
       const user = message.user;
 
@@ -56,7 +51,7 @@ export const {
     },
   },
   // 🔑 Add this line and the import to add credentials provider
-  jwt: credentialsOverrideJwt,
+  // jwt: credentialsOverrideJwt,
 });
 
 export const setupStripeCustomer = async (user: User) => {
