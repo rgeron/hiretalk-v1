@@ -1,15 +1,17 @@
+/* eslint-disable @typescript-eslint/no-unused-vars */
 import { SiteConfig } from "@/site-config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import MagicLinkMail from "@email/MagicLinkEmail";
 import type { User } from "next-auth";
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
-import Resend from "next-auth/providers/resend";
+// import Resend from "next-auth/providers/resend";
 import { env } from "../env";
 import { resend } from "../mail/resend";
 import { sendEmail } from "../mail/sendEmail";
 import prisma from "../prisma";
 import { stripe } from "../stripe";
+import TempResendAdapater from "./TempResendAdapter";
 
 export const {
   handlers: { GET, POST },
@@ -28,7 +30,7 @@ export const {
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
     }),
-    Resend({
+    TempResendAdapater({
       apiKey: env.RESEND_API_KEY,
       sendVerificationRequest: async ({ identifier: email, url }) => {
         const result = await sendEmail({
@@ -43,7 +45,7 @@ export const {
           throw new Error(`Failed to send email: ${result.error}`);
         }
       },
-    }),
+    }) as never,
     // 🔑 Add this line and the import to add credentials provider
     // getCredentialsProvider(),
   ],
@@ -56,7 +58,7 @@ export const {
   },
   events: {
     // 🔑 Add this line and the import to add credentials provider
-    // signIn: credentialsSignInCallback,
+    // signIn: credentialsSignInCallback(req),
     createUser: async (message) => {
       const user = message.user;
 

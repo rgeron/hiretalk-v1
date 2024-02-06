@@ -1,6 +1,5 @@
 import {
   Card,
-  CardContent,
   CardDescription,
   CardHeader,
   CardTitle,
@@ -29,11 +28,6 @@ export default async function AuthNewUserPage({
               You'll find a magic link from us. Click on it, and you're all set!
             </CardDescription>
           </CardHeader>
-          <CardContent>
-            <Typography variant="muted">
-              Email sent to {searchParams.email}
-            </Typography>
-          </CardContent>
         </Card>
       </div>
     </div>

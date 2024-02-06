@@ -1,13 +1,13 @@
 import { AsyncLocalStorage } from "async_hooks";
 import crypto from "crypto";
 import { nanoid } from "nanoid";
-import type NextAuth from "next-auth";
+import type { NextAuthConfig } from "next-auth";
 import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
+import type { NextRequest } from "next/server";
 import { env } from "../env";
 import { logger } from "../logger";
 import prisma from "../prisma";
-import { nextRequestHeader } from "./auth-next-request-store";
 
 export const nextRequestStorage = new AsyncLocalStorage();
 
@@ -71,70 +71,66 @@ const tokenName =
     ? "authjs.session-token"
     : "__Secure-next-auth.session-token";
 
-type SignInCallback = NonNullable<
-  Parameters<typeof NextAuth>[0]["events"]
->["signIn"];
+type SignInCallback = NonNullable<NextAuthConfig["events"]>["signIn"];
 
-type JwtOverride = NonNullable<Parameters<typeof NextAuth>[0]["jwt"]>;
+type JwtOverride = NonNullable<NextAuthConfig["jwt"]>;
 
-export const credentialsSignInCallback: SignInCallback = async ({ user }) => {
-  const request = nextRequestHeader();
+export const credentialsSignInCallback =
+  (request: NextRequest | undefined): SignInCallback =>
+  async ({ user }) => {
+    if (!request) {
+      return;
+    }
 
-  if (!request) {
-    return;
-  }
+    if (request.method !== "POST") {
+      return;
+    }
 
-  if (request.method !== "POST") {
-    return;
-  }
+    const currentUrl = request.url;
 
-  const currentUrl = request.url;
+    if (!currentUrl?.includes("credentials")) {
+      return;
+    }
 
-  if (!currentUrl?.includes("credentials")) {
-    return;
-  }
+    if (!currentUrl?.includes("callback")) {
+      return;
+    }
 
-  if (!currentUrl?.includes("callback")) {
-    return;
-  }
+    if (!user) {
+      return;
+    }
 
-  if (!user) {
-    return;
-  }
+    const uuid = nanoid();
+    // + 7 days
+    const expireAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
+    await prisma.session.create({
+      data: {
+        sessionToken: uuid,
+        userId: user.id ?? "",
+        // expires in 2 weeks
+        expires: expireAt,
+      },
+    });
 
-  const uuid = nanoid();
-  // + 7 days
-  const expireAt = new Date(Date.now() + 7 * 24 * 60 * 60 * 1000);
-  await prisma.session.create({
-    data: {
-      sessionToken: uuid,
-      userId: user.id,
-      // expires in 2 weeks
+    const cookieList = cookies();
+
+    cookieList.set(tokenName, uuid, {
       expires: expireAt,
-    },
-  });
+      path: "/",
+      sameSite: "lax",
+      httpOnly: true,
+      secure: env.NODE_ENV === "production",
+    });
 
-  logger.debug({ uuid });
-
-  const cookieList = cookies();
-
-  cookieList.set(tokenName, uuid, {
-    expires: expireAt,
-    path: "/",
-    sameSite: "lax",
-    httpOnly: true,
-    secure: env.NODE_ENV === "production",
-  });
-
-  return;
-};
+    return;
+  };
 
 // This override cancel JWT strategy for password. (it's the default one)
 export const credentialsOverrideJwt: JwtOverride = {
-  encode(params) {
+  encode() {
     return "";
   },
-  async decode(params) {
+  async decode() {
     return null;
   },
 };

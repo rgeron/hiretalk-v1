@@ -21,6 +21,7 @@
     ],
     "tailwindcss/no-custom-classname": 0,
     "@next/next/no-img-element": 0,
-    "@typescript-eslint/consistent-type-imports": "error"
+    "@typescript-eslint/consistent-type-imports": "error",
+    "prefer-template": "error"
   }
 }

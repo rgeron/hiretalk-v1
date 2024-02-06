@@ -17,19 +17,16 @@ import {
   PopoverTrigger,
 } from "@/components/ui/popover";
 import { Textarea } from "@/components/ui/textarea";
-import { Tooltip } from "@/components/ui/tooltip";
+import { InlineTooltip } from "@/components/ui/tooltip";
 import { cn } from "@/lib/utils";
 import { Angry, Frown, Meh, SmilePlus } from "lucide-react";
 import { useSession } from "next-auth/react";
-import type { PropsWithChildren} from "react";
+import type { PropsWithChildren } from "react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { contactSupportAction } from "./contact-feedback.action";
-import type {
-  ContactFeedbackSchemaType} from "./contact-feedback.schema";
-import {
-  ContactFeedbackSchema
-} from "./contact-feedback.schema";
+import type { ContactFeedbackSchemaType } from "./contact-feedback.schema";
+import { ContactFeedbackSchema } from "./contact-feedback.schema";
 
 export type ContactFeedbackPopoverProps = PropsWithChildren<{}>;
 
@@ -161,7 +158,7 @@ const ReviewInput = ({
   return (
     <>
       {ReviewInputItems.map((item) => (
-        <Tooltip key={item.value} title={item.tooltip}>
+        <InlineTooltip key={item.value} title={item.tooltip}>
           <button
             type="button"
             onClick={() => {
@@ -173,7 +170,7 @@ const ReviewInput = ({
           >
             <item.icon size={24} />
           </button>
-        </Tooltip>
+        </InlineTooltip>
       ))}
     </>
   );

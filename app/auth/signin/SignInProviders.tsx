@@ -31,7 +31,7 @@ export const SignInProviders = () => {
 
   return (
     <div className="flex flex-col gap-4">
-      {providers.email && !providers.credentials ? (
+      {providers.resend && !providers.credentials ? (
         <>
           <Typography variant="small">Magic link ✨</Typography>
           <MagicLinkForm />

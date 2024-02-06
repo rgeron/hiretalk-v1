@@ -35,7 +35,7 @@ export const EmailLayout = ({ children }: PropsWithChildren) => {
                     width={32}
                     height={32}
                     className="inline"
-                    alt="Codeline"
+                    alt={`${SiteConfig.title}'s logo`}
                   />
                 </td>
                 <td>

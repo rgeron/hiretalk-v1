@@ -25,7 +25,7 @@ export const MagicLinkForm = () => {
   const searchParams = useSearchParams();
   const emailSignInMutation = useMutation({
     mutationFn: async (email: string) => {
-      await signIn("email", {
+      await signIn("resend", {
         callbackUrl: searchParams?.get("callbackUrl") ?? `${getServerUrl()}/`,
         redirect: true,
         email,

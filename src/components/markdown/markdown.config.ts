@@ -11,4 +11,4 @@ export const rehypePlugins: Pluggable[] = [
   ],
 ];
 
-export const remarkPlugins: Pluggable[] = [remarkGfm];
+export const remarkPlugins: Pluggable[] = [remarkGfm as never];
