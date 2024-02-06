@@ -30,13 +30,14 @@ export const UserDropdown = ({ children }: PropsWithChildren) => {
         <DropdownMenuLabel>Accounts</DropdownMenuLabel>
         <DropdownMenuItem asChild>
           <Link href="/account">
-            <User2 className="mr-2 h-4 w-4" />
-            My Account
+            <User2 className="mr-2 size-4" />
+            My account
           </Link>
         </DropdownMenuItem>
+        <DropdownMenuSeparator />
         <DropdownMenuItem asChild>
           <Link href="/dashboard">
-            <LayoutDashboard className="mr-2 h-4 w-4" />
+            <LayoutDashboard className="mr-2 size-4" />
             Dashboard
           </Link>
         </DropdownMenuItem>
@@ -52,9 +53,9 @@ export const UserDropdown = ({ children }: PropsWithChildren) => {
             }}
           >
             {logout.isPending ? (
-              <Loader className="mr-2 h-4 w-4" />
+              <Loader className="mr-2 size-4" />
             ) : (
-              <LogOut className="mr-2 h-4 w-4" />
+              <LogOut className="mr-2 size-4" />
             )}
             <span>Logout</span>
           </DropdownMenuItem>

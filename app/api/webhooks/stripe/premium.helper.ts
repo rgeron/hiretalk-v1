@@ -1,13 +1,13 @@
 import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
+import SubscribtionDowngradeEmail from "@email/SubscriptionDowngradeEmail";
+import SubscribtionFailedEmail from "@email/SubscriptionFailedEmail";
+import SuccessUpgradeEmail from "@email/SuccessUpgradeEmail";
 import type { User } from "@prisma/client";
 import { UserPlan } from "@prisma/client";
 import type Stripe from "stripe";
 import { z } from "zod";
-import SubscriptionDowngradeEmail from "../../../../emails/SubscriptionDowngradeEmail";
-import SubscriptionFailedEmail from "../../../../emails/SubscriptionFailedEmail";
-import SuccessUpgradeEmail from "../../../../emails/SuccessUpgradeEmail";
 
 export const upgradeUserToPlan = async (
   userId: string,
@@ -46,7 +46,7 @@ export const notifyUserOfPremiumDowngrade = async (user: User) => {
   await sendEmail({
     to: user.email,
     subject: `Important Update: Changes to Your Account Status`,
-    react: SubscriptionDowngradeEmail(),
+    react: SubscribtionDowngradeEmail(),
   });
 };
 
@@ -54,7 +54,7 @@ export const notifyUserOfPaymentFailure = async (user: User) => {
   await sendEmail({
     to: user.email,
     subject: `Action Needed: Update Your Payment to Continue Enjoying Our Services`,
-    react: SubscriptionFailedEmail(),
+    react: SubscribtionFailedEmail(),
   });
 };
 

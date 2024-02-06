@@ -1,6 +1,6 @@
 "use server";
 
-import { setupStripeCustomer } from "@/lib/auth/auth";
+import { setupResendCustomer, setupStripeCustomer } from "@/lib/auth/auth";
 import { hashStringWithSalt } from "@/lib/auth/credentials-provider";
 import { env } from "@/lib/env";
 import prisma from "@/lib/prisma";
@@ -11,15 +11,22 @@ export const signUpAction = action(
   LoginCredentialsFormScheme,
   async ({ email, password, name }) => {
     try {
+      const userData = {
+        email,
+        passwordHash: hashStringWithSalt(password, env.NEXTAUTH_SECRET),
+        name,
+      };
+
+      const stripeCustomerId = await setupStripeCustomer(userData);
+      const resendContactId = await setupResendCustomer(userData);
+
       const user = await prisma.user.create({
         data: {
-          email,
-          passwordHash: hashStringWithSalt(password, env.NEXTAUTH_SECRET),
-          name,
+          ...userData,
+          stripeCustomerId,
+          resendContactId,
         },
       });
-
-      await setupStripeCustomer(user);
 
       return user;
     } catch {

@@ -7,6 +7,7 @@ import { Suspense } from "react";
 import { SignInProviders } from "./SignInProviders";
 import { auth } from "@/lib/auth/auth";
 import { redirect } from "next/navigation";
+import { HeaderBase } from "@/features/layout/HeaderBase";
 
 export default async function AuthSignInPage() {
   const session = await auth();
@@ -17,19 +18,7 @@ export default async function AuthSignInPage() {
 
   return (
     <div className="flex h-full flex-col">
-      <header className="sticky top-0 z-40 w-full border-b bg-background">
-        <div className="container flex h-16 items-center gap-2">
-          <Image
-            src={SiteConfig.appIcon}
-            alt="app logo"
-            width={32}
-            height={32}
-          />
-          <Link href="/" className="text-xl font-bold">
-            {SiteConfig.title}
-          </Link>
-        </div>
-      </header>
+      <HeaderBase />
       <div className="flex flex-1 items-center justify-center">
         <Card className="w-full max-w-md">
           <CardHeader className="flex flex-col items-center justify-center">

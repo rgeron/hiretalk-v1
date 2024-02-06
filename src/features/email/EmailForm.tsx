@@ -7,7 +7,6 @@ import {
   FormControl,
   FormField,
   FormItem,
-  FormLabel,
   FormMessage,
   useZodForm,
 } from "@/components/ui/form";
@@ -15,6 +14,7 @@ import { Input } from "@/components/ui/input";
 import { useMutation } from "@tanstack/react-query";
 import { AnimatePresence, motion } from "framer-motion";
 import { AlertCircle, CheckCircle } from "lucide-react";
+import { usePlausible } from "next-plausible";
 import { addEmailAction } from "./email.action";
 import type { EmailActionSchemaType } from "./email.schema";
 import { EmailActionSchema } from "./email.schema";
@@ -31,10 +31,12 @@ export const EmailForm = ({
   const form = useZodForm({
     schema: EmailActionSchema,
   });
+  const plausible = usePlausible();
 
   const submit = useMutation({
     mutationFn: async ({ email }: EmailActionSchemaType) => {
       const { serverError, data } = await addEmailAction({ email });
+      plausible("Email+Submit");
 
       if (data) {
         return data;
@@ -81,22 +83,31 @@ export const EmailForm = ({
             className="flex flex-col gap-4"
             disabled={submit.isPending}
           >
-            <FormField
-              control={form.control}
-              name="email"
-              render={({ field }) => (
-                <FormItem>
-                  <FormLabel>Email</FormLabel>
-                  <FormControl>
-                    <Input placeholder="" {...field} />
-                  </FormControl>
-                  <FormMessage />
-                </FormItem>
-              )}
-            />
-            <LoadingButton loading={submit.isPending}>
-              {submitButtonLabel}
-            </LoadingButton>
+            <div className="flex items-center gap-4">
+              <FormField
+                control={form.control}
+                name="email"
+                render={({ field }) => (
+                  <FormItem className="relative w-full">
+                    <FormControl>
+                      <Input
+                        className="rounded-lg border-accent-foreground/20 bg-accent px-4 py-6 text-lg focus-visible:ring-foreground"
+                        placeholder="Ton email"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage className="absolute -bottom-5" />
+                  </FormItem>
+                )}
+              />
+              <LoadingButton
+                className="px-4 py-6 text-lg font-normal"
+                variant="invert"
+                loading={submit.isPending}
+              >
+                {submitButtonLabel}
+              </LoadingButton>
+            </div>
             {submit.isError && (
               <Alert variant="destructive">
                 <AlertCircle size={20} />

@@ -46,8 +46,18 @@ export const {
         return;
       }
 
-      await setupStripeCustomer(user);
-      await setupResendCustomer(user);
+      const stripeCustomerId = await setupStripeCustomer(user);
+      const resendContactId = await setupResendCustomer(user);
+
+      await prisma.user.update({
+        where: {
+          id: user.id,
+        },
+        data: {
+          stripeCustomerId,
+          resendContactId,
+        },
+      });
     },
   },
   // 🔑 Add this line and the import to add credentials provider
@@ -64,14 +74,7 @@ export const setupStripeCustomer = async (user: User) => {
     name: user.name ?? undefined,
   });
 
-  await prisma.user.update({
-    where: {
-      id: user.id,
-    },
-    data: {
-      stripeCustomerId: customer.id,
-    },
-  });
+  return customer.id;
 };
 
 export const setupResendCustomer = async (user: User) => {
@@ -92,12 +95,5 @@ export const setupResendCustomer = async (user: User) => {
 
   if (!contact.data) return;
 
-  await prisma.user.update({
-    where: {
-      id: user.id,
-    },
-    data: {
-      resendContactId: contact.data.id,
-    },
-  });
+  return contact.data.id;
 };

@@ -63,11 +63,13 @@ export const DashboardNavigation = async (props: PropsWithChildren) => {
             </div>
 
             <div className="flex flex-1 items-center justify-end space-x-4">
+              {/* Mobile header */}
               <nav className="flex items-center space-x-1 lg:hidden">
                 <AuthButton />
                 <ThemeToggle />
                 <MobileDropdownMenu links={DASHBOARD_LINKS} />
               </nav>
+              {/* Desktop header */}
               <nav className="flex items-center space-x-1 max-lg:hidden">
                 <ContactFeedbackPopover>
                   <Button variant="outline" size="sm">

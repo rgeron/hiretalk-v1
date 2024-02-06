@@ -120,8 +120,8 @@ dependencies:
     specifier: 14.1.0
     version: 14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)
   next-auth:
-    specifier: 5.0.0-beta.4
-    version: 5.0.0-beta.4(next@14.1.0)(nodemailer@6.9.8)(react@18.2.0)
+    specifier: 5.0.0-beta.6
+    version: 5.0.0-beta.6(next@14.1.0)(nodemailer@6.9.8)(react@18.2.0)
   next-mdx-remote:
     specifier: ^4.4.1
     version: 4.4.1(react-dom@18.2.0)(react@18.2.0)
@@ -258,23 +258,6 @@ packages:
     resolution: {integrity: sha512-UrcABB+4bUrFABwbluTIBErXwvbsU/V7TZWfmbgJfbkwiBuziS9gxdODUyuiecfdGQ85jglMW6juS3+z5TsKLw==}
     engines: {node: '>=10'}
 
-  /@auth/core@0.18.4(nodemailer@6.9.8):
-    resolution: {integrity: sha512-GsNhsP1xE/3FoNS3dVkPjqRljLNJ4iyL2OLv3klQGNvw3bMpROFcK4lqhx7+pPHiamnVaYt2vg1xbB+lsNaevg==}
-    peerDependencies:
-      nodemailer: ^6.8.0
-    peerDependenciesMeta:
-      nodemailer:
-        optional: true
-    dependencies:
-      '@panva/hkdf': 1.1.1
-      cookie: 0.6.0
-      jose: 5.1.3
-      nodemailer: 6.9.8
-      oauth4webapi: 2.4.0
-      preact: 10.11.3
-      preact-render-to-string: 5.2.3(preact@10.11.3)
-    dev: false
-
   /@auth/core@0.21.0(nodemailer@6.9.8):
     resolution: {integrity: sha512-jUWYs8gjy2GvtP9dd/4S9KcwZ660Cm/IkybiAq96/2Ooku9SKk5SUG+UTEwkyLuaQ38ZgfwggfpDOgzsXEcufA==}
     peerDependencies:
@@ -289,6 +272,27 @@ packages:
       jose: 5.2.0
       nodemailer: 6.9.8
       oauth4webapi: 2.7.0
+      preact: 10.11.3
+      preact-render-to-string: 5.2.3(preact@10.11.3)
+    dev: false
+
+  /@auth/core@0.26.0(nodemailer@6.9.8):
+    resolution: {integrity: sha512-AcuOQZHVUJDIbP6l98GttJNlobo3dxFfUiUEzzESapJ5BxJM+k/Cez3heDkQFhDBeati+FDZpZb4aPtH+odNwA==}
+    peerDependencies:
+      '@simplewebauthn/server': ^9.0.1
+      nodemailer: ^6.8.0
+    peerDependenciesMeta:
+      '@simplewebauthn/server':
+        optional: true
+      nodemailer:
+        optional: true
+    dependencies:
+      '@panva/hkdf': 1.1.1
+      '@types/cookie': 0.6.0
+      cookie: 0.6.0
+      jose: 5.2.1
+      nodemailer: 6.9.8
+      oauth4webapi: 2.10.2
       preact: 10.11.3
       preact-render-to-string: 5.2.3(preact@10.11.3)
     dev: false
@@ -5269,12 +5273,12 @@ packages:
     resolution: {integrity: sha512-gFqAIbuKyyso/3G2qhiO2OM6shY6EPP/R0+mkDbyspxKazh8BXDC5FiFsUjlczgdNz/vfra0da2y+aHrusLG/Q==}
     hasBin: true
 
-  /jose@5.1.3:
-    resolution: {integrity: sha512-GPExOkcMsCLBTi1YetY2LmkoY559fss0+0KVa6kOfb2YFe84nAM7Nm/XzuZozah4iHgmBGrCOHL5/cy670SBRw==}
-    dev: false
-
   /jose@5.2.0:
     resolution: {integrity: sha512-oW3PCnvyrcm1HMvGTzqjxxfnEs9EoFOFWi2HsEGhlFVOXxTE3K9GKWVMFoFw06yPUqwpvEWic1BmtUZBI/tIjw==}
+    dev: false
+
+  /jose@5.2.1:
+    resolution: {integrity: sha512-qiaQhtQRw6YrOaOj0v59h3R6hUY9NvxBmmnMfKemkqYmBB0tEc97NbLP7ix44VP5p9/0YHG8Vyhzuo5YBNwviA==}
     dev: false
 
   /js-beautify@1.14.11:
@@ -6401,20 +6405,25 @@ packages:
     resolution: {integrity: sha512-Yd3UES5mWCSqR+qNT93S3UoYUkqAZ9lLg8a7g9rimsWmYGK8cVToA4/sF3RrshdyV3sAGMXVUmpMYOw+dLpOuw==}
     dev: false
 
-  /next-auth@5.0.0-beta.4(next@14.1.0)(nodemailer@6.9.8)(react@18.2.0):
-    resolution: {integrity: sha512-vgocjvwPA8gxd/zrIP/vr9lJ/HeNe+C56lPP1D3sdyenHt8KncQV6ro7q0xCsDp1fcOKx7WAWVZH5o8aMxDzgw==}
+  /next-auth@5.0.0-beta.6(next@14.1.0)(nodemailer@6.9.8)(react@18.2.0):
+    resolution: {integrity: sha512-knkj6sfl6NkoilOh886pdJAKWCcJyoEXhR8avqDKffRSK6cfyOdAoAyERMZK4uWS2MwnsuUqhSz0vhndM3ws8Q==}
     peerDependencies:
+      '@simplewebauthn/browser': v9.0.0
       next: ^14
       nodemailer: ^6.6.5
       react: ^18.2.0
     peerDependenciesMeta:
+      '@simplewebauthn/browser':
+        optional: true
       nodemailer:
         optional: true
     dependencies:
-      '@auth/core': 0.18.4(nodemailer@6.9.8)
+      '@auth/core': 0.26.0(nodemailer@6.9.8)
       next: 14.1.0(react-dom@18.2.0)(react@18.2.0)(sass@1.70.0)
       nodemailer: 6.9.8
       react: 18.2.0
+    transitivePeerDependencies:
+      - '@simplewebauthn/server'
     dev: false
 
   /next-mdx-remote@4.4.1(react-dom@18.2.0)(react@18.2.0):
@@ -6605,8 +6614,8 @@ packages:
     resolution: {integrity: sha512-I19aIingLgR1fmhftnbWWO3dXc0hSxqHQHQb3H8m+K3TnEn/iSeTZZOyvKXWqQESMwuUVnatlCnZdLBZZt2VSA==}
     dev: false
 
-  /oauth4webapi@2.4.0:
-    resolution: {integrity: sha512-ZWl8ov8HeGVyc9Icl1cag76HvIcDAp23eIIT+UVGir+dEu8BMgMlvZeZwqLVd0P8DqaumH4N+QLQXN69G1QjSA==}
+  /oauth4webapi@2.10.2:
+    resolution: {integrity: sha512-ib0x1f4tCaZkTEEnRpkt96D8F2e38AFWzTOwpha1Wmme5kD+RFFgDVkrXyBSxBefFeQUoODVaieS/w9QmkZbnQ==}
     dev: false
 
   /oauth4webapi@2.7.0:

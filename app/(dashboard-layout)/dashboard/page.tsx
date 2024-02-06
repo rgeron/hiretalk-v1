@@ -1,19 +1,13 @@
-import { ServerMdx } from "@/components/markdown/ServerMdx";
 import {
   Layout,
   LayoutContent,
   LayoutHeader,
   LayoutTitle,
 } from "@/components/page/layout";
-import {
-  Card,
-  CardContent,
-  CardDescription,
-  CardHeader,
-  CardTitle,
-} from "@/components/ui/card";
-import { Input } from "@/components/ui/input";
+import { buttonVariants } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import type { PageParams } from "@/types/next";
+import Link from "next/link";
 
 export default async function RoutePage(props: PageParams<{}>) {
   return (
@@ -22,47 +16,37 @@ export default async function RoutePage(props: PageParams<{}>) {
         <LayoutTitle>Dashboard</LayoutTitle>
       </LayoutHeader>
       <LayoutContent>
-        <Card>
-          <CardHeader>
-            <CardTitle>Analytics</CardTitle>
-            <CardDescription>
-              Find out how many people are visiting your website, how they found
-            </CardDescription>
-          </CardHeader>
-          <CardContent>
-            <ServerMdx
-              source={`## Subtitle
-            
-\`\`\`js
-const x = () => {}
-\`\`\`
-
-Please ok. I like https://google.com
-
-I like \`JavaScript\` Code !
-
-## Subtitle 2
-
-### Subtitle 3
-
-#### Subtitle 4
-
-##### Subtitle 5
-
-###### Subtitle 6
-
-> Quote
-
-- List
-- List 2
-
-1. List
-2. List 2
-`}
-            />
-            <Input />
-          </CardContent>
-        </Card>
+        <div className="flex items-start gap-4">
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg font-light">
+                Thread Created
+              </CardTitle>
+              <CardTitle>201</CardTitle>
+            </CardHeader>
+          </Card>
+          <Card>
+            <CardHeader>
+              <CardTitle className="text-lg font-light">
+                Thread Published
+              </CardTitle>
+              <CardTitle>177</CardTitle>
+            </CardHeader>
+          </Card>
+          <Card className="flex-1">
+            <CardHeader>
+              <CardTitle className="text-lg font-light">Actions</CardTitle>
+            </CardHeader>
+            <CardContent className="flex gap-2">
+              <Link
+                className={buttonVariants({ size: "sm", variant: "outline" })}
+                href="/dashboard/posts/new"
+              >
+                New post
+              </Link>
+            </CardContent>
+          </Card>
+        </div>
       </LayoutContent>
     </Layout>
   );

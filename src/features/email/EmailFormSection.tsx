@@ -5,18 +5,31 @@ import { EmailForm } from "./EmailForm";
 export const EmailFormSection = () => {
   return (
     <SectionLayout
-      variant="invert"
-      className="flex flex-col items-center gap-4"
+      size="lg"
+      className="relative flex w-full flex-col items-center gap-16"
     >
-      <Typography variant="h1" as="h2">
-        Sois informé de la sortie de Now.ts
-      </Typography>
-      <Typography variant="h3">
-        Ne loupe pas la promotion de lancement et sois le premier a rejoindre la
-        communauté Now.ts
-      </Typography>
-      <div className="m-auto w-full max-w-md">
-        <EmailForm />
+      <div className="relative m-auto flex max-w-xl flex-col gap-4 text-center">
+        <Typography
+          variant="small"
+          className="font-extrabold uppercase text-primary"
+        >
+          Be the first to use Threader
+        </Typography>
+        <Typography variant="h2" className="text-center text-4xl lg:text-5xl">
+          Join the waiting list of{" "}
+          <span className="text-gradient bg-gradient-to-r from-orange-600 via-red-400 to-yellow-400 font-mono font-extrabold uppercase">
+            Threader
+          </span>
+        </Typography>
+        <Typography variant="h3">
+          Get early access, exclusive content and more.
+        </Typography>
+        <div className="mx-auto mt-6 w-full max-w-md">
+          <EmailForm
+            submitButtonLabel="Join"
+            successMessage="Thank you for joining the waiting list"
+          />
+        </div>
       </div>
     </SectionLayout>
   );
