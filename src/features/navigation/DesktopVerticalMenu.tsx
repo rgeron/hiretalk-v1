@@ -9,10 +9,10 @@ import { Fragment, cloneElement } from "react";
 import { DASHBOARD_LINKS } from "../../../app/(dashboard-layout)/dashboard-links";
 import type { NavigationLinkGroups } from "./navigation.type";
 
-const useCurrentPath = () => {
+const useCurrentPath = (links: NavigationLinkGroups[]) => {
   const currentPath = usePathname() ?? "";
   const pathSegments = currentPath.split("/");
-  const allDashboardLinks = DASHBOARD_LINKS.flatMap((section) => section.links);
+  const allDashboardLinks = links.flatMap((section) => section.links);
 
   const linkMatchCounts = allDashboardLinks.map((link) => ({
     url: link.url,
@@ -29,6 +29,8 @@ const useCurrentPath = () => {
     { url: "", matchCount: 0 }
   );
 
+  console.log(linkMatchCounts);
+
   return mostMatchingLink.url;
 };
 
@@ -39,7 +41,7 @@ export const DesktopVerticalMenu = ({
   links: NavigationLinkGroups[];
   className?: string;
 }) => {
-  const currentPath = useCurrentPath();
+  const currentPath = useCurrentPath(links);
 
   return (
     <nav className={cn("flex flex-col gap-4", className)}>
