@@ -1,4 +1,3 @@
-import { AsyncLocalStorage } from "async_hooks";
 import crypto from "crypto";
 import { nanoid } from "nanoid";
 import type { NextAuthConfig } from "next-auth";
@@ -6,10 +5,13 @@ import CredentialsProvider from "next-auth/providers/credentials";
 import { cookies } from "next/headers";
 import type { NextRequest } from "next/server";
 import { env } from "../env";
-import { logger } from "../logger";
 import prisma from "../prisma";
 
-export const nextRequestStorage = new AsyncLocalStorage();
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+
+export const validatePassword = (password: string) => {
+  return PASSWORD_REGEX.test(password);
+};
 
 export const hashStringWithSalt = (string: string, salt: string) => {
   const hash = crypto.createHash("sha256");
@@ -31,7 +33,6 @@ export const getCredentialsProvider = () => {
       password: { label: "Password", type: "password" },
     },
     async authorize(credentials) {
-      logger.debug("Authroize user");
       if (!credentials || !credentials.email || !credentials.password)
         return null;
 
@@ -41,16 +42,12 @@ export const getCredentialsProvider = () => {
         env.NEXTAUTH_SECRET
       );
 
-      logger.debug("passwordHash", passwordHash);
-
       const user = await prisma.user.findFirst({
         where: {
           email: credentials.email,
           passwordHash: passwordHash,
         },
       });
-
-      logger.debug("user", user);
 
       if (user) {
         return {

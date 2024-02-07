@@ -29,6 +29,8 @@ export const {
     GitHub({
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
+      // TODO : Delete this when Authjs fix the issue
+      allowDangerousEmailAccountLinking: true,
     }),
     Resend({
       apiKey: env.RESEND_API_KEY,

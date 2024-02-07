@@ -1,9 +1,22 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { requiredAuth } from "@/lib/auth/helper";
+import prisma from "@/lib/prisma";
+import { EditPasswordForm } from "./EditPasswordForm";
 import { EditProfileForm } from "./EditProfileForm";
 
-export default async function DeleteProfilePage() {
+export default async function EditProfilePage() {
   const session = await requiredAuth();
+  const hasPassword = await prisma.user.findFirst({
+    where: {
+      id: session.user.id,
+      passwordHash: {
+        not: null,
+      },
+    },
+    select: {
+      id: true,
+    },
+  });
   return (
     <Card>
       <CardHeader>
@@ -11,6 +24,12 @@ export default async function DeleteProfilePage() {
       </CardHeader>
       <CardContent>
         <EditProfileForm defaultValues={session.user} />
+        {Boolean(hasPassword) && (
+          <>
+            <div className="h-16" />
+            <EditPasswordForm />
+          </>
+        )}
       </CardContent>
     </Card>
   );
