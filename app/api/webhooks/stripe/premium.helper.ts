@@ -1,3 +1,4 @@
+import { logger } from "@/lib/logger";
 import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
@@ -13,6 +14,7 @@ export const upgradeUserToPlan = async (
   userId: string,
   plan: UserPlan = "PREMIUM"
 ) => {
+  logger.debug("UPDATE USER", userId, plan);
   await prisma.user.update({
     where: {
       id: userId,
@@ -61,9 +63,18 @@ export const notifyUserOfPaymentFailure = async (user: User) => {
 const PlanSchema = z.nativeEnum(UserPlan);
 
 export const getPlanFromLineItem = async (
-  lineItems?: Stripe.LineItem[] | Stripe.InvoiceLineItem[]
+  lineItems?:
+    | Stripe.LineItem[]
+    | Stripe.InvoiceLineItem[]
+    | Stripe.SubscriptionItem[]
 ): Promise<UserPlan> => {
+  if (!lineItems) {
+    return "PREMIUM";
+  }
+
   const productId = lineItems?.[0]?.price?.product;
+
+  logger.debug("Product ID", productId);
 
   if (!productId) {
     return "PREMIUM";
@@ -74,6 +85,7 @@ export const getPlanFromLineItem = async (
   const safePlan = PlanSchema.safeParse(product.metadata?.plan);
 
   if (safePlan.success) {
+    logger.debug("Product ID", { safePlan });
     return safePlan.data;
   } else {
     return "PREMIUM";

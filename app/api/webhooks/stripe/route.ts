@@ -61,6 +61,10 @@ export const POST = async (req: NextRequest) => {
       await onCustomerSubscriptionDeleted(event.data.object);
       break;
 
+    case "customer.subscription.updated":
+      await onCustomerSubscriptionUpdated(event.data.object);
+      break;
+
     default:
       return NextResponse.json({
         ok: true,
@@ -97,6 +101,8 @@ async function onInvoicePaid(object: Stripe.Invoice) {
   // ✅ Provision access to your service
   const user = await findUserFromCustomer(object.customer);
 
+  if (user.plan !== "FREE") return;
+
   await upgradeUserToPlan(
     user.id,
     // TODO :Verify if it's right values
@@ -123,4 +129,14 @@ async function onCustomerSubscriptionDeleted(object: Stripe.Subscription) {
   const user = await findUserFromCustomer(object.customer);
   await downgradeUserFromPlan(user.id);
   await notifyUserOfPremiumDowngrade(user);
+}
+
+async function onCustomerSubscriptionUpdated(object: Stripe.Subscription) {
+  const user = await findUserFromCustomer(object.customer);
+
+  await upgradeUserToPlan(
+    user.id,
+    await getPlanFromLineItem(object.items.data)
+  );
+  await notifyUserOfPremiumUpgrade(user);
 }
