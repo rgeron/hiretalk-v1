@@ -5,13 +5,13 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { requiredFullAuth } from "@/lib/auth/helper";
+import { requiredAuth } from "@/lib/auth/helper";
 import { env } from "@/lib/env";
 import { resend } from "@/lib/mail/resend";
 import { ToggleEmailCheckbox } from "./ToggleEmailCheckbox";
 
 export default async function MailProfilePage() {
-  const user = await requiredFullAuth();
+  const user = await requiredAuth();
 
   if (!user.resendContactId) {
     return <ErrorComponent />;

@@ -1,6 +1,6 @@
 "use server";
 
-import { requiredFullAuth } from "@/lib/auth/helper";
+import { requiredAuth } from "@/lib/auth/helper";
 import { env } from "@/lib/env";
 import { resend } from "@/lib/mail/resend";
 import { ActionError, userAction } from "@/lib/server-actions/safe-actions";
@@ -13,7 +13,7 @@ const ToggleSubscribedActionSchema = z.object({
 export const toggleSubscribedAction = userAction(
   ToggleSubscribedActionSchema,
   async (data) => {
-    const user = await requiredFullAuth();
+    const user = await requiredAuth();
 
     if (!user.resendContactId) {
       throw new ActionError("User has no resend contact");

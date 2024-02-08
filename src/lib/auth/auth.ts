@@ -2,7 +2,8 @@
 import { SiteConfig } from "@/site-config";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import MagicLinkMail from "@email/MagicLinkEmail";
-import type { Session, User } from "next-auth";
+import type { User } from "@prisma/client";
+import type { Session } from "next-auth";
 import NextAuth from "next-auth";
 import GitHub from "next-auth/providers/github";
 import Resend from "next-auth/providers/resend";
@@ -61,14 +62,15 @@ export const {
     session(params) {
       if (params.newSession) return params.session;
 
-      const typedParams = params as {
+      const typedParams = params as unknown as {
         session: Session;
         user?: User;
       };
 
-      if (!typedParams.user?.id) return params.session;
+      if (!typedParams.user) return typedParams.session;
 
-      typedParams.session.user.id = typedParams.user.id;
+      typedParams.user.passwordHash = null;
+
       return typedParams.session;
     },
   },

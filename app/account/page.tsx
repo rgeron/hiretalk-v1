@@ -13,27 +13,25 @@ import { Mail, Pen } from "lucide-react";
 import Link from "next/link";
 
 export default async function page() {
-  const session = await requiredAuth();
+  const user = await requiredAuth();
   return (
     <Card className="w-full">
       <CardHeader>
         <div className="flex items-center gap-2">
           <Avatar>
-            <AvatarFallback>{session.user.email.slice(0, 2)}</AvatarFallback>
-            {session.user.image ? (
-              <AvatarImage src={session.user.image} />
-            ) : null}
+            <AvatarFallback>{user.email.slice(0, 2)}</AvatarFallback>
+            {user.image ? <AvatarImage src={user.image} /> : null}
           </Avatar>
 
-          <CardTitle>{displayName(session.user)}</CardTitle>
+          <CardTitle>{displayName(user)}</CardTitle>
         </div>
       </CardHeader>
       <CardContent className="flex flex-col gap-2 divide-y">
         <p className="flex items-center gap-2">
-          <Mail size={16} /> {session.user.email}
+          <Mail size={16} /> {user.email}
         </p>
         <p className="flex items-center gap-2 pt-2">
-          <Pen size={16} /> {session.user.name}
+          <Pen size={16} /> {user.name}
         </p>
       </CardContent>
       <CardFooter>

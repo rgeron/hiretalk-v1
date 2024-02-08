@@ -1,14 +1,14 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
-import { requiredFullAuth } from "@/lib/auth/helper";
+import { requiredAuth } from "@/lib/auth/helper";
 import { getServerUrl } from "@/lib/server-url";
 import { stripe } from "@/lib/stripe";
 import { cn } from "@/lib/utils";
 import Link from "next/link";
 
 export default async function DeleteProfilePage() {
-  const user = await requiredFullAuth();
+  const user = await requiredAuth();
 
   const stripeSession = await stripe.billingPortal.sessions.create({
     customer: user.stripeCustomerId ?? "",

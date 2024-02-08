@@ -4,7 +4,7 @@ import {
   hashStringWithSalt,
   validatePassword,
 } from "@/lib/auth/credentials-provider";
-import { requiredFullAuth } from "@/lib/auth/helper";
+import { requiredAuth } from "@/lib/auth/helper";
 import { env } from "@/lib/env";
 import prisma from "@/lib/prisma";
 import { ActionError, userAction } from "@/lib/server-actions/safe-actions";
@@ -30,7 +30,15 @@ export const updateProfileAction = userAction(
 export const editPasswordAction = userAction(
   EditPasswordFormSchema,
   async (input, ctx) => {
-    const session = await requiredFullAuth();
+    const user = await requiredAuth();
+    const { passwordHash } = await prisma.user.findUniqueOrThrow({
+      where: {
+        id: user.id,
+      },
+      select: {
+        passwordHash: true,
+      },
+    });
 
     if (input.newPassword !== input.confirmPassword) {
       throw new ActionError("Passwords do not match");
@@ -38,7 +46,7 @@ export const editPasswordAction = userAction(
 
     if (
       hashStringWithSalt(input.currentPassword, env.NEXTAUTH_SECRET) !==
-      session.passwordHash
+      passwordHash
     ) {
       throw new ActionError("Invalid current password");
     }
@@ -49,7 +57,7 @@ export const editPasswordAction = userAction(
       );
     }
 
-    const user = await prisma.user.update({
+    const updatedUser = await prisma.user.update({
       where: {
         id: ctx.user.id,
       },
@@ -59,8 +67,11 @@ export const editPasswordAction = userAction(
           env.NEXTAUTH_SECRET
         ),
       },
+      select: {
+        id: true,
+      },
     });
 
-    return user;
+    return updatedUser;
   }
 );

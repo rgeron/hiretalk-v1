@@ -1,4 +1,4 @@
-import prisma from "../prisma";
+import type { User } from "@prisma/client";
 import { auth } from "./auth";
 
 export const requiredAuth = async () => {
@@ -8,17 +8,7 @@ export const requiredAuth = async () => {
     throw new Error("You must be authenticated to access this resource.");
   }
 
-  return session as Required<typeof session>;
-};
-
-export const requiredFullAuth = async () => {
-  const session = await requiredAuth();
-
-  const user = await prisma.user.findUniqueOrThrow({
-    where: {
-      id: session.user.id,
-    },
-  });
+  const user = session.user as User;
 
   return user;
 };

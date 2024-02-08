@@ -5,10 +5,10 @@ import { EditPasswordForm } from "./EditPasswordForm";
 import { EditProfileForm } from "./EditProfileForm";
 
 export default async function EditProfilePage() {
-  const session = await requiredAuth();
+  const user = await requiredAuth();
   const hasPassword = await prisma.user.findFirst({
     where: {
-      id: session.user.id,
+      id: user.id,
       passwordHash: {
         not: null,
       },
@@ -23,7 +23,7 @@ export default async function EditProfilePage() {
         <CardTitle>Edit your profile</CardTitle>
       </CardHeader>
       <CardContent>
-        <EditProfileForm defaultValues={session.user} />
+        <EditProfileForm defaultValues={user} />
         {Boolean(hasPassword) && (
           <>
             <div className="h-16" />

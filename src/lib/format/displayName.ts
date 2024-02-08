@@ -1,6 +1,6 @@
 interface User {
   email: string;
-  name?: string;
+  name?: string | null;
 }
 
 export function displayName(user: User): string {

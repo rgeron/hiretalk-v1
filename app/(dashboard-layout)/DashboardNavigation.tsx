@@ -14,7 +14,7 @@ import { MobileDropdownMenu } from "../../src/features/navigation/MobileDropdown
 import { DASHBOARD_LINKS } from "./dashboard-links";
 
 export const DashboardNavigation = async (props: PropsWithChildren) => {
-  const session = await requiredAuth();
+  const user = await requiredAuth();
   return (
     <div className="flex h-full flex-col lg:flex-row lg:overflow-hidden">
       {/* Desktop ONLY Navigation bar */}
@@ -37,11 +37,11 @@ export const DashboardNavigation = async (props: PropsWithChildren) => {
           <Button variant="outline" size="sm">
             <Avatar className="mr-2 size-6">
               <AvatarFallback>
-                {session.user.email ? session.user.email.slice(0, 2) : "??"}
+                {user.email ? user.email.slice(0, 2) : "??"}
               </AvatarFallback>
-              {session.user.image && <AvatarImage src={session.user.image} />}
+              {user.image && <AvatarImage src={user.image} />}
             </Avatar>
-            <span className="max-lg:hidden">{session.user.name}</span>
+            <span className="max-lg:hidden">{user.name}</span>
           </Button>
         </UserDropdown>
       </div>

@@ -1,3 +1,4 @@
+import type { User } from "@prisma/client";
 import { createSafeActionClient } from "next-safe-action";
 import { auth } from "../auth/auth";
 
@@ -21,31 +22,31 @@ export const action = createSafeActionClient({
   handleReturnedServerError,
 });
 
+const getUser = async () => {
+  const session = await auth();
+
+  if (!session) {
+    throw new ActionError("Session not found!");
+  }
+
+  // In the real world, you would check if the session is valid by querying a database.
+  // We'll keep it very simple here.
+  const user = session.user;
+
+  if (!user.id || !user.email) {
+    throw new ActionError("Session is not valid!");
+  }
+  return user as User;
+};
+
 export const userAction = createSafeActionClient({
   handleReturnedServerError,
 
   async middleware() {
-    const session = await auth();
-
-    if (!session) {
-      throw new Error("Session not found!");
-    }
-
-    // In the real world, you would check if the session is valid by querying a database.
-    // We'll keep it very simple here.
-    const user = session.user;
-
-    if (!user.id || !user.email) {
-      throw new Error("Session is not valid!");
-    }
+    const user = await getUser();
 
     return {
-      user: user as {
-        id: string;
-        email: string;
-        image?: string;
-        name?: string;
-      },
+      user: user as User,
     };
   },
 });
