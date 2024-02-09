@@ -56,7 +56,7 @@ export const ContactFeedbackPopover = (props: ContactFeedbackPopoverProps) => {
 
   return (
     <Popover open={open} onOpenChange={(v) => setOpen(v)}>
-      <PopoverTrigger>
+      <PopoverTrigger asChild>
         {props.children ? (
           props.children
         ) : (
