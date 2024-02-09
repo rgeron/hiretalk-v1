@@ -1,6 +1,6 @@
 import { Layout } from "@/components/page/layout";
 import { Separator } from "@/components/ui/separator";
-import { AuthButton } from "@/features/auth/HeaderAuthButton";
+import { AuthButton } from "@/features/auth/AuthButton";
 import { ThemeToggle } from "@/features/theme/ThemeToggle";
 import { SiteConfig } from "@/site-config";
 import Image from "next/image";

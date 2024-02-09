@@ -1,4 +1,4 @@
-import { AuthButton } from "../auth/HeaderAuthButton";
+import { AuthButton } from "../auth/AuthButton";
 import { HeaderBase } from "./HeaderBase";
 
 export function Header() {

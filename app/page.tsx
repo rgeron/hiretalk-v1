@@ -3,11 +3,11 @@ import { CTASection } from "@/features/landing/CTASection";
 import { FAQSection } from "@/features/landing/FAQSection";
 import { FeaturesPreviewSection } from "@/features/landing/FeaturesPreviewSection";
 import { Hero } from "@/features/landing/Hero";
+import { LandingHeader } from "@/features/landing/LandingHeader";
 import { PainSection } from "@/features/landing/Pain";
 import { SectionDivider } from "@/features/landing/SectionDivider";
 import StatsSection from "@/features/landing/StatsSection";
 import { Footer } from "@/features/layout/Footer";
-import { Header } from "@/features/layout/Header";
 import { Pricing } from "@/features/pricing/PricingSection";
 import { ReviewGrid } from "@/features/review/ReviewGrid";
 import { ReviewTriple } from "@/features/review/ReviewTriple";
@@ -16,10 +16,14 @@ import { Calendar, CalendarClock, Eye, Repeat } from "lucide-react";
 export default function HomePage() {
   return (
     <div className="flex h-fit flex-col gap-2">
-      <Header />
+      <LandingHeader />
+
       <Hero />
+
       <StatsSection />
+
       <BentoGridSection />
+
       <PainSection />
 
       <SectionDivider />

@@ -1,21 +1,20 @@
 import { cn } from "@/lib/utils";
-import type { PropsWithChildren } from "react";
+import type { ComponentPropsWithoutRef } from "react";
 
-export type SectionLayoutProps = PropsWithChildren<{
+export type SectionLayoutProps = {
   size?: "sm" | "base" | "lg";
-  spacing?: "sm" | "base" | "lg";
   variant?: "default" | "card" | "primary" | "invert" | "image";
   className?: string;
   containerClassName?: string;
-}>;
+} & ComponentPropsWithoutRef<"div">;
 
 export const SectionLayout = ({
   size = "base",
-  spacing = "base",
   variant = "default",
   className,
   containerClassName,
   children,
+  ...props
 }: SectionLayoutProps) => {
   return (
     <div
@@ -30,19 +29,15 @@ export const SectionLayout = ({
         },
         containerClassName
       )}
+      {...props}
     >
       <div
         className={cn(
-          "m-auto px-4",
+          "m-auto px-4 py-20 lg:py-28",
           {
             "max-w-4xl": size === "sm",
             "max-w-5xl": size === "base",
             "max-w-6xl": size === "lg",
-          },
-          {
-            "py-4 lg:py-8": spacing === "sm",
-            "py-20 lg:py-28": spacing === "base",
-            "py-32 lg:py-40": spacing === "lg",
           },
           className
         )}

@@ -1,6 +1,6 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { AuthButton } from "@/features/auth/HeaderAuthButton";
+import { AuthButton } from "@/features/auth/AuthButton";
 import { UserDropdown } from "@/features/auth/UserDropdown";
 import { ContactFeedbackPopover } from "@/features/contact/feedback/ContactFeedbackPopover";
 import { ThemeToggle } from "@/features/theme/ThemeToggle";
