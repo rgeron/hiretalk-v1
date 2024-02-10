@@ -1,11 +1,13 @@
+import { Footer } from "@/features/layout/Footer";
 import { Header } from "@/features/layout/Header";
 import type { PropsWithChildren } from "react";
 
-export default function layout({ children }: PropsWithChildren) {
+export default function RouteLayout(props: PropsWithChildren) {
   return (
-    <div className="relative flex min-h-screen flex-col">
+    <div className="flex h-full flex-col">
       <Header />
-      <div className="flex-1">{children}</div>
+      <div className="min-h-screen flex-1 overflow-auto">{props.children}</div>
+      <Footer />
     </div>
   );
 }

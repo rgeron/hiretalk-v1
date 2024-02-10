@@ -2,7 +2,7 @@ import { Layout, LayoutContent } from "@/components/page/layout";
 import { Typography } from "@/components/ui/typography";
 import { MDXRemote } from "next-mdx-remote/rsc";
 
-const markdown = `Privacy Markdown`;
+const markdown = `Terms Markdown`;
 
 export default function page() {
   return (
