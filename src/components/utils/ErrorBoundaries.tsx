@@ -17,12 +17,12 @@ type Props = {
   fallback?: ReactNode | ((error: string) => ReactNode);
   title?: string;
   description?: string;
-};
+}
 
 type State = {
   hasError: boolean;
   error: string;
-};
+}
 
 /**
  * ErrorBoundary is a component that catches errors in its children and renders a fallback UI.

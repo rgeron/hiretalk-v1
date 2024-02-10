@@ -12,11 +12,11 @@ import { SectionLayout } from "./SectionLayout";
 type Faq = {
   question: string;
   answer: string;
-};
+}
 
 export type FeaturesPreviewProps = {
   faq: Faq[];
-};
+}
 
 export const FAQSection = (props: FeaturesPreviewProps) => {
   return (

@@ -12,7 +12,7 @@ type PolymorphicAsProp<E extends ElementType> = {
     | E
     | React.ComponentType<Omit<ComponentPropsWithoutRef<E>, "as">>
     | React.FunctionComponent<Omit<ComponentPropsWithoutRef<E>, "as">>;
-};
+}
 
 type PolymorphicProps<E extends ElementType> = PropsWithChildren<
   Omit<ComponentPropsWithoutRef<E>, "as"> & PolymorphicAsProp<E>
@@ -68,8 +68,7 @@ export function Typography<E extends ElementType = typeof defaultElement>({
   variant,
   ...restProps
 }: PolymorphicProps<E> & TypographyCvaProps) {
-  const Component: ElementType =
-    as ?? defaultElementMapping[variant ?? "base"] ?? defaultElement;
+  const Component: ElementType = as ?? defaultElementMapping[variant ?? "base"];
 
   return (
     <Component

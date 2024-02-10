@@ -8,7 +8,7 @@ export type ReviewSingleProps = {
   name: string;
   role: string;
   compagnyImage?: string;
-};
+}
 
 export const ReviewSingle = (props: ReviewSingleProps) => {
   return (

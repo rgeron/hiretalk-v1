@@ -36,7 +36,7 @@ export const SignInButton = (props: VariantProps<typeof buttonVariants>) => {
 export const SignInButtonWithUser = () => {
   const session = useSession();
 
-  if (session?.data?.user) {
+  if (session.data?.user) {
     const user = session.data.user;
     return (
       <UserDropdown>

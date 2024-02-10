@@ -41,7 +41,7 @@ export const SignInCredentialsAndMagicLinkForm = () => {
   );
   const searchParams = useSearchParams();
 
-  const paramsError = searchParams?.get("error");
+  const paramsError = searchParams.get("error");
   const error = paramsError ? ErrorMapping[paramsError] : null;
 
   async function onSubmit(values: LoginCredentialsFormType) {
@@ -49,12 +49,12 @@ export const SignInCredentialsAndMagicLinkForm = () => {
       await signIn("credentials", {
         email: values.email,
         password: values.password,
-        callbackUrl: searchParams?.get("callbackUrl") ?? undefined,
+        callbackUrl: searchParams.get("callbackUrl") ?? undefined,
       });
     } else {
       await signIn("email", {
         email: values.email,
-        callbackUrl: searchParams?.get("callbackUrl") ?? undefined,
+        callbackUrl: searchParams.get("callbackUrl") ?? undefined,
       });
     }
   }

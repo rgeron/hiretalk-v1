@@ -72,7 +72,7 @@ export const getPlanFromLineItem = async (
     return "PREMIUM";
   }
 
-  const productId = lineItems?.[0]?.price?.product;
+  const productId = lineItems[0].price?.product;
 
   logger.debug("Product ID", productId);
 
@@ -82,7 +82,7 @@ export const getPlanFromLineItem = async (
 
   const product = await stripe.products.retrieve(productId as string);
 
-  const safePlan = PlanSchema.safeParse(product.metadata?.plan);
+  const safePlan = PlanSchema.safeParse(product.metadata.plan);
 
   if (safePlan.success) {
     logger.debug("Product ID", { safePlan });

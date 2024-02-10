@@ -7,7 +7,7 @@ import { useIsClient } from "usehooks-ts";
 
 export const CanvasConfettiBySide = () => {
   const canvasRef = useRef<HTMLCanvasElement>(null);
-  const isClient = useIsClient;
+  const isClient = useIsClient();
 
   useEffect(() => {
     const canvas = canvasRef.current;

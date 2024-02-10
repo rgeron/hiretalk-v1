@@ -7,11 +7,12 @@
     "dev": "next dev",
     "build": "next build",
     "start": "next start",
-    "lint": "next lint",
+    "lint": "next lint --fix",
+    "format": "prettier --write .",
+    "ts": "tsc --noEmit",
     "email": "email dev",
     "stripe-webhooks": "stripe listen --forward-to localhost:3000/api/webhooks/stripe",
     "vercel-build": "prisma generate && prisma migrate deploy && next build",
-    "ts": "tsc --noEmit",
     "postinstall": "prisma generate"
   },
   "dependencies": {
@@ -92,6 +93,7 @@
     "eslint": "^8.56.0",
     "eslint-config-next": "14.1.0",
     "postcss": "^8.4.34",
+    "prettier": "^3.2.5",
     "prisma": "^5.9.1",
     "tailwindcss": "^3.4.1",
     "typescript": "^5.3.3",

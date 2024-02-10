@@ -22,7 +22,7 @@ import { EmailActionSchema } from "./email.schema";
 export type EmailFormProps = {
   submitButtonLabel?: string;
   successMessage?: string;
-};
+}
 
 export const EmailForm = ({
   submitButtonLabel = "Subscribe",
@@ -111,7 +111,7 @@ export const EmailForm = ({
             {submit.isError && (
               <Alert variant="destructive">
                 <AlertCircle size={20} />
-                <AlertTitle>{submit.error?.message}</AlertTitle>
+                <AlertTitle>{submit.error.message}</AlertTitle>
                 <AlertDescription>
                   Try another email address or contact us.
                 </AlertDescription>

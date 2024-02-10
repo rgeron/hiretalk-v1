@@ -3,7 +3,7 @@ import { ReviewItem } from "./ReviewItem";
 
 export type ReviewGridProps = {
   reviews: ReviewItemProps[];
-};
+}
 
 export const ReviewGrid = (props: ReviewGridProps) => {
   return (

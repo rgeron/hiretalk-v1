@@ -16,7 +16,7 @@ type DialogStore = {
   dialogs: DialogType[];
   addDialog: (dialog: ConfirmationDialogProps) => void;
   removeDialog: (dialogId: string) => void;
-};
+}
 
 const useDialogStore = create<DialogStore>((set, get) => ({
   dialogs: [],
@@ -30,7 +30,7 @@ const useDialogStore = create<DialogStore>((set, get) => ({
         label: dialog.cancel?.label ?? "Cancel",
         onClick: () => {
           removeDialog(id);
-          dialog.cancel?.onClick?.();
+          dialog.cancel?.onClick();
         },
       },
       action: {

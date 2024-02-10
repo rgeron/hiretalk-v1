@@ -6,7 +6,7 @@ import { logger } from "@/lib/logger";
 import type { ErrorParams } from "@/types/next";
 import { useEffect } from "react";
 
-export default function RouteError({ error, reset }: ErrorParams) {
+export default function RouteError({ error }: ErrorParams) {
   useEffect(() => {
     // Log the error to an error reporting service
     logger.error(error);

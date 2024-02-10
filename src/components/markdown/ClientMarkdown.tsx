@@ -3,7 +3,7 @@ import { rehypePlugins, remarkPlugins } from "./markdown.config";
 
 export type ClientMarkdownProps = {
   markdown: string;
-};
+}
 
 export const ClientMarkdown = (props: ClientMarkdownProps) => {
   return (

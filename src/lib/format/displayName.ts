@@ -1,4 +1,4 @@
-interface User {
+type User = {
   email: string;
   name?: string | null;
 }

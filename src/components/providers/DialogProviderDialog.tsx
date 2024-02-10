@@ -24,7 +24,7 @@ export type ConfirmationDialogProps = {
     onClick: () => void | Promise<void>;
   };
   loading?: boolean;
-};
+}
 
 export const ProviderConfirmationDialog = ({
   title,

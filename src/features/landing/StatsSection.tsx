@@ -4,7 +4,7 @@ import { animate } from "framer-motion";
 import { useEffect, useRef } from "react";
 import { SectionLayout } from "./SectionLayout";
 
-interface StatProps {
+type StatProps = {
   number: number;
   suffix: string;
   text: string;

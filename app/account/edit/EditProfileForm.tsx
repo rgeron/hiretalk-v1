@@ -20,12 +20,12 @@ import { ProfileFormSchema } from "./edit-profile.schema";
 
 type SchoolFormProps = {
   defaultValues: ProfileFormType;
-};
+}
 
 export const EditProfileForm = ({ defaultValues }: SchoolFormProps) => {
   const form = useZodForm({
     schema: ProfileFormSchema,
-    defaultValues: defaultValues ?? {},
+    defaultValues: defaultValues,
   });
   const router = useRouter();
 

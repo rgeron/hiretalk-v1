@@ -58,7 +58,7 @@ export type NextTopLoaderProps = {
    * @default 0
    */
   delay?: number;
-};
+}
 
 const isAnchorOfCurrentUrl = (currentUrl: string, newUrl: string) => {
   const currentUrlObj = new URL(currentUrl);

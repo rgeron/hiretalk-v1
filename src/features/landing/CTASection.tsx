@@ -9,7 +9,7 @@ export type CTASectionProps = {
   subtitle: string;
   ctaHref: string;
   ctaLabel: string;
-};
+}
 
 export const CTASection = (props: CTASectionProps) => {
   return (

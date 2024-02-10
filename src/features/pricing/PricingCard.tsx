@@ -21,7 +21,7 @@ export type PricingCardProps = {
   cta: string;
   ctaSubtitle: string;
   priceId: string;
-};
+}
 
 export const PricingCard = (props: PricingCardProps) => {
   return (

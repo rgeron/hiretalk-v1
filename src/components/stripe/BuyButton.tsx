@@ -44,7 +44,7 @@ export const BuyButton = ({ priceId, ...props }: BuyButtonProps) => {
     <Button
       onClick={() => mutation.mutate()}
       {...props}
-      disabled={mutation.isPending ?? props.disabled}
+      disabled={mutation.isPending || props.disabled}
     />
   );
 };

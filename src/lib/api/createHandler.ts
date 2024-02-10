@@ -9,13 +9,13 @@ export type MiddlewareFn<TContext> = (req: NextRequest) => Promise<TContext>;
 type CreateHandlerParams<TContext> = {
   middleware?: MiddlewareFn<TContext>;
   handleReturnedServerError?: HandleReturnedServerErrorFn;
-};
+}
 
 type HandlerParams<TBody, TParams, TSearchParams> = {
   bodySchema?: TBody;
   searchSchema?: TSearchParams;
   paramsSchema?: TParams;
-};
+}
 
 type Callback<TContext, TBody, TParams, TSearchParams> = (params: {
   request: NextRequest;

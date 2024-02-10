@@ -13,11 +13,11 @@ type Feature = {
   icon: ReactNode;
   gif: string;
   description: string;
-};
+}
 
 export type FeaturesPreviewProps = {
   features: Feature[];
-};
+}
 
 export const FeaturesPreviewSection = (props: FeaturesPreviewProps) => {
   const [currentFeature, setCurrentFeature] = useState<number>(0);

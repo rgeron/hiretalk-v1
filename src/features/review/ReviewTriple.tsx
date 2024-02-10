@@ -4,7 +4,7 @@ import { ReviewItem } from "./ReviewItem";
 
 export type ReviewTripleProps = {
   reviews: [ReviewItemProps, ReviewItemProps, ReviewItemProps];
-};
+}
 
 export const ReviewTriple = (props: ReviewTripleProps) => {
   return (

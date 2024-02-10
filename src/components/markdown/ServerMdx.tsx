@@ -5,7 +5,7 @@ import { rehypePlugins, remarkPlugins } from "./markdown.config";
 
 export type ServerMdxProps = {
   source: string;
-};
+}
 
 // * If you want to add custom component, such as an "EmailForm", you can add it to the MdxComponent object.
 const MdxComponent = {} satisfies Record<string, React.ComponentType>;

@@ -10,7 +10,7 @@ import { toggleSubscribedAction } from "./mail-account.action";
 
 type ToggleEmailCheckboxProps = {
   unsubscribed: boolean;
-};
+}
 
 export const ToggleEmailCheckbox = ({
   unsubscribed,

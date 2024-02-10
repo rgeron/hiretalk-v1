@@ -34,6 +34,6 @@
     "@typescript-eslint/prefer-optional-chain": 2,
     "@typescript-eslint/prefer-string-starts-ends-with": 2,
     "@typescript-eslint/consistent-type-exports": 2,
-    "@typescript-eslint/consistent-type-definitions": 2
+    "@typescript-eslint/consistent-type-definitions": ["error", "type"]
   }
 }

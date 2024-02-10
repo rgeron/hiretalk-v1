@@ -33,8 +33,7 @@ export const getCredentialsProvider = () => {
       password: { label: "Password", type: "password" },
     },
     async authorize(credentials) {
-      if (!credentials || !credentials.email || !credentials.password)
-        return null;
+      if (!credentials.email || !credentials.password) return null;
 
       // Add logic here to look up the user from the credentials supplied
       const passwordHash = hashStringWithSalt(
@@ -85,15 +84,11 @@ export const credentialsSignInCallback =
 
     const currentUrl = request.url;
 
-    if (!currentUrl?.includes("credentials")) {
+    if (!currentUrl.includes("credentials")) {
       return;
     }
 
-    if (!currentUrl?.includes("callback")) {
-      return;
-    }
-
-    if (!user) {
+    if (!currentUrl.includes("callback")) {
       return;
     }
 

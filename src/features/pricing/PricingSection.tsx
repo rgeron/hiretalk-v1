@@ -4,7 +4,7 @@ import { PricingCard, type PricingCardProps } from "./PricingCard";
 
 export type PricingProps = {
   cards: PricingCardProps[];
-};
+}
 
 export const Pricing = (props: PricingProps) => {
   return (

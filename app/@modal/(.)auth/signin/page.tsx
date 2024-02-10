@@ -11,7 +11,7 @@ export default function Page() {
 
   return (
     <Dialog
-      open={path?.startsWith("/auth/signin")}
+      open={path.startsWith("/auth/signin")}
       onOpenChange={(open) => {
         if (!open) {
           router.back();
