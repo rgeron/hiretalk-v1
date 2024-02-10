@@ -5,7 +5,7 @@ import prisma from "@/lib/prisma";
 import { ActionError, authAction } from "@/lib/server-actions/safe-actions";
 import { SiteConfig } from "@/site-config";
 import { z } from "zod";
-import DeleteAccountEmail from "../../../emails/DeleteAccountEmail";
+import DeleteAccountEmail from "../../../../emails/DeleteAccountEmail";
 
 export const deleteAccountAction = authAction(z.any(), async (_, ctx) => {
   const userId = ctx.user.id;

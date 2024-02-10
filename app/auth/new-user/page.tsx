@@ -7,12 +7,17 @@ import {
 } from "@/components/page/layout";
 import { buttonVariants } from "@/components/ui/button";
 import { Header } from "@/features/layout/Header";
+import type { PageParams } from "@/types/next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default function SuccessPaymentPage() {
-  // You can delete this line if you want to use the "new-user" page to create an onboarding.
-  redirect("/");
+export default function SuccessPaymentPage(props: PageParams) {
+  const callbackUrl =
+    typeof props.searchParams.callbackUrl === "string"
+      ? props.searchParams.callbackUrl
+      : "/";
+
+  redirect(callbackUrl);
 
   return (
     <>

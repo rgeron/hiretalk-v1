@@ -1,6 +1,6 @@
 "use client";
 
-import { Page500 } from "@/components/page/Page500";
+import { Page400 } from "@/components/page/Page400";
 import { HeaderBase } from "@/features/layout/HeaderBase";
 
 export default function ErrorPage() {
@@ -8,7 +8,7 @@ export default function ErrorPage() {
     <div className="relative flex min-h-screen flex-col">
       <HeaderBase />
       <div className="flex flex-1 items-center justify-center">
-        <Page500 />
+        <Page400 />
       </div>
     </div>
   );

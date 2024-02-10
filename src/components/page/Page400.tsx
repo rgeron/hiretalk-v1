@@ -3,11 +3,11 @@ import Link from "next/link";
 import { buttonVariants } from "../ui/button";
 import { Typography } from "../ui/typography";
 
-export function Page500() {
+export function Page400() {
   return (
     <main className="flex flex-col items-center gap-8">
-      <div className="space-y-3 text-center">
-        <Typography variant="code">500</Typography>
+      <div className="max-w-lg space-y-3 text-center">
+        <Typography variant="code">400</Typography>
         <Typography variant="h1">Oh No! Unexpected Error.</Typography>
         <Typography variant="base">
           It seems we're experiencing some technical difficulties. Not to worry,
