@@ -1,3 +1,5 @@
+"use client";
+
 import { LogoSvg } from "@/components/svg/LogoSvg";
 import { SiteConfig } from "@/site-config";
 import {
