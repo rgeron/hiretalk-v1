@@ -16,7 +16,7 @@ export const ReviewSmall = (props: ReviewSmallProps) => {
         {props.avatars.map((avatar) => (
           <Avatar
             key={avatar}
-            className="-mr-4 h-12 w-12 border-4 border-background last:mr-0"
+            className="-mr-4 size-12 border-4 border-background last:mr-0"
           >
             <AvatarFallback>A</AvatarFallback>
             <AvatarImage src={avatar} alt="avatar" />

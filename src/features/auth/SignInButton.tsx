@@ -17,7 +17,7 @@ const useHost = () => {
   return `${host}`;
 };
 
-export const LoginButton = () => {
+export const SignInButton = () => {
   const host = useHost();
   const pathname = usePathname();
 

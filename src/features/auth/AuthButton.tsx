@@ -1,7 +1,7 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
 import { auth } from "@/lib/auth/auth";
-import { LoginButton } from "./LoginButton";
+import { SignInButton } from "./SignInButton";
 import { UserDropdown } from "./UserDropdown";
 
 export const AuthButton = async () => {
@@ -23,5 +23,5 @@ export const AuthButton = async () => {
     );
   }
 
-  return <LoginButton />;
+  return <SignInButton />;
 };

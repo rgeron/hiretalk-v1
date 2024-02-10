@@ -6,13 +6,10 @@ import {
 } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
 import { SiteConfig } from "@/site-config";
+import type { PageParams } from "@/types/next";
 import Image from "next/image";
 
-export default async function AuthNewUserPage({
-  searchParams,
-}: {
-  searchParams: Record<string, string>;
-}) {
+export default async function AuthNewUserPage(props: PageParams) {
   return (
     <div className="h-full">
       <header className="flex items-center gap-2 px-4 pt-4">

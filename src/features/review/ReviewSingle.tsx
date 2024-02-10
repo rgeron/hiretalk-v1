@@ -18,7 +18,7 @@ export const ReviewSingle = (props: ReviewSingleProps) => {
           <img
             src={props.image}
             alt="review image"
-            className="h-full w-full -rotate-1 border-4 border-background object-cover shadow-lg shadow-foreground/20"
+            className="size-full -rotate-1 border-4 border-background object-cover shadow-lg shadow-foreground/20"
           />
         </AspectRatio>
       </div>

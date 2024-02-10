@@ -6,7 +6,7 @@ import { useMutation } from "@tanstack/react-query";
 import { LogOut } from "lucide-react";
 import { signOut } from "next-auth/react";
 
-export const LogoutButton = () => {
+export const SignOutButton = () => {
   const logout = useMutation({
     mutationFn: () => signOut(),
   });
@@ -18,9 +18,9 @@ export const LogoutButton = () => {
       }}
     >
       {logout.isPending ? (
-        <Loader className="mr-2 h-4 w-4" />
+        <Loader className="mr-2 size-4" />
       ) : (
-        <LogOut className="mr-2 h-4 w-4" />
+        <LogOut className="mr-2 size-4" />
       )}
       Logout
     </Button>

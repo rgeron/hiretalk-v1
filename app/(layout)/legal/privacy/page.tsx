@@ -11,7 +11,7 @@ export default function page() {
         <Typography variant="h1">Privacy</Typography>
       </div>
       <Layout>
-        <LayoutContent className="prose dark:prose-invert mb-8">
+        <LayoutContent className="prose mb-8 dark:prose-invert">
           <MDXRemote source={markdown} />
         </LayoutContent>
       </Layout>

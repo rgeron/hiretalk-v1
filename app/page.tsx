@@ -27,6 +27,7 @@ export default function HomePage() {
       <PainSection />
 
       <SectionDivider />
+
       <ReviewTriple
         reviews={[
           {
