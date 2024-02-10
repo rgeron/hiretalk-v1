@@ -4,7 +4,7 @@ import { cn } from "@/lib/utils";
 import { Rocket } from "lucide-react";
 import Link from "next/link";
 import { Typography } from "../../components/ui/typography";
-import { ReviewSmall } from "../review/ReviewSmall";
+import { ReviewSmall } from "./review/ReviewSmall";
 
 export const Hero = () => {
   return (

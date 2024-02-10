@@ -1,6 +1,5 @@
 "use client";
 
-import { SubmitButton } from "@/components/form/SubmitButton";
 import {
   Form,
   FormControl,
@@ -11,6 +10,7 @@ import {
   useZodForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { SubmitButton } from "@/features/form/SubmitButton";
 import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
@@ -20,7 +20,7 @@ import { ProfileFormSchema } from "./edit-profile.schema";
 
 type SchoolFormProps = {
   defaultValues: ProfileFormType;
-}
+};
 
 export const EditProfileForm = ({ defaultValues }: SchoolFormProps) => {
   const form = useZodForm({
@@ -35,7 +35,7 @@ export const EditProfileForm = ({ defaultValues }: SchoolFormProps) => {
     if (values.email !== defaultValues.email) {
       await signIn("email", { email: values.email });
       toast.success(
-        "You have updated your email. We have sent you a new email verification link."
+        "You have updated your email. We have sent you a new email verification link.",
       );
       router.push("/");
       return;

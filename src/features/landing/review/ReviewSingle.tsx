@@ -1,7 +1,7 @@
-import { ClientMarkdown } from "@/components/markdown/ClientMarkdown";
 import { Layout } from "@/components/page/layout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Typography } from "@/components/ui/typography";
+import { ClientMarkdown } from "@/features/markdown/ClientMarkdown";
 
 export type ReviewSingleProps = {
   image: string;

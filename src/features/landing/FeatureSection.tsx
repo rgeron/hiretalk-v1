@@ -1,9 +1,9 @@
 "use client";
 
-import { ClientMarkdown } from "@/components/markdown/ClientMarkdown";
 import { DotPattern } from "@/components/svg/DotPattern";
 import { Badge } from "@/components/ui/badge";
 import { Typography } from "@/components/ui/typography";
+import { ClientMarkdown } from "@/features/markdown/ClientMarkdown";
 import type { ReactNode } from "react";
 import { SectionLayout } from "./SectionLayout";
 

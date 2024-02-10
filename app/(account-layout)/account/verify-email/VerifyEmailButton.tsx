@@ -1,6 +1,6 @@
 "use client";
 
-import { LoadingButton } from "@/components/form/SubmitButton";
+import { LoadingButton } from "@/features/form/SubmitButton";
 import { Check, X } from "lucide-react";
 import { useAction } from "next-safe-action/hooks";
 import { toast } from "sonner";

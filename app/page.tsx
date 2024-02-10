@@ -7,11 +7,11 @@ import { LandingHeader } from "@/features/landing/LandingHeader";
 import { PainSection } from "@/features/landing/Pain";
 import { SectionDivider } from "@/features/landing/SectionDivider";
 import StatsSection from "@/features/landing/StatsSection";
+import { Pricing } from "@/features/landing/pricing/PricingSection";
+import { ReviewGrid } from "@/features/landing/review/ReviewGrid";
+import { ReviewSingle } from "@/features/landing/review/ReviewSingle";
+import { ReviewTriple } from "@/features/landing/review/ReviewTriple";
 import { Footer } from "@/features/layout/Footer";
-import { Pricing } from "@/features/pricing/PricingSection";
-import { ReviewGrid } from "@/features/review/ReviewGrid";
-import { ReviewSingle } from "@/features/review/ReviewSingle";
-import { ReviewTriple } from "@/features/review/ReviewTriple";
 import Image from "next/image";
 
 export default function HomePage() {

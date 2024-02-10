@@ -1,5 +1,5 @@
 import { Typography } from "@/components/ui/typography";
-import { SectionLayout } from "../landing/SectionLayout";
+import { SectionLayout } from "../SectionLayout";
 import { PricingCard, type PricingCardProps } from "./PricingCard";
 
 export type PricingProps = {

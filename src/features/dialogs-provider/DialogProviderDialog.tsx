@@ -9,8 +9,8 @@ import {
   AlertDialogFooter,
   AlertDialogHeader,
   AlertDialogTitle,
-} from "../ui/alert-dialog";
-import { Loader } from "../ui/loader";
+} from "../../components/ui/alert-dialog";
+import { Loader } from "../../components/ui/loader";
 
 export type ConfirmationDialogProps = {
   title: string;
@@ -24,7 +24,7 @@ export type ConfirmationDialogProps = {
     onClick: () => void | Promise<void>;
   };
   loading?: boolean;
-}
+};
 
 export const ProviderConfirmationDialog = ({
   title,
