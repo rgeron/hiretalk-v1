@@ -1,6 +1,8 @@
+import { ClientMarkdown } from "@/components/markdown/ClientMarkdown";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Card, CardContent, CardHeader } from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
+import { cn } from "@/lib/utils";
 import type { ComponentPropsWithoutRef } from "react";
 
 export type ReviewItemProps = {
@@ -10,14 +12,11 @@ export type ReviewItemProps = {
   image: string;
 } & ComponentPropsWithoutRef<"div">;
 
-export const ReviewItem = (props: ReviewItemProps) => {
+export const ReviewItem = ({ className, ...props }: ReviewItemProps) => {
   return (
-    <Card {...props}>
+    <Card className={cn("h-fit", className)} {...props}>
       <CardHeader>
-        <Typography
-          variant="quote"
-          dangerouslySetInnerHTML={{ __html: props.review }}
-        />
+        <ClientMarkdown className="citation">{props.review}</ClientMarkdown>
       </CardHeader>
       <CardContent className="flex items-center gap-2 rounded-lg bg-background pt-6">
         <div>

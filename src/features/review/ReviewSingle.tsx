@@ -1,4 +1,4 @@
-import { ServerMdx } from "@/components/markdown/ServerMdx";
+import { ClientMarkdown } from "@/components/markdown/ClientMarkdown";
 import { Layout } from "@/components/page/layout";
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Typography } from "@/components/ui/typography";
@@ -15,10 +15,9 @@ export const ReviewSingle = (props: ReviewSingleProps) => {
   return (
     <Layout className="flex flex-col items-center gap-8">
       <div className="flex flex-1 flex-col gap-4">
-        <ServerMdx
-          className="citation prose-2xl text-center"
-          source={props.review}
-        />
+        <ClientMarkdown className="citation prose-2xl text-center">
+          {props.review}
+        </ClientMarkdown>
         <div className="m-auto flex gap-2">
           <Avatar className="size-16">
             <AvatarFallback>{props.name[0]}</AvatarFallback>

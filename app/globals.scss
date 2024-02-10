@@ -4,9 +4,6 @@
 
 @layer base {
   :root {
-    color: hsl(240, 5%, 96%);
-    color2: hsl(240, 6%, 90%);
-    border: hsl(240, 5%, 65%);
     --background: 240 5% 96%;
     --foreground: 20 14.3% 4.1%;
     --card: 240 4% 94%;
@@ -91,7 +88,7 @@
   color: hsl(var(--primary));
 }
 
-.citation b {
+.citation strong {
   font-weight: 700;
   background: hsl(var(--primary) / 0.5);
   display: inline;
