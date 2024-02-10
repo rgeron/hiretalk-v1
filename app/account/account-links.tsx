@@ -5,6 +5,7 @@ export const ACCOUNT_LINKS: NavigationLinkGroups[] = [
   {
     title: "PERSONAL INFORMATION",
     links: [
+      { url: "/account", title: "Profile", icon: <User2 /> },
       { url: "/account/edit", title: "Edit profile", icon: <User2 /> },
       {
         url: "/account/delete",

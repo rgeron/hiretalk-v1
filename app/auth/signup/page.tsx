@@ -1,7 +1,7 @@
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Loader } from "@/components/ui/loader";
 import { Typography } from "@/components/ui/typography";
-import { auth } from "@/lib/auth/auth";
+import { auth } from "@/lib/auth/helper";
 import { SiteConfig } from "@/site-config";
 import Image from "next/image";
 import Link from "next/link";
@@ -10,9 +10,9 @@ import { Suspense } from "react";
 import { SignUpCredentialsForm } from "./SignUpCredentialsForm";
 
 export default async function AuthSignInPage() {
-  const session = await auth();
+  const user = await auth();
 
-  if (session) {
+  if (user) {
     redirect("/");
   }
 

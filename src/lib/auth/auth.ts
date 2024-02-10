@@ -15,7 +15,7 @@ import { setupResendCustomer, setupStripeCustomer } from "./auth-config-setup";
 
 export const {
   handlers,
-  auth,
+  auth: baseAuth,
   // TODO : Use req callback
 } = NextAuth((req) => ({
   pages: {

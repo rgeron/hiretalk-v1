@@ -10,7 +10,7 @@ import { DASHBOARD_LINKS } from "../../../app/(dashboard-layout)/dashboard-links
 import type { NavigationLinkGroups } from "./navigation.type";
 
 const useCurrentPath = (links: NavigationLinkGroups[]) => {
-  const currentPath = usePathname() ?? "";
+  const currentPath = usePathname();
   const pathSegments = currentPath.split("/");
   const allDashboardLinks = links.flatMap((section) => section.links);
 
@@ -28,8 +28,6 @@ const useCurrentPath = (links: NavigationLinkGroups[]) => {
         : maxMatchLink,
     { url: "", matchCount: 0 }
   );
-
-  console.log(linkMatchCounts);
 
   return mostMatchingLink.url;
 };

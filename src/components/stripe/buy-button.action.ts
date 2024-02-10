@@ -1,7 +1,6 @@
 "use server";
 
-import { auth } from "@/lib/auth/auth";
-import prisma from "@/lib/prisma";
+import { auth } from "@/lib/auth/helper";
 import { ActionError, action } from "@/lib/server-actions/safe-actions";
 import { getServerUrl } from "@/lib/server-url";
 import { stripe } from "@/lib/stripe";
@@ -13,21 +12,9 @@ const BuyButtonSchema = z.object({
 
 export const buyButtonAction = action(BuyButtonSchema, async (data) => {
   const { priceId } = data;
-  const authSession = await auth();
+  const user = await auth();
 
-  let stripeCustomerId: string | undefined;
-
-  if (authSession?.user.id) {
-    const user = await prisma.user.findUnique({
-      where: {
-        id: authSession.user.id,
-      },
-      select: {
-        stripeCustomerId: true,
-      },
-    });
-    stripeCustomerId = user?.stripeCustomerId ?? undefined;
-  }
+  const stripeCustomerId = user?.stripeCustomerId ?? undefined;
 
   const price = await stripe.prices.retrieve(priceId);
 

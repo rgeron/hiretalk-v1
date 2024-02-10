@@ -35,11 +35,6 @@ export const POST = async (req: NextRequest) => {
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
-  if (!event) {
-    logger.debug("Request FAILED - EVENT");
-    return NextResponse.json({ error: "invalid" }, { status: 400 });
-  }
-
   switch (event.type) {
     case "checkout.session.completed":
       await onCheckoutSessionCompleted(event.data.object);
@@ -93,7 +88,7 @@ async function onCheckoutSessionCompleted(object: Stripe.Checkout.Session) {
 async function onCheckoutSessionExpired(object: Stripe.Checkout.Session) {
   // The user didn't complete the transaction
   // 📧 (optional) Send an abandoned cart email
-  console.log("Checkout session expired", object);
+  logger.debug("Checkout session expired", object);
 }
 
 async function onInvoicePaid(object: Stripe.Invoice) {
@@ -106,7 +101,7 @@ async function onInvoicePaid(object: Stripe.Invoice) {
   await upgradeUserToPlan(
     user.id,
     // TODO :Verify if it's right values
-    await getPlanFromLineItem(object.lines?.data)
+    await getPlanFromLineItem(object.lines.data)
   );
 }
 

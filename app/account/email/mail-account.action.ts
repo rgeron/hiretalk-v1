@@ -3,14 +3,14 @@
 import { requiredAuth } from "@/lib/auth/helper";
 import { env } from "@/lib/env";
 import { resend } from "@/lib/mail/resend";
-import { ActionError, userAction } from "@/lib/server-actions/safe-actions";
+import { ActionError, authAction } from "@/lib/server-actions/safe-actions";
 import { z } from "zod";
 
 const ToggleSubscribedActionSchema = z.object({
   unsubscribed: z.boolean(),
 });
 
-export const toggleSubscribedAction = userAction(
+export const toggleSubscribedAction = authAction(
   ToggleSubscribedActionSchema,
   async (data) => {
     const user = await requiredAuth();

@@ -12,8 +12,8 @@ export const SiteConfig = {
     primary: "#007291",
   },
   email: {
-    from: "contact@codeline.app",
-    contact: "contact@codeline.app",
+    from: "NowTS <contact@nowts.app>",
+    contact: "NowTS <contact@nowts.app>",
   },
   maker: {
     image: "https://melvynx.com/images/me/twitter-en.jpg",

@@ -1,11 +1,6 @@
-import type { LayoutParams } from "@/types/next";
-import { AccountNavigation } from "./AccountNavigation";
 import { Skeleton } from "@/components/ui/skeleton";
+import type { LayoutParams } from "@/types/next";
 
 export default async function RouteLayout(props: LayoutParams<{}>) {
-  return (
-    <AccountNavigation>
-      <Skeleton className="h-12" />
-    </AccountNavigation>
-  );
+  return <Skeleton className="h-12" />;
 }

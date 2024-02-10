@@ -1,7 +1,7 @@
 "use client";
 
-import { Button } from "@/components/ui/button";
 import { Card, CardFooter, CardHeader, CardTitle } from "@/components/ui/card";
+import { SignInButton } from "@/features/auth/SignInButton";
 import { logger } from "@/lib/logger";
 import type { ErrorParams } from "@/types/next";
 import { useEffect } from "react";
@@ -16,11 +16,11 @@ export default function RouteError({ error, reset }: ErrorParams) {
     <Card>
       <CardHeader>
         <CardTitle>
-          Sorry, something went wrong. Please try again later.
+          You need to be authenticated to access this resource.
         </CardTitle>
       </CardHeader>
       <CardFooter>
-        <Button onClick={reset}>Try again</Button>
+        <SignInButton variant="invert" size="lg" />
       </CardFooter>
     </Card>
   );

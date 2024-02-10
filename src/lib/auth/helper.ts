@@ -1,14 +1,29 @@
 import type { User } from "@prisma/client";
-import { auth } from "./auth";
+import { baseAuth } from "./auth";
 
-export const requiredAuth = async () => {
-  const session = await auth();
+export class AuthError extends Error {
+  constructor(message: string) {
+    super(message);
+  }
+}
 
-  if (!session?.user) {
-    throw new Error("You must be authenticated to access this resource.");
+export const auth = async () => {
+  const session = await baseAuth();
+
+  if (session?.user) {
+    const user = session.user as User;
+    return user;
   }
 
-  const user = session.user as User;
+  return null;
+};
+
+export const requiredAuth = async () => {
+  const user = await auth();
+
+  if (!user) {
+    throw new AuthError("You must be authenticated to access this resource.");
+  }
 
   return user;
 };

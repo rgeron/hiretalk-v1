@@ -7,13 +7,13 @@ import {
 import { requiredAuth } from "@/lib/auth/helper";
 import { env } from "@/lib/env";
 import prisma from "@/lib/prisma";
-import { ActionError, userAction } from "@/lib/server-actions/safe-actions";
+import { ActionError, authAction } from "@/lib/server-actions/safe-actions";
 import {
   EditPasswordFormSchema,
   ProfileFormSchema,
 } from "./edit-profile.schema";
 
-export const updateProfileAction = userAction(
+export const updateProfileAction = authAction(
   ProfileFormSchema,
   async (input, ctx) => {
     const user = await prisma.user.update({
@@ -27,7 +27,7 @@ export const updateProfileAction = userAction(
   }
 );
 
-export const editPasswordAction = userAction(
+export const editPasswordAction = authAction(
   EditPasswordFormSchema,
   async (input, ctx) => {
     const user = await requiredAuth();

@@ -1,5 +1,5 @@
-import { auth } from "@/lib/auth/auth";
 import { NextResponse } from "next/server";
+import { auth } from "../auth/helper";
 import type { HandleReturnedServerErrorFn } from "./createHandler";
 import { createHandler } from "./createHandler";
 
@@ -36,15 +36,11 @@ export const authHandler = createHandler({
   handleReturnedServerError,
 
   async middleware() {
-    const session = await auth();
+    const user = await auth();
 
-    if (!session) {
+    if (!user) {
       throw new HandlerError("Session not found!", 401);
     }
-
-    // In the real world, you would check if the session is valid by querying a database.
-    // We'll keep it very simple here.
-    const user = session.user;
 
     if (!user.id || !user.email) {
       throw new HandlerError("Session is not valid!", 401);

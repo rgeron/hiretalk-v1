@@ -1,23 +1,23 @@
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button } from "@/components/ui/button";
-import { auth } from "@/lib/auth/auth";
+import { auth } from "@/lib/auth/helper";
 import { SignInButton } from "./SignInButton";
 import { UserDropdown } from "./UserDropdown";
 
 export const AuthButton = async () => {
-  const session = await auth();
+  const user = await auth();
 
-  if (session?.user) {
+  if (user) {
     return (
       <UserDropdown>
         <Button variant="outline" size="sm">
           <Avatar className="mr-2 size-6">
             <AvatarFallback>
-              {session.user.email ? session.user.email.slice(0, 2) : "??"}
+              {user.email ? user.email.slice(0, 2) : "??"}
             </AvatarFallback>
-            {session.user.image && <AvatarImage src={session.user.image} />}
+            {user.image && <AvatarImage src={user.image} />}
           </Avatar>
-          <span className="max-lg:hidden">{session.user.name}</span>
+          <span className="max-lg:hidden">{user.name}</span>
         </Button>
       </UserDropdown>
     );
