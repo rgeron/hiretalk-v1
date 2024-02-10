@@ -16,6 +16,7 @@ import { Calendar, CalendarClock, Eye, Repeat } from "lucide-react";
 export default function HomePage() {
   return (
     <div className="flex h-fit flex-col gap-2">
+      <div className="mt-16"></div>
       <LandingHeader />
 
       <Hero />

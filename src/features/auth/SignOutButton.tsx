@@ -10,6 +10,7 @@ export const SignOutButton = () => {
   const logout = useMutation({
     mutationFn: () => signOut(),
   });
+
   return (
     <Button
       size="sm"

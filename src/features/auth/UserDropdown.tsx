@@ -18,9 +18,7 @@ import type { PropsWithChildren } from "react";
 
 export const UserDropdown = ({ children }: PropsWithChildren) => {
   const logout = useMutation({
-    mutationFn: async () => {
-      signOut();
-    },
+    mutationFn: () => signOut(),
   });
 
   return (
