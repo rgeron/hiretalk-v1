@@ -4,12 +4,12 @@ import { PricingCard, type PricingCardProps } from "./PricingCard";
 
 export type PricingProps = {
   cards: PricingCardProps[];
-}
+};
 
 export const Pricing = (props: PricingProps) => {
   return (
     <SectionLayout
-      size="lg"
+      size="base"
       className="flex w-full flex-col items-center gap-16"
     >
       <div className="space-y-2 text-center">

@@ -98,3 +98,13 @@
   padding: 2px;
   margin: -2px;
 }
+
+.dot-pattern {
+  background-color: var(--dot-background);
+  opacity: 0.8;
+  background-image: radial-gradient(
+    var(--dot-color) 0.5px,
+    var(--dot-background) 0.5px
+  );
+  background-size: var(--size, 10px) var(--size, 10px);
+}

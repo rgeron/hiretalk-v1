@@ -1,18 +1,23 @@
+import { cn } from "@/lib/utils";
+import type { ComponentPropsWithoutRef } from "react";
 import Markdown from "react-markdown";
 import { rehypePlugins, remarkPlugins } from "./markdown.config";
 
-export type ClientMarkdownProps = {
-  markdown: string;
-}
+export type ClientMarkdownProps = ComponentPropsWithoutRef<typeof Markdown>;
 
-export const ClientMarkdown = (props: ClientMarkdownProps) => {
+export const ClientMarkdown = ({
+  children,
+  className,
+  ...props
+}: ClientMarkdownProps) => {
   return (
     <Markdown
       rehypePlugins={rehypePlugins}
-      remarkPlugins={remarkPlugins}
-      className="prose dark:prose-invert"
+      remarkPlugins={remarkPlugins as never}
+      className={cn("prose dark:prose-invert", className)}
+      {...props}
     >
-      {props.markdown}
+      {children}
     </Markdown>
   );
 };

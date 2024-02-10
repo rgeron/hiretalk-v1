@@ -21,22 +21,27 @@ export type PricingCardProps = {
   cta: string;
   ctaSubtitle: string;
   priceId: string;
-}
+  className?: string;
+};
 
 export const PricingCard = (props: PricingCardProps) => {
   return (
     <Card
-      className={cn("h-fit bg-card max-w-md flex-1 relative", {
-        "border-primary border-2 shadow-lg": props.isPopular,
-        "border-border border-2 shadow-lg": !props.isPopular,
-      })}
+      className={cn(
+        "border-[0.5px] h-fit lg:rounded-3xl rounded-3xl flex-1 p-6 ring-1 ring-gray-900/10 sm:p-8",
+        {
+          "relative bg-background shadow-2xl": props.isPopular,
+          "bg-background/60 sm:mx-8 lg:mx-0": !props.isPopular,
+        },
+        props.className,
+      )}
     >
       {props.isPopular ? (
         <div className="absolute inset-x-0 top-0 flex items-center justify-center">
           <Badge className="-translate-y-1/2">Popular</Badge>
         </div>
       ) : null}
-      <CardHeader className="flex flex-col items-center gap-6 lg:gap-8">
+      <CardHeader className="flex flex-col items-start gap-6 lg:gap-8">
         <p className="gap-4 text-lg font-bold uppercase text-primary">
           {props.title}
         </p>

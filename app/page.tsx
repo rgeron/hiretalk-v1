@@ -1,7 +1,7 @@
 import { BentoGridSection } from "@/features/landing/BentoSection";
 import { CTASection } from "@/features/landing/CTASection";
 import { FAQSection } from "@/features/landing/FAQSection";
-import { FeaturesPreviewSection } from "@/features/landing/FeaturesPreviewSection";
+import { FeaturesSection } from "@/features/landing/FeatureSection";
 import { Hero } from "@/features/landing/Hero";
 import { LandingHeader } from "@/features/landing/LandingHeader";
 import { PainSection } from "@/features/landing/Pain";
@@ -10,8 +10,9 @@ import StatsSection from "@/features/landing/StatsSection";
 import { Footer } from "@/features/layout/Footer";
 import { Pricing } from "@/features/pricing/PricingSection";
 import { ReviewGrid } from "@/features/review/ReviewGrid";
+import { ReviewSingle } from "@/features/review/ReviewSingle";
 import { ReviewTriple } from "@/features/review/ReviewTriple";
-import { Calendar, CalendarClock, Eye, Repeat } from "lucide-react";
+import Image from "next/image";
 
 export default function HomePage() {
   return (
@@ -53,34 +54,75 @@ export default function HomePage() {
       />
       <SectionDivider />
 
-      <FeaturesPreviewSection
+      <ReviewSingle
+        image="https://i.pravatar.cc/300?u=5"
+        name="Michel"
+        review={`Threader has completely transformed the way I manage my social media content. The ability to schedule posts and use AI for content suggestions has saved me hours each week.`}
+        role="Digital Marketer"
+        compagnyImage="https://1000logos.net/wp-content/uploads/2017/03/McDonalds-Logo-2003.png"
+        key={1}
+      />
+
+      <FeaturesSection
         features={[
           {
-            label: "Schedule your post",
-            icon: <Calendar />,
+            badge: "⏰ Schedule",
+            title: "Schedule your post",
             description: "Schedule your post on the Threader in a few clicks.",
-            gif: "/images/placeholder1.gif",
+            component: (
+              <Image
+                src="/images/placeholder1.gif"
+                alt=""
+                width={200}
+                height={100}
+                className="h-auto w-full object-cover"
+              />
+            ),
           },
           {
-            label: "See what you scheduled",
-            icon: <CalendarClock />,
+            badge: "📅 Calendar",
+            title: "See what you scheduled",
             description:
               "With the calendar view, you can see what you scheduled and when.",
-            gif: "/images/placeholder1.gif",
+            component: (
+              <Image
+                src="/images/placeholder1.gif"
+                alt=""
+                width={200}
+                height={100}
+                className="h-auto w-full object-cover"
+              />
+            ),
           },
           {
-            label: "Preview your post",
-            icon: <Eye />,
+            badge: "👁️ Preview",
+            title: "Preview your post",
             description:
               "Preview your post before scheduling it to see how it will look like.",
-            gif: "/images/placeholder1.gif",
+            component: (
+              <Image
+                src="/images/placeholder1.gif"
+                alt=""
+                width={200}
+                height={100}
+                className="h-auto w-full object-cover"
+              />
+            ),
           },
           {
-            label: "Schedule repost",
-            icon: <Repeat />,
+            badge: "🔄 Repost",
+            title: "Schedule repost",
             description:
               "Automatically repost your post after a certain amount of time.",
-            gif: "/images/placeholder1.gif",
+            component: (
+              <Image
+                src="/images/placeholder1.gif"
+                alt=""
+                width={200}
+                height={100}
+                className="h-auto w-full object-cover"
+              />
+            ),
           },
         ]}
       />

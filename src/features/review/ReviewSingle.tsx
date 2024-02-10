@@ -1,5 +1,6 @@
+import { ServerMdx } from "@/components/markdown/ServerMdx";
 import { Layout } from "@/components/page/layout";
-import { AspectRatio } from "@/components/ui/aspect-ratio";
+import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Typography } from "@/components/ui/typography";
 
 export type ReviewSingleProps = {
@@ -8,30 +9,43 @@ export type ReviewSingleProps = {
   name: string;
   role: string;
   compagnyImage?: string;
-}
+};
 
 export const ReviewSingle = (props: ReviewSingleProps) => {
   return (
-    <Layout className="flex items-center gap-8 max-lg:flex-col">
-      <div className="flex-1" style={{ maxWidth: 250 }}>
-        <AspectRatio ratio={2 / 3}>
-          <img
-            src={props.image}
-            alt="review image"
-            className="size-full -rotate-1 border-4 border-background object-cover shadow-lg shadow-foreground/20"
-          />
-        </AspectRatio>
-      </div>
+    <Layout className="flex flex-col items-center gap-8">
       <div className="flex flex-1 flex-col gap-4">
-        <Typography variant="h3">{props.review}</Typography>
-        <div className="flex gap-2">
+        <ServerMdx
+          className="citation prose-2xl text-center"
+          source={props.review}
+        />
+        <div className="m-auto flex gap-2">
+          <Avatar className="size-16">
+            <AvatarFallback>{props.name[0]}</AvatarFallback>
+            <AvatarImage src={props.image} alt={props.name} />
+          </Avatar>
           <div className="flex flex-col gap-0.5">
             <Typography variant="large">{props.name}</Typography>
-            <Typography variant="small">{props.role}</Typography>
+            <p className="inline-flex items-center gap-0.5">
+              <Typography as="span" variant="small">
+                {props.role}
+              </Typography>
+              {props.compagnyImage ? (
+                <>
+                  <span>at</span>
+
+                  <Avatar className="size-8">
+                    <AvatarFallback>{props.name[0]}</AvatarFallback>
+                    <AvatarImage
+                      src={props.compagnyImage}
+                      className="object-contain"
+                      alt={props.name}
+                    />
+                  </Avatar>
+                </>
+              ) : null}
+            </p>
           </div>
-          {props.compagnyImage ? (
-            <img src={props.compagnyImage} alt="compagny image" />
-          ) : null}
         </div>
       </div>
     </Layout>
