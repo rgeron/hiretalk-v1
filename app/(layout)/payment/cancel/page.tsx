@@ -1,13 +1,13 @@
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
+import { ContactSupportDialog } from "@/features/contact/support/ContactSupportDialog";
 import {
   Layout,
   LayoutContent,
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { Badge } from "@/components/ui/badge";
-import { buttonVariants } from "@/components/ui/button";
-import { ContactSupportDialog } from "@/features/contact/support/ContactSupportDialog";
+} from "@/features/page/layout";
 import Link from "next/link";
 
 export default function CancelPaymentPage() {

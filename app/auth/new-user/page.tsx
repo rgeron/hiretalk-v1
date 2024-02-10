@@ -1,12 +1,12 @@
+import { buttonVariants } from "@/components/ui/button";
+import { Header } from "@/features/layout/Header";
 import {
   Layout,
   LayoutContent,
   LayoutDescription,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
-import { buttonVariants } from "@/components/ui/button";
-import { Header } from "@/features/layout/Header";
+} from "@/features/page/layout";
 import type { PageParams } from "@/types/next";
 import Link from "next/link";
 import { redirect } from "next/navigation";

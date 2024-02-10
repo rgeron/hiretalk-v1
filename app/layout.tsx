@@ -1,6 +1,6 @@
-import { NextTopLoader } from "@/components/page/NextTopLoader";
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { FloatingLegalFooter } from "@/features/legal/FloatingLegalFooter";
+import { NextTopLoader } from "@/features/page/NextTopLoader";
 import { cn } from "@/lib/utils";
 import { SiteConfig } from "@/site-config";
 import type { LayoutParams } from "@/types/next";
@@ -32,7 +32,7 @@ export default function RootLayout({
           className={cn(
             "h-full bg-background font-sans antialiased",
             GeistMono.variable,
-            GeistSans.variable
+            GeistSans.variable,
           )}
         >
           <Providers>

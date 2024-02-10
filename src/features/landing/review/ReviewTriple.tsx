@@ -1,10 +1,10 @@
-import { Layout } from "@/components/page/layout";
+import { Layout } from "@/features/page/layout";
 import type { ReviewItemProps } from "./ReviewItem";
 import { ReviewItem } from "./ReviewItem";
 
 export type ReviewTripleProps = {
   reviews: [ReviewItemProps, ReviewItemProps, ReviewItemProps];
-}
+};
 
 export const ReviewTriple = (props: ReviewTripleProps) => {
   return (

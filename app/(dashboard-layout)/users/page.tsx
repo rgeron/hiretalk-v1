@@ -3,7 +3,7 @@ import {
   LayoutContent,
   LayoutHeader,
   LayoutTitle,
-} from "@/components/page/layout";
+} from "@/features/page/layout";
 import type { PageParams } from "@/types/next";
 
 export default function RoutePage(props: PageParams<{}>) {

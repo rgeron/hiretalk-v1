@@ -1,9 +1,3 @@
-import {
-  Layout,
-  LayoutContent,
-  LayoutHeader,
-  LayoutTitle,
-} from "@/components/page/layout";
 import { buttonVariants } from "@/components/ui/button";
 import {
   Card,
@@ -14,6 +8,12 @@ import {
 } from "@/components/ui/card";
 import { ContactSupportDialog } from "@/features/contact/support/ContactSupportDialog";
 import { HeaderBase } from "@/features/layout/HeaderBase";
+import {
+  Layout,
+  LayoutContent,
+  LayoutHeader,
+  LayoutTitle,
+} from "@/features/page/layout";
 import type { PageParams } from "@/types/next";
 import Link from "next/link";
 import { getError } from "./auth-error-mapping";

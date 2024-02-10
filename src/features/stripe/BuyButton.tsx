@@ -3,8 +3,8 @@
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
-import type { ButtonProps } from "../ui/button";
-import { Button } from "../ui/button";
+import type { ButtonProps } from "../../components/ui/button";
+import { Button } from "../../components/ui/button";
 import { buyButtonAction } from "./buy-button.action";
 
 export type BuyButtonProps = {
