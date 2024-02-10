@@ -1,5 +1,3 @@
-"use client";
-
 import { LogoSvg } from "@/components/svg/LogoSvg";
 import { SiteConfig } from "@/site-config";
 import {
@@ -19,7 +17,7 @@ function useBoundedScroll(threshold: number) {
   const scrollYBoundedProgress = useTransform(
     scrollYBounded,
     [0, threshold],
-    [0, 1]
+    [0, 1],
   );
 
   useEffect(() => {
@@ -54,7 +52,7 @@ export function LandingHeader() {
   const scrollYBoundedProgressDelayed = useTransform(
     scrollYBoundedProgress,
     [0, 0.75, 1],
-    [0, 0, 1]
+    [0, 0, 1],
   );
 
   return (
@@ -64,7 +62,7 @@ export function LandingHeader() {
         backgroundColor: useMotionTemplate`rgb(var(--background) / ${useTransform(
           scrollYBoundedProgressDelayed,
           [0, 1],
-          [1, 0.1]
+          [1, 0.1],
         )})`,
       }}
       className="fixed inset-x-0 z-50 flex h-20 w-screen shadow backdrop-blur-md"
@@ -77,7 +75,7 @@ export function LandingHeader() {
               scale: useTransform(
                 scrollYBoundedProgressDelayed,
                 [0, 1],
-                [1, 0.9]
+                [1, 0.9],
               ),
             }}
             className="flex origin-left items-center text-xl font-semibold uppercase"
@@ -90,7 +88,7 @@ export function LandingHeader() {
             opacity: useTransform(
               scrollYBoundedProgressDelayed,
               [0, 1],
-              [1, 0]
+              [1, 0],
             ),
           }}
           className="flex items-center gap-4 text-sm font-medium text-muted-foreground"
