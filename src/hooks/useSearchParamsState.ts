@@ -5,12 +5,12 @@ import { useDebounceFn } from "./useDebounceFn";
 
 export const useSearchParamsState = <T extends string>(
   key: string,
-  defaultValue: T = "" as T
+  defaultValue: T = "" as T,
 ): [T, Dispatch<SetStateAction<T>>] => {
   const params = useSearchParams();
 
   const [value, setValue] = useState<T>(() => {
-    const value_ = params?.get(key) as T | null;
+    const value_ = params.get(key) as T | null;
     return value_ ?? defaultValue;
   });
 
