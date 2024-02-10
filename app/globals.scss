@@ -4,9 +4,12 @@
 
 @layer base {
   :root {
-    --background: 240 6% 96%;
+    color: hsl(240, 5%, 96%);
+    color2: hsl(240, 6%, 90%);
+    border: hsl(240, 5%, 65%);
+    --background: 240 5% 96%;
     --foreground: 20 14.3% 4.1%;
-    --card: 240 4% 93%;
+    --card: 240 4% 94%;
     --card-foreground: 20 14.3% 4.1%;
     --popover: 0 0% 100%;
     --popover-foreground: 20 14.3% 4.1%;
@@ -21,7 +24,7 @@
     --destructive: 0 84.2% 60.2%;
     --destructive-foreground: 60 9.1% 97.8%;
     --border: 240 8% 85%;
-    --input: 20 5.9% 90%;
+    --input: 240 8% 85%;
     --ring: 20 14.3% 4.1%;
     --radius: 0.5rem;
   }
