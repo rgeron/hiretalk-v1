@@ -16,9 +16,9 @@ import { LoginCredentialsFormScheme } from "./signup.schema";
 export const signUpAction = action(
   LoginCredentialsFormScheme,
   async ({ email, password, name }) => {
-    if (validatePassword(password)) {
+    if (!validatePassword(password)) {
       throw new ActionError(
-        "Invalid new password. Must be at least 8 characters, and contain at least one letter and one number"
+        "Invalid new password. Must be at least 8 characters, and contain at least one letter and one number",
       );
     }
 
@@ -44,5 +44,5 @@ export const signUpAction = action(
     } catch {
       throw new ActionError("Email already exists");
     }
-  }
+  },
 );

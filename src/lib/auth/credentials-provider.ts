@@ -7,7 +7,7 @@ import type { NextRequest } from "next/server";
 import { env } from "../env";
 import prisma from "../prisma";
 
-const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d)[A-Za-z\d]{8,}$/;
+const PASSWORD_REGEX = /^(?=.*[A-Za-z])(?=.*\d).{8,}$/;
 
 export const validatePassword = (password: string) => {
   return PASSWORD_REGEX.test(password);
@@ -38,7 +38,7 @@ export const getCredentialsProvider = () => {
       // Add logic here to look up the user from the credentials supplied
       const passwordHash = hashStringWithSalt(
         String(credentials.password),
-        env.NEXTAUTH_SECRET
+        env.NEXTAUTH_SECRET,
       );
 
       const user = await prisma.user.findFirst({
