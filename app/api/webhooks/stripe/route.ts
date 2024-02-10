@@ -28,7 +28,7 @@ export const POST = async (req: NextRequest) => {
     event = stripe.webhooks.constructEvent(
       body,
       stripeSignature ?? "",
-      env.STRIPE_WEBHOOK_SECRET
+      env.STRIPE_WEBHOOK_SECRET,
     );
   } catch {
     logger.debug("Request FAILED - TRY");
@@ -72,8 +72,8 @@ export const POST = async (req: NextRequest) => {
 };
 
 async function onCheckoutSessionCompleted(object: Stripe.Checkout.Session) {
-  // The user paid successfully and the subscription is created (if any)
-  // ✅ Provision access to your service
+  // The user paid and the subscription is active
+  // ✅ Grant access to your service
   const user = await findUserFromCustomer(object.customer);
 
   const lineItems = await stripe.checkout.sessions.listLineItems(object.id, {
@@ -86,14 +86,14 @@ async function onCheckoutSessionCompleted(object: Stripe.Checkout.Session) {
 }
 
 async function onCheckoutSessionExpired(object: Stripe.Checkout.Session) {
-  // The user didn't complete the transaction
-  // 📧 (optional) Send an abandoned cart email
+  // The user stop the checkout process
+  // 📤 Send email if you want
   logger.debug("Checkout session expired", object);
 }
 
 async function onInvoicePaid(object: Stripe.Invoice) {
-  // A payment was made, usually a recurring payments for a subscription
-  // ✅ Provision access to your service
+  // A payment was made through the invoice (usually a recurring payment for a subscription)
+  // ✅ Give access to your service
   const user = await findUserFromCustomer(object.customer);
 
   if (user.plan !== "FREE") return;
@@ -101,7 +101,7 @@ async function onInvoicePaid(object: Stripe.Invoice) {
   await upgradeUserToPlan(
     user.id,
     // TODO :Verify if it's right values
-    await getPlanFromLineItem(object.lines.data)
+    await getPlanFromLineItem(object.lines.data),
   );
 }
 
@@ -131,7 +131,7 @@ async function onCustomerSubscriptionUpdated(object: Stripe.Subscription) {
 
   await upgradeUserToPlan(
     user.id,
-    await getPlanFromLineItem(object.items.data)
+    await getPlanFromLineItem(object.items.data),
   );
   await notifyUserOfPremiumUpgrade(user);
 }

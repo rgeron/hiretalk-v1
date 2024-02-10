@@ -12,6 +12,7 @@ const BuyButtonSchema = z.object({
 
 export const buyButtonAction = action(BuyButtonSchema, async (data) => {
   const { priceId } = data;
+
   const user = await auth();
 
   const stripeCustomerId = user?.stripeCustomerId ?? undefined;
@@ -23,7 +24,7 @@ export const buyButtonAction = action(BuyButtonSchema, async (data) => {
   const session = await stripe.checkout.sessions.create({
     customer: stripeCustomerId,
     mode: priceType === "one_time" ? "payment" : "subscription",
-    payment_method_types: ["card"],
+    payment_method_types: ["card", "link"],
     line_items: [
       {
         price: priceId,

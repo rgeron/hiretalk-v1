@@ -12,9 +12,8 @@ import { z } from "zod";
 
 export const upgradeUserToPlan = async (
   userId: string,
-  plan: UserPlan = "PREMIUM"
+  plan: UserPlan = "PREMIUM",
 ) => {
-  logger.debug("UPDATE USER", userId, plan);
   await prisma.user.update({
     where: {
       id: userId,
@@ -66,10 +65,10 @@ export const getPlanFromLineItem = async (
   lineItems?:
     | Stripe.LineItem[]
     | Stripe.InvoiceLineItem[]
-    | Stripe.SubscriptionItem[]
+    | Stripe.SubscriptionItem[],
 ): Promise<UserPlan> => {
   if (!lineItems) {
-    return "PREMIUM";
+    return "FREE";
   }
 
   const productId = lineItems[0].price?.product;
@@ -77,7 +76,7 @@ export const getPlanFromLineItem = async (
   logger.debug("Product ID", productId);
 
   if (!productId) {
-    return "PREMIUM";
+    return "FREE";
   }
 
   const product = await stripe.products.retrieve(productId as string);
@@ -85,9 +84,8 @@ export const getPlanFromLineItem = async (
   const safePlan = PlanSchema.safeParse(product.metadata.plan);
 
   if (safePlan.success) {
-    logger.debug("Product ID", { safePlan });
     return safePlan.data;
   } else {
-    return "PREMIUM";
+    return "FREE";
   }
 };

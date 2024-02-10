@@ -11,7 +11,7 @@ import type { PageParams } from "@/types/next";
 import Link from "next/link";
 import { redirect } from "next/navigation";
 
-export default function SuccessPaymentPage(props: PageParams) {
+export default function NewUserPage(props: PageParams) {
   const callbackUrl =
     typeof props.searchParams.callbackUrl === "string"
       ? props.searchParams.callbackUrl

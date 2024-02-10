@@ -37,7 +37,7 @@ export const SignInCredentialsAndMagicLinkForm = () => {
   });
   const [isUsingCredentials, setIsUsingCredentials] = useLocalStorage(
     "sign-in-with-credentials",
-    false
+    false,
   );
   const searchParams = useSearchParams();
 
@@ -52,7 +52,7 @@ export const SignInCredentialsAndMagicLinkForm = () => {
         callbackUrl: searchParams.get("callbackUrl") ?? undefined,
       });
     } else {
-      await signIn("email", {
+      await signIn("resend", {
         email: values.email,
         callbackUrl: searchParams.get("callbackUrl") ?? undefined,
       });

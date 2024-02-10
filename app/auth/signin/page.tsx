@@ -1,12 +1,10 @@
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { Loader } from "@/components/ui/loader";
 import { HeaderBase } from "@/features/layout/HeaderBase";
 import { auth } from "@/lib/auth/helper";
 import type { PageParams } from "@/types/next";
 import { AlertTriangle } from "lucide-react";
 import { redirect } from "next/navigation";
-import { Suspense } from "react";
 import { getError } from "../error/auth-error-mapping";
 import { SignInProviders } from "./SignInProviders";
 
@@ -28,9 +26,7 @@ export default async function AuthSignInPage(props: PageParams<{}>) {
             <CardTitle>Sign in</CardTitle>
           </CardHeader>
           <CardContent>
-            <Suspense fallback={<Loader />}>
-              <SignInProviders />
-            </Suspense>
+            <SignInProviders />
           </CardContent>
           {error ? (
             <Alert>
