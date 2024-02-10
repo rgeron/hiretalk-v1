@@ -5,27 +5,33 @@ import {
   LayoutHeader,
   LayoutTitle,
 } from "@/components/page/layout";
-import { ContactFeedbackPopover } from "@/features/contact/feedback/ContactFeedbackPopover";
+import { Badge } from "@/components/ui/badge";
+import { buttonVariants } from "@/components/ui/button";
 import { ContactSupportDialog } from "@/features/contact/support/ContactSupportDialog";
+import Link from "next/link";
 
 export default function CancelPaymentPage() {
   return (
-    <>
-      <Layout>
-        <LayoutHeader>
-          <LayoutTitle>Oops! Something Went Wrong</LayoutTitle>
-          <LayoutDescription>
-            We encountered an issue processing your payment. Please check your
-            payment details and try again. If the problem persists, don’t
-            hesitate to contact us for assistance. We’re here to help you
-            resolve this smoothly.
-          </LayoutDescription>
-        </LayoutHeader>
-        <LayoutContent>
-          <ContactSupportDialog />
-          <ContactFeedbackPopover />
-        </LayoutContent>
-      </Layout>
-    </>
+    <Layout>
+      <LayoutHeader>
+        <Badge variant="outline">Payment failed</Badge>
+        <LayoutTitle>
+          We're sorry, but we couldn't process your payment
+        </LayoutTitle>
+        <LayoutDescription>
+          We encountered an issue processing your payment.
+          <br /> Please check your payment details and try again. <br />
+          If the problem persists, don't hesitate to contact us for assistance.
+          <br />
+          We're here to help you resolve this smoothly.
+        </LayoutDescription>
+      </LayoutHeader>
+      <LayoutContent className="flex items-center gap-2">
+        <Link href="/" className={buttonVariants({ variant: "invert" })}>
+          Home
+        </Link>
+        <ContactSupportDialog />
+      </LayoutContent>
+    </Layout>
   );
 }

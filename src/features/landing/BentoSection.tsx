@@ -48,10 +48,7 @@ const Skeleton1 = () => {
       whileHover="animate"
       className="flex h-full flex-col gap-2"
     >
-      <motion.div
-        variants={variants}
-        className="flex flex-row items-start gap-2 rounded-2xl border border-border bg-background p-3"
-      >
+      <motion.div className="flex flex-row items-start gap-2 rounded-2xl border border-border bg-background p-3">
         <img
           alt="avatar"
           src="https://melvynx.com/_next/image?url=%2Fimages%2Fmy-face.png&w=828&q=75"

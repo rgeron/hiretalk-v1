@@ -23,15 +23,12 @@ import { Textarea } from "@/components/ui/textarea";
 import { SiteConfig } from "@/site-config";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
-import type { PropsWithChildren} from "react";
+import type { PropsWithChildren } from "react";
 import { useState } from "react";
 import { toast } from "sonner";
 import { contactSupportAction } from "./contact-support.action";
-import type {
-  ContactSupportSchemaType} from "./contact-support.schema";
-import {
-  ContactSupportSchema
-} from "./contact-support.schema";
+import type { ContactSupportSchemaType } from "./contact-support.schema";
+import { ContactSupportSchema } from "./contact-support.schema";
 
 export type ContactSupportDialogProps = PropsWithChildren<{}>;
 
@@ -74,7 +71,7 @@ export const ContactSupportDialog = (props: ContactSupportDialogProps) => {
           <DialogDescription>
             Fill the form bellow or send an email to{" "}
             <Link
-              className="text-indigo-500"
+              className="text-primary"
               href={`mailto:${SiteConfig.email.contact}`}
             >
               {SiteConfig.email.contact}
