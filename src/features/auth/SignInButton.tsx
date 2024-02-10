@@ -2,6 +2,7 @@
 
 import { Avatar, AvatarFallback, AvatarImage } from "@/components/ui/avatar";
 import { Button, buttonVariants } from "@/components/ui/button";
+import { displayName } from "@/lib/format/displayName";
 import type { VariantProps } from "class-variance-authority";
 import { useSession } from "next-auth/react";
 import Link from "next/link";
@@ -38,20 +39,32 @@ export const SignInButtonWithUser = () => {
 
   if (session.data?.user) {
     const user = session.data.user;
-    return (
-      <UserDropdown>
-        <Button variant="outline" size="sm">
-          <Avatar className="mr-2 size-6">
-            <AvatarFallback>
-              {user.email ? user.email.slice(0, 2) : "??"}
-            </AvatarFallback>
-            {user.image && <AvatarImage src={user.image} />}
-          </Avatar>
-          <span className="max-lg:hidden">{user.name}</span>
-        </Button>
-      </UserDropdown>
-    );
+    return <LoggedInButton user={user} />;
   }
 
   return <SignInButton />;
+};
+
+export const LoggedInButton = ({
+  user,
+}: {
+  user: {
+    name?: string | null;
+    email: string;
+    image?: string | null;
+  };
+}) => {
+  return (
+    <UserDropdown>
+      <Button variant="outline" size="sm">
+        <Avatar className="mr-2 size-6 bg-card">
+          <AvatarFallback className="bg-card">
+            {user.email.slice(0, 1).toUpperCase()}
+          </AvatarFallback>
+          {user.image && <AvatarImage src={user.image} />}
+        </Avatar>
+        <span className="max-lg:hidden">{displayName(user)}</span>
+      </Button>
+    </UserDropdown>
+  );
 };

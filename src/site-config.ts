@@ -13,7 +13,7 @@ export const SiteConfig = {
   },
   email: {
     from: "NowTS <contact@nowts.app>",
-    contact: "NowTS <contact@nowts.app>",
+    contact: "contact@nowts.app",
   },
   maker: {
     image: "https://melvynx.com/images/me/twitter-en.jpg",
