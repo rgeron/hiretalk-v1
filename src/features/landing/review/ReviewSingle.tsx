@@ -4,10 +4,25 @@ import { ClientMarkdown } from "@/features/markdown/ClientMarkdown";
 import { Layout } from "@/features/page/layout";
 
 export type ReviewSingleProps = {
+  /**
+   * The image of the user.
+   */
   image: string;
+  /**
+   * The review of the user. Use **bold** text to highlight.
+   */
   review: string;
+  /**
+   * The name of the user.
+   */
   name: string;
+  /**
+   * The role of the user. (his job)
+   */
   role: string;
+  /**
+   * A compagny image if the user is working for a compagny.
+   */
   compagnyImage?: string;
 };
 

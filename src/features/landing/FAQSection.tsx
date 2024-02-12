@@ -7,16 +7,17 @@ import {
   AccordionTrigger,
 } from "@/components/ui/accordion";
 import { Typography } from "@/components/ui/typography";
+import { ClientMarkdown } from "../markdown/ClientMarkdown";
 import { SectionLayout } from "./SectionLayout";
 
 type Faq = {
   question: string;
   answer: string;
-}
+};
 
 export type FeaturesPreviewProps = {
   faq: Faq[];
-}
+};
 
 export const FAQSection = (props: FeaturesPreviewProps) => {
   return (
@@ -29,7 +30,7 @@ export const FAQSection = (props: FeaturesPreviewProps) => {
           FAQ
         </Typography>
         <Typography variant="h2" className="text-5xl">
-          Frequently Asked Questions
+          Questions fréquentes
         </Typography>
       </div>
       <div className="flex-1">
@@ -41,7 +42,7 @@ export const FAQSection = (props: FeaturesPreviewProps) => {
                   {e.question}
                 </AccordionTrigger>
                 <AccordionContent className="text-base">
-                  {e.answer}
+                  <ClientMarkdown>{e.answer}</ClientMarkdown>
                 </AccordionContent>
               </AccordionItem>
             );

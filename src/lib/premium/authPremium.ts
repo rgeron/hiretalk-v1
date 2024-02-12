@@ -1,25 +1,14 @@
-import { auth } from "../auth/auth";
-import prisma from "../prisma";
+import { auth } from "../auth/helper";
 
 /**
  * Return onyl the user if it is a premium user, otherwise null
  */
 export const authPremium = async () => {
-  const session = await auth();
+  const user = await auth();
 
-  const userId = session?.user?.id;
+  const userId = user?.id;
 
   if (!userId) {
-    return null;
-  }
-
-  const user = await prisma.user.findUnique({
-    where: {
-      id: userId,
-    },
-  });
-
-  if (!user) {
     return null;
   }
 

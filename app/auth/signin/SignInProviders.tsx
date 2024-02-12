@@ -3,7 +3,6 @@
 import { Divider } from "@/components/ui/divider";
 import { Skeleton } from "@/components/ui/skeleton";
 import { Typography } from "@/components/ui/typography";
-import { logger } from "@/lib/logger";
 import { useQuery } from "@tanstack/react-query";
 import Link from "next/link";
 import { MagicLinkForm } from "./MagicLinkForm";
@@ -15,8 +14,6 @@ export const SignInProviders = () => {
     queryFn: () => fetch(`/api/auth/providers`).then((res) => res.json()),
     queryKey: ["providers"],
   });
-
-  logger.debug({ providers });
 
   if (isPending) {
     return (

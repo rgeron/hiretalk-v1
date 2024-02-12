@@ -6,9 +6,21 @@ import { cn } from "@/lib/utils";
 import type { ComponentPropsWithoutRef } from "react";
 
 export type ReviewItemProps = {
+  /**
+   * The review of the user. Use **bold** text to highlight.
+   */
   review: string;
+  /**
+   * The name of the user.
+   */
   name: string;
+  /**
+   * The role of the user. (his job)
+   */
   role: string;
+  /**
+   * The image of the user.
+   */
   image: string;
 } & ComponentPropsWithoutRef<"div">;
 

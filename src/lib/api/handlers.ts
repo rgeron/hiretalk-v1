@@ -1,7 +1,7 @@
 import { NextResponse } from "next/server";
 import { auth } from "../auth/helper";
 import type { HandleReturnedServerErrorFn } from "./createHandler";
-import { createHandler } from "./createHandler";
+import { createSafeHandler } from "./createHandler";
 
 export class HandlerError extends Error {
   status = 400;
@@ -21,18 +21,18 @@ const handleReturnedServerError: HandleReturnedServerErrorFn = (e) => {
       },
       {
         status: e.status,
-      }
+      },
     );
   }
 
   return "An unexpected error occurred.";
 };
 
-export const handler = createHandler({
+export const handler = createSafeHandler({
   handleReturnedServerError,
 });
 
-export const authHandler = createHandler({
+export const authHandler = createSafeHandler({
   handleReturnedServerError,
 
   async middleware() {

@@ -2,11 +2,8 @@
 
 import { toast } from "sonner";
 import { create } from "zustand";
-import type {
-  ConfirmationDialogProps} from "./DialogProviderDialog";
-import {
-  ProviderConfirmationDialog,
-} from "./DialogProviderDialog";
+import type { ConfirmationDialogProps } from "./DialogProviderDialog";
+import { ProviderConfirmationDialog } from "./DialogProviderDialog";
 
 type DialogType = ConfirmationDialogProps & {
   id: string;
@@ -16,7 +13,7 @@ type DialogStore = {
   dialogs: DialogType[];
   addDialog: (dialog: ConfirmationDialogProps) => void;
   removeDialog: (dialogId: string) => void;
-}
+};
 
 const useDialogStore = create<DialogStore>((set, get) => ({
   dialogs: [],
@@ -34,10 +31,10 @@ const useDialogStore = create<DialogStore>((set, get) => ({
         },
       },
       action: {
-        label: dialog.action.label,
+        label: dialog.action?.label ?? "",
         onClick: () => {
           // check if it's a promise
-          const onClickReturn = dialog.action.onClick();
+          const onClickReturn = dialog.action?.onClick();
           if (onClickReturn instanceof Promise) {
             set((state) => {
               const dialog = state.dialogs.find((dialog) => dialog.id === id);
@@ -59,7 +56,7 @@ const useDialogStore = create<DialogStore>((set, get) => ({
                 });
               });
           } else {
-            dialog.action.onClick();
+            dialog.action?.onClick();
             removeDialog(id);
           }
         },

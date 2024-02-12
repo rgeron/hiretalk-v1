@@ -34,7 +34,7 @@ export const SignInButton = (props: VariantProps<typeof buttonVariants>) => {
   );
 };
 
-export const SignInButtonWithUser = () => {
+export const AuthButtonClient = () => {
   const session = useSession();
 
   if (session.data?.user) {

@@ -10,7 +10,7 @@ import {
   useTransform,
 } from "framer-motion";
 import { useEffect } from "react";
-import { SignInButtonWithUser } from "../auth/SignInButton";
+import { AuthButtonClient } from "../auth/SignInButton";
 import { ThemeToggle } from "../theme/ThemeToggle";
 
 function useBoundedScroll(threshold: number) {
@@ -97,7 +97,7 @@ export function LandingHeader() {
         >
           <a href="#features">Features</a>
           <a href="#pricing">Pricing</a>
-          <SignInButtonWithUser />
+          <AuthButtonClient />
           <ThemeToggle />
         </motion.nav>
       </div>

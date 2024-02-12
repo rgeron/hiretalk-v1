@@ -3,9 +3,13 @@ import { Star } from "lucide-react";
 import type { PropsWithChildren } from "react";
 
 export type ReviewSmallProps = PropsWithChildren<{
-  // A array of images url
+  /**
+   * An array of URLs to users avatar.
+   */
   avatars: string[];
-  // The number of stars / 5
+  /**
+   * The number of stars to display.
+   */
   stars: number;
 }>;
 

@@ -1,5 +1,6 @@
 "use client";
 
+import type { ReactNode } from "react";
 import {
   AlertDialog,
   AlertDialogAction,
@@ -13,9 +14,9 @@ import {
 import { Loader } from "../../components/ui/loader";
 
 export type ConfirmationDialogProps = {
-  title: string;
+  title?: string;
   description?: string;
-  action: {
+  action?: {
     label: string;
     onClick: () => void | Promise<void>;
   };
@@ -24,6 +25,7 @@ export type ConfirmationDialogProps = {
     onClick: () => void | Promise<void>;
   };
   loading?: boolean;
+  children?: ReactNode;
 };
 
 export const ProviderConfirmationDialog = ({
@@ -32,24 +34,33 @@ export const ProviderConfirmationDialog = ({
   loading,
   action,
   cancel,
+  children,
 }: ConfirmationDialogProps) => {
   return (
     <AlertDialog open={true}>
       <AlertDialogContent>
-        <AlertDialogHeader>
-          <AlertDialogTitle>{title}</AlertDialogTitle>
-          {description ? (
-            <AlertDialogDescription>{description}</AlertDialogDescription>
-          ) : null}
-        </AlertDialogHeader>
-        <AlertDialogFooter>
-          <AlertDialogCancel disabled={loading} onClick={cancel?.onClick}>
-            {cancel?.label ?? "Cancel"}
-          </AlertDialogCancel>
-          <AlertDialogAction disabled={loading} onClick={action.onClick}>
-            {loading ? <Loader /> : action.label}
-          </AlertDialogAction>
-        </AlertDialogFooter>
+        {children ? (
+          children
+        ) : (
+          <>
+            <AlertDialogHeader>
+              <AlertDialogTitle>{title ?? ""}</AlertDialogTitle>
+              {description ? (
+                <AlertDialogDescription>{description}</AlertDialogDescription>
+              ) : null}
+            </AlertDialogHeader>
+            <AlertDialogFooter>
+              <AlertDialogCancel disabled={loading} onClick={cancel?.onClick}>
+                {cancel?.label ?? "Cancel"}
+              </AlertDialogCancel>
+              {action ? (
+                <AlertDialogAction disabled={loading} onClick={action.onClick}>
+                  {loading ? <Loader /> : action.label}
+                </AlertDialogAction>
+              ) : null}
+            </AlertDialogFooter>
+          </>
+        )}
       </AlertDialogContent>
     </AlertDialog>
   );
