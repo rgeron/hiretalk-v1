@@ -1,12 +1,8 @@
 import { SiteConfig } from "@/site-config";
 
 export const getServerUrl = () => {
-  if (process.env.IS_PRODUCTION) {
+  if (process.env.VERCEL_ENV === "production") {
     return SiteConfig.prodUrl;
-  }
-
-  if (process.env.DEV_URL) {
-    return process.env.DEV_URL;
   }
 
   if (process.env.VERCEL_URL) {
