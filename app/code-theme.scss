@@ -1,16 +1,3 @@
-.prose {
-  & code:not(.code-highlight):not(.not-prose code) {
-    &::after {
-      content: "";
-    }
-    &::before {
-      content: "";
-    }
-
-    @apply bg-primary/20 -my-1 py-1 px-0.5 border-primary/60 font-mono border rounded-sm;
-  }
-}
-
 html.dark {
   /**
  * Github Dark theme for Prism.js
@@ -282,5 +269,44 @@ html.light {
   }
   .token.entity {
     cursor: help;
+  }
+}
+
+.prose {
+  & .code-line {
+    @apply lg:text-base;
+  }
+
+  & .highlight-line {
+    width: 100%;
+    display: block;
+    --space: 0px;
+    background-color: hsl(var(--primary) / 0.2) !important;
+    padding-top: var(--space);
+    padding-bottom: var(--space);
+    padding-right: var(--space);
+    margin-top: calc(-1 * var(--space));
+    margin-bottom: calc(-1 * var(--space));
+    margin-right: calc(-1 * var(--space));
+    --space-left: 6px;
+    margin-left: calc(-1 * var(--space-left));
+    padding-left: var(--space-left);
+    border-left: 4px solid hsl(var(--primary) / 0.8);
+  }
+
+  &.code-highlight {
+    width: 100%;
+    display: block;
+  }
+
+  & code:not(.code-highlight):not(.not-prose code) {
+    &::after {
+      content: "";
+    }
+    &::before {
+      content: "";
+    }
+
+    @apply bg-primary/20 -my-1 py-1 px-0.5 border-primary/60 font-mono border rounded-sm;
   }
 }

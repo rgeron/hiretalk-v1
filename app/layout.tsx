@@ -1,6 +1,7 @@
 import { TailwindIndicator } from "@/components/utils/TailwindIndicator";
 import { FloatingLegalFooter } from "@/features/legal/FloatingLegalFooter";
 import { NextTopLoader } from "@/features/page/NextTopLoader";
+import { getServerUrl } from "@/lib/server-url";
 import { cn } from "@/lib/utils";
 import { SiteConfig } from "@/site-config";
 import type { LayoutParams } from "@/types/next";
@@ -16,6 +17,7 @@ import { Providers } from "./providers";
 export const metadata: Metadata = {
   title: SiteConfig.title,
   description: SiteConfig.description,
+  metadataBase: new URL(getServerUrl()),
 };
 
 export default function RootLayout({
