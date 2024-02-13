@@ -1,7 +1,7 @@
+import { getCurrentPost } from "@/features/posts/post-manager";
 import { SiteConfig } from "@/site-config";
 import type { PageParams } from "@/types/next";
 import { ImageResponse } from "next/og";
-import { getCurrentPost } from "../../../../src/features/posts/post-manager";
 import { getOgImageFont } from "../../../src/lib/og-image-font";
 
 export const alt = "Codeline information images";
@@ -39,21 +39,6 @@ export default async function og(props: PageParams<{ slug: string }>) {
             position: "absolute",
             top: 0,
             left: 0,
-            opacity: "0.8",
-
-            width: "100%",
-            height: "100%",
-            border: `4px solid ${SiteConfig.brand.primary}`,
-            borderRadius: 10,
-            backgroundColor: SiteConfig.brand.primary,
-          }}
-        ></div>
-
-        <div
-          style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
             right: 0,
             bottom: 0,
             opacity: "1",
@@ -63,26 +48,22 @@ export default async function og(props: PageParams<{ slug: string }>) {
             backgroundColor: "#000000",
           }}
         ></div>
-
-        <div
+        <img
+          src={post.attributes.coverUrl}
+          alt={alt}
           style={{
-            position: "absolute",
-            top: 0,
-            left: 0,
-            opacity: "0.6",
-
             width: "100%",
             height: "100%",
-            backgroundImage: `url(${post.attributes.coverUrl})`,
-            backgroundSize: "cover",
-            backgroundPosition: "center",
-            backgroundRepeat: "no-repeat",
+            objectFit: "cover",
+            borderRadius: 12,
             filter: "blur(2px)",
+            position: "absolute",
           }}
-        ></div>
+        />
 
         <div
           style={{
+            position: "relative",
             display: "flex",
             flexDirection: "column",
             justifyContent: "flex-end",
