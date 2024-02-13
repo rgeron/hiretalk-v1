@@ -28,10 +28,10 @@ export const POST = async (req: NextRequest) => {
     event = stripe.webhooks.constructEvent(
       body,
       stripeSignature ?? "",
-      env.STRIPE_WEBHOOK_SECRET,
+      env.STRIPE_WEBHOOK_SECRET ?? "",
     );
   } catch {
-    logger.debug("Request FAILED - TRY");
+    logger.debug("Request Failed - STRIPE_WEBHOOK_SECRET may be invalid");
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 
