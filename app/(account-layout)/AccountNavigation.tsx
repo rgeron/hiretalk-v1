@@ -12,7 +12,7 @@ import { ACCOUNT_LINKS } from "./account-links";
 
 export const AccountNavigation = async (props: PropsWithChildren) => {
   return (
-    <div className="flex h-full flex-col">
+    <div className="flex min-h-full flex-col">
       <header className="w-full border-b bg-background max-lg:sticky max-lg:top-0 max-lg:z-40">
         <div className="container flex h-16 items-center space-x-4 sm:justify-between sm:space-x-0">
           <div className="flex items-center gap-2">
