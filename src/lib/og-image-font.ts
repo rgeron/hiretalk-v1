@@ -3,10 +3,10 @@ import type { SatoriOptions } from "next/dist/compiled/@vercel/og/satori";
 
 export const getOgImageFont = async () => {
   const interSemiBold = fetch(
-    `${getServerUrl()}/fonts/Geist-SemiBold.otf`
+    `${getServerUrl()}/fonts/Geist-SemiBold.otf`,
   ).then(async (res) => res.arrayBuffer());
   const interBold = fetch(`${getServerUrl()}/fonts/Geist-Black.otf`).then(
-    async (res) => res.arrayBuffer()
+    async (res) => res.arrayBuffer(),
   );
   return [
     {

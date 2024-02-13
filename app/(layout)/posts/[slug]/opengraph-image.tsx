@@ -1,8 +1,8 @@
 import { getCurrentPost } from "@/features/posts/post-manager";
+import { getOgImageFont } from "@/lib/og-image-font";
 import { SiteConfig } from "@/site-config";
 import type { PageParams } from "@/types/next";
 import { ImageResponse } from "next/og";
-import { getOgImageFont } from "../../../src/lib/og-image-font";
 
 export const alt = "Codeline information images";
 export const size = {
