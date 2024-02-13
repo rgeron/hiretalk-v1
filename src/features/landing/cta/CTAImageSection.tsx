@@ -1,21 +1,14 @@
 import { buttonVariants } from "@/components/ui/button";
 import { Typography } from "@/components/ui/typography";
 import Link from "next/link";
-import { SectionLayout } from "./SectionLayout";
+import { SectionLayout } from "../SectionLayout";
 
-export type CTASectionProps = {
-  backgroundImage: string;
-  title: string;
-  subtitle: string;
-  ctaHref: string;
-  ctaLabel: string;
-}
-
-export const CTASection = (props: CTASectionProps) => {
+export const CTAImageSection = () => {
   return (
     <div
       style={{
-        backgroundImage: `url(${props.backgroundImage})`,
+        backgroundImage:
+          "url(https://images.unsplash.com/photo-1707680639756-d37ea04572a9?q=80&w=2973&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D)",
         backgroundSize: "cover",
       }}
     >
@@ -27,13 +20,13 @@ export const CTASection = (props: CTASectionProps) => {
           variant="h2"
           className="text-center text-5xl font-extrabold"
         >
-          {props.title}
+          Start getting a lot of followers
         </Typography>
         <Typography variant="base" className="text-center font-bold">
-          {props.subtitle}
+          By posting every day with Threader !
         </Typography>
-        <Link href={props.ctaHref} className={buttonVariants({ size: "lg" })}>
-          {props.ctaLabel}
+        <Link href="#pricing" className={buttonVariants({ size: "lg" })}>
+          Get started
         </Link>
       </SectionLayout>
     </div>

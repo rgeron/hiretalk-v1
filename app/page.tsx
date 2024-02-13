@@ -1,6 +1,5 @@
 import { EmailFormSection } from "@/features/email/EmailFormSection";
 import { BentoGridSection } from "@/features/landing/BentoSection";
-import { CTASection } from "@/features/landing/CTASection";
 import { FAQSection } from "@/features/landing/FAQSection";
 import { FeaturesSection } from "@/features/landing/FeatureSection";
 import { Hero } from "@/features/landing/Hero";
@@ -8,6 +7,9 @@ import { LandingHeader } from "@/features/landing/LandingHeader";
 import { PainSection } from "@/features/landing/Pain";
 import { SectionDivider } from "@/features/landing/SectionDivider";
 import StatsSection from "@/features/landing/StatsSection";
+import CTASectionCard from "@/features/landing/cta/CTACardSection";
+import { CTAImageSection } from "@/features/landing/cta/CTAImageSection";
+import CtaSection from "@/features/landing/cta/CTASection";
 import { Pricing } from "@/features/landing/pricing/PricingSection";
 import { ReviewGrid } from "@/features/landing/review/ReviewGrid";
 import { ReviewSingle } from "@/features/landing/review/ReviewSingle";
@@ -128,13 +130,9 @@ export default function HomePage() {
         ]}
       />
 
-      <CTASection
-        ctaHref="#pricing"
-        backgroundImage="https://images.unsplash.com/photo-1550418290-a8d86ad674a6?q=80&w=2970&auto=format&fit=crop&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D"
-        ctaLabel="Start for free"
-        subtitle="Join the Threader community now"
-        title="Start publishing your content faster"
-      />
+      <CTAImageSection />
+      <CTASectionCard />
+      <CtaSection />
 
       <Pricing
         cards={[

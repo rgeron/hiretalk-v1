@@ -9,7 +9,7 @@
       "  LayoutContent,",
       "  LayoutHeader,",
       "  LayoutTitle,",
-      "} from \"@/components/page/layout\";",
+      "} from \"@/features/page/layout\";",
       "import type { PageParams } from \"@/types/next\";",
       "",
       "export default async function RoutePage(props: PageParams<{ $1 }>) {",
@@ -23,7 +23,7 @@
       "      </LayoutContent>",
       "    </Layout>",
       "  );",
-      "}"
-    ]
-  }
+      "}",
+    ],
+  },
 }

@@ -10,6 +10,7 @@ export const Pricing = (props: PricingProps) => {
   return (
     <SectionLayout
       size="base"
+      id="pricing"
       className="flex w-full flex-col items-center gap-16"
     >
       <div className="space-y-2 text-center">
