@@ -6,7 +6,6 @@ export const ACCOUNT_LINKS: NavigationLinkGroups[] = [
     title: "PERSONAL INFORMATION",
     links: [
       { url: "/account", title: "Profile", icon: <User2 /> },
-      { url: "/account/edit", title: "Edit profile", icon: <User2 /> },
       {
         url: "/account/delete",
         title: "Delete profile",
@@ -17,8 +16,6 @@ export const ACCOUNT_LINKS: NavigationLinkGroups[] = [
   },
   {
     title: "EMAIL SETTINGS",
-    links: [
-      { url: "/account/email", title: "Edit email settings", icon: <Mail /> },
-    ],
+    links: [{ url: "/account/email", title: "Settings", icon: <Mail /> }],
   },
 ];

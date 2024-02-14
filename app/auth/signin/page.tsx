@@ -1,3 +1,4 @@
+import { LogoSvg } from "@/components/svg/LogoSvg";
 import { Alert, AlertDescription, AlertTitle } from "@/components/ui/alert";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { HeaderBase } from "@/features/layout/HeaderBase";
@@ -22,10 +23,11 @@ export default async function AuthSignInPage(props: PageParams<{}>) {
       <HeaderBase />
       <div className="flex flex-1 items-center justify-center">
         <Card className="w-full max-w-md">
-          <CardHeader className="flex flex-col items-center justify-center">
-            <CardTitle>Sign in</CardTitle>
+          <CardHeader className="flex flex-col items-center justify-center gap-2">
+            <LogoSvg />
+            <CardTitle>Sign in to your account</CardTitle>
           </CardHeader>
-          <CardContent>
+          <CardContent className="mt-8">
             <SignInProviders />
           </CardContent>
           {error ? (

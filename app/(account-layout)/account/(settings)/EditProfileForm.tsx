@@ -46,7 +46,7 @@ export const EditProfileForm = ({ defaultValues }: SchoolFormProps) => {
       return;
     }
 
-    router.push(`/account`);
+    router.refresh();
   };
 
   return (
@@ -82,7 +82,9 @@ export const EditProfileForm = ({ defaultValues }: SchoolFormProps) => {
           </FormItem>
         )}
       />
-      <SubmitButton>Save</SubmitButton>
+      <SubmitButton className="w-fit" size="sm">
+        Save
+      </SubmitButton>
     </Form>
   );
 };
