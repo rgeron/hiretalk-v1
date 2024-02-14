@@ -1,19 +1,5 @@
 Welcome to [NOW.TS](https://nowts.app) directory.
 
-## Getting Started
+## Setup the project
 
-First, run the development server:
-
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
-
-## Learn More
-
-Check the documentation in [Codeline.app](https://codeline.app) to learn more about NOW.TS.
+Please follow the [NOW.TS Course](https://codeline.app/courses/clqn8pmte0001lr54itcjzl59/lessons/clqn8pz990003112iia11p7uo) to setup the project.
