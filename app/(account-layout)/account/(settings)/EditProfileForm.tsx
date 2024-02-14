@@ -10,7 +10,10 @@ import {
   useZodForm,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { InlineTooltip } from "@/components/ui/tooltip";
 import { SubmitButton } from "@/features/form/SubmitButton";
+import type { User } from "@prisma/client";
+import { BadgeCheck } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
 import { createVerifyEmailAction } from "../verify-email/verify-email.action";
@@ -19,7 +22,7 @@ import type { ProfileFormType } from "./edit-profile.schema";
 import { ProfileFormSchema } from "./edit-profile.schema";
 
 type SchoolFormProps = {
-  defaultValues: ProfileFormType;
+  defaultValues: User;
 };
 
 export const EditProfileForm = ({ defaultValues }: SchoolFormProps) => {
@@ -74,7 +77,14 @@ export const EditProfileForm = ({ defaultValues }: SchoolFormProps) => {
         name="email"
         render={({ field }) => (
           <FormItem>
-            <FormLabel>Email</FormLabel>
+            <FormLabel className="flex items-center gap-1">
+              <span>Email</span>
+              {defaultValues.emailVerified ? (
+                <InlineTooltip title="Email verified. If you change your email, you will need to verify it again.">
+                  <BadgeCheck size={16} />
+                </InlineTooltip>
+              ) : null}
+            </FormLabel>
             <FormControl>
               <Input placeholder="" {...field} />
             </FormControl>
