@@ -65,7 +65,7 @@ export const getCredentialsProvider = () => {
 const tokenName =
   env.NODE_ENV === "development"
     ? "authjs.session-token"
-    : "__Secure-next-auth.session-token";
+    : "__Secure-authjs.session-token";
 
 type SignInCallback = NonNullable<NextAuthConfig["events"]>["signIn"];
 
