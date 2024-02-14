@@ -16,11 +16,17 @@ import {
 export const updateProfileAction = authAction(
   ProfileFormSchema,
   async (input, ctx) => {
+    const previousEmail = ctx.user.email;
+
     const user = await prisma.user.update({
       where: {
         id: ctx.user.id,
       },
-      data: input,
+      data: {
+        name: input.name,
+        email: input.email,
+        emailVerified: previousEmail === input.email ? undefined : null,
+      },
     });
 
     return user;

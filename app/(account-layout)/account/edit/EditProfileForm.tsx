@@ -11,9 +11,9 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { SubmitButton } from "@/features/form/SubmitButton";
-import { signIn } from "next-auth/react";
 import { useRouter } from "next/navigation";
 import { toast } from "sonner";
+import { createVerifyEmailAction } from "../verify-email/verify-email.action";
 import { updateProfileAction } from "./edit-profile.action";
 import type { ProfileFormType } from "./edit-profile.schema";
 import { ProfileFormSchema } from "./edit-profile.schema";
@@ -33,7 +33,7 @@ export const EditProfileForm = ({ defaultValues }: SchoolFormProps) => {
     const { data, serverError } = await updateProfileAction(values);
 
     if (values.email !== defaultValues.email) {
-      await signIn("email", { email: values.email });
+      await createVerifyEmailAction(values.email);
       toast.success(
         "You have updated your email. We have sent you a new email verification link.",
       );

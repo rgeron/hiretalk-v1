@@ -16,7 +16,7 @@ export default async function RoutePage(props: PageParams<{}>) {
         <LayoutTitle>Dashboard</LayoutTitle>
       </LayoutHeader>
       <LayoutContent>
-        <div className="flex items-start gap-4">
+        <div className="flex flex-wrap items-start gap-4">
           <Card>
             <CardHeader>
               <CardTitle className="text-lg font-light">

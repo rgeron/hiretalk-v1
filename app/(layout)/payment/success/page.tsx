@@ -25,7 +25,6 @@ export default function SuccessPaymentPage() {
           </Link>
         </LayoutContent>
       </Layout>
-      {/* <CanvasConfettiBySide /> */}
     </>
   );
 }

@@ -3,6 +3,7 @@
 import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
 import { ActionError, authAction } from "@/lib/server-actions/safe-actions";
+import { stripe } from "@/lib/stripe";
 import { SiteConfig } from "@/site-config";
 import { z } from "zod";
 import DeleteAccountEmail from "../../../../emails/DeleteAccountEmail";
@@ -26,7 +27,17 @@ export const deleteAccountAction = authAction(z.any(), async (_, ctx) => {
     },
   });
 
-  // TODO : Add delete subscriptions data
+  if (user.stripeCustomerId) {
+    const subscriptions = await stripe.subscriptions.list({
+      customer: user.stripeCustomerId,
+    });
+
+    for (const subscription of subscriptions.data) {
+      await stripe.subscriptions.cancel(subscription.id);
+    }
+
+    await stripe.customers.del(user.stripeCustomerId);
+  }
 
   await sendEmail({
     from: SiteConfig.email.from,

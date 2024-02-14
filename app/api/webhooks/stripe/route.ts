@@ -15,11 +15,16 @@ import {
   upgradeUserToPlan,
 } from "./premium.helper";
 
+/**
+ * Stripe Webhooks
+ *
+ * @docs
+ * - https://stripe.com/docs/webhooks
+ * - https://stripe.com/docs/api/events/types
+ */
 export const POST = async (req: NextRequest) => {
   const body = await req.text();
   const headerList = headers();
-
-  logger.debug("Request ");
 
   const stripeSignature = headerList.get("stripe-signature");
 
@@ -31,7 +36,7 @@ export const POST = async (req: NextRequest) => {
       env.STRIPE_WEBHOOK_SECRET ?? "",
     );
   } catch {
-    logger.debug("Request Failed - STRIPE_WEBHOOK_SECRET may be invalid");
+    logger.error("Request Failed - STRIPE_WEBHOOK_SECRET may be invalid");
     return NextResponse.json({ error: "invalid" }, { status: 400 });
   }
 

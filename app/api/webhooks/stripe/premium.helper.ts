@@ -1,4 +1,3 @@
-import { logger } from "@/lib/logger";
 import { sendEmail } from "@/lib/mail/sendEmail";
 import prisma from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
@@ -72,8 +71,6 @@ export const getPlanFromLineItem = async (
   }
 
   const productId = lineItems[0].price?.product;
-
-  logger.debug("Product ID", productId);
 
   if (!productId) {
     return "FREE";

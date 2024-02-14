@@ -13,24 +13,21 @@ import { sendEmail } from "../mail/sendEmail";
 import prisma from "../prisma";
 import { setupResendCustomer, setupStripeCustomer } from "./auth-config-setup";
 
-export const {
-  handlers,
-  auth: baseAuth,
-  // TODO : Use req callback
-} = NextAuth((req) => ({
+export const { handlers, auth: baseAuth } = NextAuth((req) => ({
   pages: {
     signIn: "/auth/signin",
     signOut: "/auth/signout",
-    error: "/auth/error", // Error code passed in query string as ?error=
+    error: "/auth/error",
     verifyRequest: "/auth/verify-request",
-    newUser: "/auth/new-user", // New users will be directed here on first sign in (leave the property out if not of interest)
+    // ℹ️ Add this line if you want to add an onboarding page
+    // newUser: "/auth/new-user",
   },
   adapter: PrismaAdapter(prisma),
   providers: [
     GitHub({
       clientId: env.GITHUB_ID,
       clientSecret: env.GITHUB_SECRET,
-      // TODO : Delete this when Authjs fix the issue
+      // This is required because AuthJS beta is not stable.
       allowDangerousEmailAccountLinking: true,
     }),
     Resend({

@@ -16,7 +16,8 @@ export default function RouteError({ error, reset }: ErrorParams) {
     <Card variant="error">
       <CardHeader>
         <CardTitle>
-          Sorry, something went wrong. Please try again later.
+          Sorry, the post you are looking for doesn't work as expected. Please
+          try again later.
         </CardTitle>
       </CardHeader>
       <CardFooter>

@@ -1,6 +1,5 @@
 "use client";
 
-import { Alert, AlertTitle } from "@/components/ui/alert";
 import { Button } from "@/components/ui/button";
 import {
   Form,
@@ -13,7 +12,6 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { Typography } from "@/components/ui/typography";
-import { AlertTriangle } from "lucide-react";
 import { signIn } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { useLocalStorage } from "usehooks-ts";
@@ -26,23 +24,15 @@ const LoginCredentialsFormScheme = z.object({
 
 type LoginCredentialsFormType = z.infer<typeof LoginCredentialsFormScheme>;
 
-const ErrorMapping: Record<string, string> = {
-  CredentialsSignin: "Invalid credentials. Please try again.",
-  EmailSignin: "Error during sing in with email.",
-};
-
 export const SignInCredentialsAndMagicLinkForm = () => {
   const form = useZodForm({
     schema: LoginCredentialsFormScheme,
   });
+  const searchParams = useSearchParams();
   const [isUsingCredentials, setIsUsingCredentials] = useLocalStorage(
     "sign-in-with-credentials",
     false,
   );
-  const searchParams = useSearchParams();
-
-  const paramsError = searchParams.get("error");
-  const error = paramsError ? ErrorMapping[paramsError] : null;
 
   async function onSubmit(values: LoginCredentialsFormType) {
     if (isUsingCredentials) {
@@ -112,13 +102,6 @@ export const SignInCredentialsAndMagicLinkForm = () => {
       <Button type="submit" className="w-full">
         {isUsingCredentials ? "Login with Password" : "Login with MagicLink"}
       </Button>
-
-      {error && (
-        <Alert variant="destructive">
-          <AlertTriangle size={16} />
-          <AlertTitle>{error}</AlertTitle>
-        </Alert>
-      )}
 
       {isUsingCredentials && (
         <Typography variant="small">

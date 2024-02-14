@@ -19,7 +19,7 @@
       "  }, [error]);",
       "",
       "  return (",
-      "    <Card>",
+      "    <Card variant=\"error\">",
       "      <CardHeader>",
       "        <CardTitle>",
       "          Sorry, something went wrong. Please try again later.",
@@ -30,7 +30,7 @@
       "      </CardFooter>",
       "    </Card>",
       "  );",
-      "}"
-    ]
-  }
+      "}",
+    ],
+  },
 }

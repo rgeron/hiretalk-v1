@@ -6,6 +6,7 @@ import { EditProfileForm } from "./EditProfileForm";
 
 export default async function EditProfilePage() {
   const user = await requiredAuth();
+
   const hasPassword = await prisma.user.findFirst({
     where: {
       id: user.id,
@@ -17,6 +18,7 @@ export default async function EditProfilePage() {
       id: true,
     },
   });
+
   return (
     <Card>
       <CardHeader>

@@ -1,6 +1,14 @@
 import { buttonVariants } from "@/components/ui/button";
-import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import {
+  Card,
+  CardContent,
+  CardDescription,
+  CardFooter,
+  CardHeader,
+  CardTitle,
+} from "@/components/ui/card";
 import { Typography } from "@/components/ui/typography";
+import { ContactSupportDialog } from "@/features/contact/support/ContactSupportDialog";
 import { requiredAuth } from "@/lib/auth/helper";
 import { getServerUrl } from "@/lib/server-url";
 import { stripe } from "@/lib/stripe";
@@ -10,8 +18,24 @@ import Link from "next/link";
 export default async function DeleteProfilePage() {
   const user = await requiredAuth();
 
+  if (!user.stripeCustomerId) {
+    return (
+      <Card variant="error">
+        <CardHeader>
+          <CardTitle>You account is not linked to a billing account</CardTitle>
+          <CardDescription>
+            You can't do nothing. Please contact the support.
+          </CardDescription>
+        </CardHeader>
+        <CardFooter>
+          <ContactSupportDialog />
+        </CardFooter>
+      </Card>
+    );
+  }
+
   const stripeSession = await stripe.billingPortal.sessions.create({
-    customer: user.stripeCustomerId ?? "",
+    customer: user.stripeCustomerId,
     return_url: `${getServerUrl()}/account/billing`,
   });
 

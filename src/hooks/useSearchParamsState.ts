@@ -28,7 +28,6 @@ export const useSearchParamsState = <T extends string>(
     }
     lastValueRef.current = value;
 
-    // set url params with new value without params
     const url = new URL(window.location.href);
     const searchParams = new URLSearchParams(url.search);
     searchParams.set(key, value);

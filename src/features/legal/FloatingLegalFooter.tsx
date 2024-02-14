@@ -1,5 +1,3 @@
-// TODO : S'inspirer du floater de v0.dev pour faire celui-ci
-
 import { SiteConfig } from "@/site-config";
 import Image from "next/image";
 import Link from "next/link";

@@ -15,6 +15,7 @@ import Link from "next/link";
 
 export default async function page() {
   const user = await requiredAuth();
+
   return (
     <Card className="w-full">
       <CardHeader>

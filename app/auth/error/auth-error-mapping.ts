@@ -2,7 +2,7 @@
  * Find all errors here : https://authjs.dev/reference/core/errors
  * It's UX friendly message for each error.
  */
-export const ERRORS: Record<string, string> = {
+export const AUTH_ERRORS: Record<string, string> = {
   AccountNotLinked:
     "Your email is already used with another account. Please sign in with the account originally linked to this email.",
   AdapterError:
@@ -80,7 +80,7 @@ export const getError = (errorCode: unknown) => {
   const error = typeof errorCode === "string" ? errorCode : "AuthError";
 
   const errorMessage =
-    ERRORS[error] || "An unknown error occurred. Please try again later.";
+    AUTH_ERRORS[error] || "An unknown error occurred. Please try again later.";
 
   return {
     error,
