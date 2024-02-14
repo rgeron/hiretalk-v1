@@ -22,20 +22,6 @@ export const PostSlugMetadataImage = ({ post }: MetadataImageProps) => {
         backgroundColor: "#090910",
       }}
     >
-      <div
-        style={{
-          position: "absolute",
-          top: 0,
-          left: 0,
-          right: 0,
-          bottom: 0,
-          opacity: "1",
-
-          borderRadius: 12,
-          margin: "4px",
-          backgroundColor: "#000000",
-        }}
-      ></div>
       <img
         src={post.attributes.coverUrl}
         alt={alt}
@@ -57,11 +43,11 @@ export const PostSlugMetadataImage = ({ post }: MetadataImageProps) => {
           justifyContent: "flex-end",
           alignItems: "flex-start",
           height: "100%",
-          flex: 1,
-          paddingBottom: 32,
-          paddingLeft: 42,
+          paddingBottom: 64,
+          paddingLeft: 54,
           gap: 16,
           backdropFilter: "blur(12px)",
+          backgroundColor: "rgba(0, 0, 0, 0.5)",
         }}
       >
         <p
@@ -72,9 +58,16 @@ export const PostSlugMetadataImage = ({ post }: MetadataImageProps) => {
             margin: 0,
           }}
         >
-          NOW.TS
+          {SiteConfig.title}
         </p>
-        <p style={{ fontSize: "3.5rem", fontWeight: "bold", margin: 0 }}>
+        <p
+          style={{
+            fontSize: "3.5rem",
+            fontWeight: "bold",
+            margin: 0,
+            marginRight: 40,
+          }}
+        >
           {post.attributes.title}
         </p>
       </div>
