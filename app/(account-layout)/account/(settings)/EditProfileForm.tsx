@@ -49,6 +49,7 @@ export const EditProfileForm = ({ defaultValues }: SchoolFormProps) => {
       return;
     }
 
+    toast.success("Profile updated");
     router.refresh();
   };
 
