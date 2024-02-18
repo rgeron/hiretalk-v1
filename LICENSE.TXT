@@ -16,5 +16,5 @@ Jurisdiction: This Agreement shall be governed by and construed in accordance wi
 
 By using the Software, Licensee agrees to be bound by the terms of this Agreement. If Licensee does not agree to the terms of this Agreement, they must not use the Software.
 
-Melvyn Malherbe, Codelynx LCC
+Melvyn Malherbe, Codelynx LLC
 3 February 2024
