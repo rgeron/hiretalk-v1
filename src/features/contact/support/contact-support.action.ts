@@ -15,5 +15,5 @@ export const contactSupportAction = action(
       text: data.message,
     });
     return { message: "Your message has been sent to support." };
-  }
+  },
 );

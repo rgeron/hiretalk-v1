@@ -12,7 +12,7 @@ type PolymorphicAsProp<E extends ElementType> = {
     | E
     | React.ComponentType<Omit<ComponentPropsWithoutRef<E>, "as">>
     | React.FunctionComponent<Omit<ComponentPropsWithoutRef<E>, "as">>;
-}
+};
 
 type PolymorphicProps<E extends ElementType> = PropsWithChildren<
   Omit<ComponentPropsWithoutRef<E>, "as"> & PolymorphicAsProp<E>

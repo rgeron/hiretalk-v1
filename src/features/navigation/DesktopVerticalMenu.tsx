@@ -26,7 +26,7 @@ const useCurrentPath = (links: NavigationLinkGroups[]) => {
       currentLink.matchCount > maxMatchLink.matchCount
         ? currentLink
         : maxMatchLink,
-    { url: "", matchCount: 0 }
+    { url: "", matchCount: 0 },
   );
 
   return mostMatchingLink.url;
@@ -62,7 +62,7 @@ export const DesktopVerticalMenu = ({
                     "hover:bg-card",
                     {
                       "bg-accent/50 hover:bg-accent/80": isCurrent,
-                    }
+                    },
                   )}
                   href={link.url}
                 >

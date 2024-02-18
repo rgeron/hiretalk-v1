@@ -31,5 +31,5 @@ export const contactSupportAction = action(
     });
 
     return { message: "Your feedback has been sent to support." };
-  }
+  },
 );

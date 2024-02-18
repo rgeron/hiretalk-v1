@@ -9,7 +9,7 @@ export const CircleSvg = ({
     <svg
       className={cn(
         "absolute -z-10 w-[calc(100%+1rem)] top-0 left-0 fill-foreground",
-        className
+        className,
       )}
       xmlns="http://www.w3.org/2000/svg"
       width="223"

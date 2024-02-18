@@ -32,5 +32,5 @@ export const createVerifyEmailAction = authAction(
         }`,
       }),
     });
-  }
+  },
 );

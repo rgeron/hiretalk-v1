@@ -30,5 +30,5 @@ export const toggleSubscribedAction = authAction(
     });
 
     return updateContact;
-  }
+  },
 );

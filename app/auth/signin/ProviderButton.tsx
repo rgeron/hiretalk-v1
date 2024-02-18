@@ -17,7 +17,7 @@ const ProviderData: Record<string, { icon: ReactNode; name: string }> = {
 
 type ProviderButtonProps = {
   providerId: string;
-}
+};
 
 export const ProviderButton = (props: ProviderButtonProps) => {
   const searchParams = useSearchParams();

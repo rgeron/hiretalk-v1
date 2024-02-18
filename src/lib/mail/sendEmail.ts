@@ -6,7 +6,7 @@ type ResendSendType = typeof resend.emails.send;
 type ResendParamsType = Parameters<ResendSendType>;
 type ResendParamsTypeWithConditionalFrom = [
   payload: Omit<ResendParamsType[0], "from"> & { from?: string },
-  options?: ResendParamsType[1]
+  options?: ResendParamsType[1],
 ];
 
 /**

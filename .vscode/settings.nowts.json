@@ -48,5 +48,9 @@
   "workbench.layoutControl.enabled": false,
   "git.ignoreRebaseWarning": true,
   "explorer.confirmDelete": false,
-  "git.confirmSync": false
+  "git.confirmSync": false,
+  "tailwindCSS.experimental.classRegex": [
+    ["cva\\(([^)]*)\\)", "[\"'`]([^\"'`]*).*?[\"'`]"],
+    ["cx\\(([^)]*)\\)", "(?:'|\"|`)([^']*)(?:'|\"|`)"]
+  ]
 }

@@ -10,7 +10,7 @@ import { toggleSubscribedAction } from "./mail-account.action";
 
 type ToggleEmailCheckboxProps = {
   unsubscribed: boolean;
-}
+};
 
 export const ToggleEmailCheckbox = ({
   unsubscribed,
@@ -36,7 +36,7 @@ export const ToggleEmailCheckbox = ({
         "flex flex-row items-start space-x-3 space-y-0 rounded-md border p-4",
         {
           "bg-muted": mutation.isPending,
-        }
+        },
       )}
     >
       <Checkbox

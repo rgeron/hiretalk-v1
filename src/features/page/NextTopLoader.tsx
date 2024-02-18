@@ -58,7 +58,7 @@ export type NextTopLoaderProps = {
    * @default 0
    */
   delay?: number;
-}
+};
 
 const isAnchorOfCurrentUrl = (currentUrl: string, newUrl: string) => {
   const currentUrlObj = new URL(currentUrl);
@@ -93,8 +93,8 @@ export const NextTopLoader = ({
     !shadow && shadow !== undefined
       ? ""
       : shadow
-      ? `box-shadow:${shadow}`
-      : `box-shadow:0 0 10px ${color},0 0 5px ${color}`;
+        ? `box-shadow:${shadow}`
+        : `box-shadow:0 0 10px ${color},0 0 5px ${color}`;
 
   const styles = (
     <style>
