@@ -9,7 +9,7 @@ import {
   validatePassword,
 } from "@/lib/auth/credentials-provider";
 import { env } from "@/lib/env";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { ActionError, action } from "@/lib/server-actions/safe-actions";
 import { LoginCredentialsFormScheme } from "./signup.schema";
 

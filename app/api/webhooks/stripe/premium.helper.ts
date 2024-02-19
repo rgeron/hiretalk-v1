@@ -1,5 +1,5 @@
 import { sendEmail } from "@/lib/mail/sendEmail";
-import prisma from "@/lib/prisma";
+import { prisma } from "@/lib/prisma";
 import { stripe } from "@/lib/stripe";
 import SubscribtionDowngradeEmail from "@email/SubscriptionDowngradeEmail";
 import SubscribtionFailedEmail from "@email/SubscriptionFailedEmail";

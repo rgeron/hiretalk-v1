@@ -10,7 +10,7 @@ import Resend from "next-auth/providers/resend";
 import { env } from "../env";
 import { logger } from "../logger";
 import { sendEmail } from "../mail/sendEmail";
-import prisma from "../prisma";
+import { prisma } from "../prisma";
 import { setupResendCustomer, setupStripeCustomer } from "./auth-config-setup";
 
 export const { handlers, auth: baseAuth } = NextAuth((req) => ({
