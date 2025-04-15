@@ -43,6 +43,9 @@ export function OrgSidebar({
   return (
     <Sidebar variant="inset">
       <SidebarHeader className="flex flex-col gap-2">
+        <div className="mb-2 flex items-center">
+          <h2 className="text-xl font-bold">Talk2Apply</h2>
+        </div>
         <OrgsSelect orgs={userOrgs} currentOrgSlug={slug} />
         <OrgCommand />
       </SidebarHeader>

@@ -5,11 +5,11 @@ import type {
 import type { AuthRole } from "@/lib/auth/auth-permissions";
 import { isInRoles } from "@/lib/organizations/is-in-roles";
 import {
+  Briefcase,
   CreditCard,
-  Home,
+  FileText,
   Settings,
   TriangleAlert,
-  User,
   User2,
 } from "lucide-react";
 
@@ -45,17 +45,17 @@ const ORGANIZATION_PATH = `/orgs/:organizationSlug`;
 
 export const ORGANIZATION_LINKS: NavigationGroup[] = [
   {
-    title: "Menu",
+    title: "Offers",
     links: [
       {
-        href: ORGANIZATION_PATH,
-        Icon: Home,
-        label: "Dashboard",
+        href: `${ORGANIZATION_PATH}/job-offers`,
+        Icon: Briefcase,
+        label: "Job offers",
       },
       {
-        href: `${ORGANIZATION_PATH}/users`,
-        Icon: User,
-        label: "Users",
+        href: `${ORGANIZATION_PATH}/templates`,
+        Icon: FileText,
+        label: "Templates",
       },
     ],
   },
