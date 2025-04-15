@@ -23,3 +23,8 @@ model Feedback {
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
 }
+
+// Add these to the Organization model in better-auth.prisma
+// jobOffers   JobOffer[]
+// templates   Template[]
+// questionBank QuestionBank[]

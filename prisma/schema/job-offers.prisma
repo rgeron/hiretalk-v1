@@ -1,0 +1,92 @@
+model JobOffer {
+  id                String      @id @default(cuid())
+  name              String
+  description       String
+  interviewType     String      // e.g., "technical", "motivational"
+  durationMin       Int
+  durationMax       Int
+  interviewerStyle  String      // e.g., "friendly", "direct", "formal"
+  status            String      // e.g., "to be launched", "ongoing", "closed"
+  templateId        String?     // Optionally reference a Template
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+  organizationId    String
+  
+  // Relations
+  candidateApplications CandidateApplication[]
+  template             Template?    @relation(fields: [templateId], references: [id])
+  organization         Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model CandidateApplication {
+  id                String   @id @default(cuid())
+  jobOfferId        String
+  candidateName     String
+  candidateEmail    String
+  callRecordingUrl  String?       // URL to the stored call recording
+  transcript        String?       // Full call transcript or URL reference
+  callStartedAt     DateTime?
+  callEndedAt       DateTime?
+  
+  // AI Evaluation Scores
+  scoreTechnical    Float?       // Technical skills score
+  scoreCommunication Float?
+  scoreProblemSolving Float?
+  scoreSystemDesign  Float?
+  overallScore      Float?
+  
+  // AI Insights
+  strengths         String?       // Can be stored as text or JSON array
+  areasForImprovement String?
+  hiringRecommendation String?    // e.g., "Hire", "Next Round", "Reject"
+  
+  createdAt         DateTime    @default(now())
+  updatedAt         DateTime    @updatedAt
+
+  // Relations
+  jobOffer          JobOffer   @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
+}
+
+model Template {
+  id          String           @id @default(cuid())
+  name        String
+  description String?
+  // Option 1: Embed questions as JSON
+  questions   Json?            // Alternatively, use a relational model below
+  createdAt   DateTime         @default(now())
+  updatedAt   DateTime         @updatedAt
+  organizationId String
+  
+  // Relations
+  jobOffers   JobOffer[]
+  questionsRel TemplateQuestion[]
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+}
+
+model TemplateQuestion {
+  id          String    @id @default(cuid())
+  templateId  String
+  question    String
+  category    String    // e.g., "technical", "behavioural", etc.
+  order       Int
+  weight      Float?    // Optional weighting
+
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+
+  // Relations
+  template    Template  @relation(fields: [templateId], references: [id], onDelete: Cascade)
+}
+
+// Optionally, a global QuestionBank if you want common questions that can be shared
+model QuestionBank {
+  id        String   @id @default(cuid())
+  text      String
+  category  String   // e.g., "technical", "communication"
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+  organizationId String
+  
+  // Relations
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+} 
