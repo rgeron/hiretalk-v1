@@ -53,7 +53,7 @@ export const ORGANIZATION_LINKS: NavigationGroup[] = [
         label: "Job offers",
       },
       {
-        href: `${ORGANIZATION_PATH}/templates`,
+        href: `${ORGANIZATION_PATH}/job-offers/templates`,
         Icon: FileText,
         label: "Templates",
       },
