@@ -9,6 +9,7 @@ import {
 import { hasPermission } from "@/lib/auth/auth-org";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import type { PageParams } from "@/types/next";
+import Link from "next/link";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Job Offers",
@@ -28,8 +29,14 @@ export default async function JobOffersPage(
         <LayoutTitle>Job Offers</LayoutTitle>
       </LayoutHeader>
       <LayoutActions className="flex gap-2">
-        {(await hasPermission({ jobOffers: ["create"] })) && (
-          <Button variant="default">Create Job Offer</Button>
+        {(await hasPermission({
+          organization: ["update"],
+        })) && (
+          <Button variant="default" asChild>
+            <Link href={`/orgs/${params.orgSlug}/job-offers/add-new`}>
+              New offer
+            </Link>
+          </Button>
         )}
       </LayoutActions>
       <LayoutContent className="flex flex-col gap-4 lg:gap-6">

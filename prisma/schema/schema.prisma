@@ -12,6 +12,10 @@ datasource db {
   directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
+// Include job offers schema
+// This is important to make the job offer models available
+include = "./job-offers.prisma"
+
 model Feedback {
   id      String  @id @default(nanoid(11))
   review  Int
