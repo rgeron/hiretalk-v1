@@ -5,7 +5,7 @@ alwaysApply: false
 ---
 ## Context
 
-- The library used for handling authentification, organization and subscribtoin is `Better-Auth`.
+- The library used for handling authentification, organization and subscribtion is `Better-Auth`.
 
 ## Config files
 
