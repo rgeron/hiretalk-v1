@@ -1,4 +1,5 @@
 import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Layout,
   LayoutContent,
@@ -13,10 +14,11 @@ import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getJobOfferByIdAction } from "../../job-offer.action";
+import { JobOfferTabs } from "../job-offer-tabs";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Job Applications",
-  description: "Manage applications for your job offer",
+  description: "View and manage applications for this job offer",
 });
 
 export default async function JobOfferApplicationsPage(
@@ -27,7 +29,7 @@ export default async function JobOfferApplicationsPage(
 ) {
   const params = await props.params;
 
-  // Fetch the job offer data to validate and show title
+  // Fetch the job offer data
   try {
     const jobOffer = await resolveActionResult(
       getJobOfferByIdAction({ jobOfferId: params.jobOfferId }),
@@ -37,34 +39,43 @@ export default async function JobOfferApplicationsPage(
       <Layout>
         <LayoutHeader>
           <Button variant="outline" size="sm" asChild className="mb-2">
-            <Link
-              href={`/orgs/${params.orgSlug}/job-offers/${params.jobOfferId}`}
-            >
+            <Link href={`/orgs/${params.orgSlug}/job-offers`}>
               <ArrowLeft className="mr-2 h-4 w-4" />
-              Back to Job Offer
+              Back to Job Offers
             </Link>
           </Button>
-          <LayoutTitle>Applications for: {jobOffer.name}</LayoutTitle>
+          <LayoutTitle>{jobOffer.name}</LayoutTitle>
           <LayoutDescription>
-            Manage and review candidate applications
+            Manage applications and interviews for this job offer
           </LayoutDescription>
         </LayoutHeader>
 
-        <LayoutContent>
-          <div className="rounded-lg border p-8 text-center">
-            <h2 className="mb-4 text-xl font-semibold">No applications yet</h2>
-            <p className="text-muted-foreground mx-auto mb-6 max-w-md">
-              When candidates apply for this job offer and complete the AI voice
-              interview, their applications will appear here.
-            </p>
-            <Button asChild>
-              <Link
-                href={`/orgs/${params.orgSlug}/job-offers/${params.jobOfferId}`}
-              >
-                Return to Job Offer
-              </Link>
-            </Button>
-          </div>
+        <LayoutContent className="flex flex-col gap-6">
+          <JobOfferTabs
+            orgSlug={params.orgSlug}
+            jobOfferId={jobOffer.id}
+            activeTab="applications"
+          />
+
+          <Card>
+            <CardHeader>
+              <CardTitle>Applications</CardTitle>
+            </CardHeader>
+            <CardContent>
+              {jobOffer.applicationCount > 0 ? (
+                <p>Displaying application list would go here</p>
+              ) : (
+                <div className="flex flex-col items-center justify-center py-12 text-center">
+                  <h3 className="text-lg font-medium">No applications yet</h3>
+                  <p className="text-muted-foreground mt-1 max-w-md">
+                    Share your job offer link with candidates to start receiving
+                    applications.
+                  </p>
+                  <Button className="mt-4">Get Invitation Link</Button>
+                </div>
+              )}
+            </CardContent>
+          </Card>
         </LayoutContent>
       </Layout>
     );

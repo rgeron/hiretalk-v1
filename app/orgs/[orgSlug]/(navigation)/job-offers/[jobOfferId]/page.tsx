@@ -16,6 +16,7 @@ import { ArrowLeft, Calendar, Clock, Users } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getJobOfferByIdAction } from "../job-offer.action";
+import { JobOfferTabs } from "./job-offer-tabs";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Job Offer Details",
@@ -96,6 +97,12 @@ export default async function JobOfferDetailsPage(
         </LayoutHeader>
 
         <LayoutContent className="flex flex-col gap-6">
+          <JobOfferTabs
+            orgSlug={params.orgSlug}
+            jobOfferId={jobOffer.id}
+            activeTab="job-offer"
+          />
+
           <div className="grid grid-cols-1 gap-6 md:grid-cols-2">
             <Card>
               <CardHeader>
@@ -133,7 +140,7 @@ export default async function JobOfferDetailsPage(
                   <div className="font-medium">Applications</div>
                   <div className="flex items-center gap-2">
                     <Users className="h-4 w-4" />
-                    {jobOffer.applicationCount ?? 0} application
+                    {jobOffer.applicationCount} application
                     {jobOffer.applicationCount !== 1 ? "s" : ""}
                   </div>
                 </div>
@@ -142,17 +149,17 @@ export default async function JobOfferDetailsPage(
 
             <Card>
               <CardHeader>
-                <CardTitle>Manage Applications</CardTitle>
+                <CardTitle>Job Settings</CardTitle>
               </CardHeader>
               <CardContent className="flex flex-col gap-4">
                 <p className="text-muted-foreground">
-                  Manage applications and interviews for this job offer.
+                  Manage settings and configuration for this job offer.
                 </p>
-                <Button asChild>
+                <Button variant="outline" asChild>
                   <Link
-                    href={`/orgs/${params.orgSlug}/job-offers/${jobOffer.id}/applications`}
+                    href={`/orgs/${params.orgSlug}/job-offers/${jobOffer.id}/edit`}
                   >
-                    View Applications
+                    Edit Job Offer
                   </Link>
                 </Button>
               </CardContent>
