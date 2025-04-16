@@ -47,8 +47,7 @@ export const getJobOffersAction = orgAction
       });
 
       return jobOffersWithCounts;
-    } catch (error) {
-      console.error("Error fetching job offers:", error);
+    } catch {
       throw new Error("Failed to fetch job offers. Please try again later.");
     }
   });
