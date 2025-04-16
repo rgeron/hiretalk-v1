@@ -7,8 +7,8 @@ import {
   LayoutTitle,
 } from "@/features/page/layout";
 import { hasPermission } from "@/lib/auth/auth-org";
-import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
 import { combineWithParentMetadata } from "@/lib/metadata";
+import { getRequiredCurrentOrgCache } from "@/lib/react/cache";
 import type { PageParams } from "@/types/next";
 import Link from "next/link";
 import { TemplateCard } from "./template-card";
@@ -36,7 +36,7 @@ export default async function TemplatesPage(
         <LayoutTitle>Interview Templates</LayoutTitle>
       </LayoutHeader>
       <LayoutActions className="flex gap-2">
-        {(await hasPermission({ templates: ["create"] })) && (
+        {(await hasPermission({ organization: ["update"] })) && (
           <Link href={`/orgs/${params.orgSlug}/job-offers/templates/new`}>
             <Button variant="default">Create Template</Button>
           </Link>

@@ -1,5 +1,6 @@
 "use client";
 
+import { Button } from "@/components/ui/button";
 import {
   Card,
   CardContent,
@@ -7,11 +8,10 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { Button } from "@/components/ui/button";
-import { Clock, FileText, MessagesSquare } from "lucide-react";
-import Link from "next/link";
 import { cn } from "@/lib/utils";
 import { format } from "date-fns";
+import { Clock, FileText, MessagesSquare } from "lucide-react";
+import Link from "next/link";
 
 export type TemplateCardProps = {
   template: {
@@ -44,7 +44,7 @@ export function TemplateCard({ template, orgSlug }: TemplateCardProps) {
       </CardHeader>
       <CardContent className="flex-1">
         <p className="text-muted-foreground line-clamp-3 text-sm">
-          {template.description || "No description provided"}
+          {template.description ?? "No description provided"}
         </p>
 
         <div className="text-muted-foreground mt-4 flex items-center gap-2 text-xs">

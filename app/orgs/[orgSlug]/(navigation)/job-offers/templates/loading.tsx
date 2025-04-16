@@ -1,3 +1,4 @@
+import { Button } from "@/components/ui/button";
 import {
   Layout,
   LayoutActions,
@@ -5,7 +6,6 @@ import {
   LayoutHeader,
   LayoutTitle,
 } from "@/features/page/layout";
-import { Button } from "@/components/ui/button";
 import { LoadingTemplateCards } from "./template-loading";
 
 export default function Loading() {
