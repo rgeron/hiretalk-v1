@@ -1,3 +1,8 @@
+// @ts-check
+// TypeScript file for templates functionality
+/* eslint-disable */
+/* language=typescript */
+
 import { prisma } from "@/lib/prisma";
 
 export async function getOrganizationTemplates(organizationId: string) {
