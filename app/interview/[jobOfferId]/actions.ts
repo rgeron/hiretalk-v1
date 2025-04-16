@@ -1,7 +1,12 @@
 "use server";
 
 import { prisma } from "@/lib/prisma";
+import OpenAI from "openai";
 import { z } from "zod";
+
+const openai = new OpenAI({
+  apiKey: process.env.OPENAI_API_KEY,
+});
 
 const applyToJobSchema = z.object({
   jobOfferId: z.string(),
@@ -17,7 +22,12 @@ type ApplyToJobResult = {
   error?: string;
   interviewData?: {
     threadId: string;
-    runId: string;
+    runId?: string;
+    jobTitle?: string;
+    companyName?: string;
+    jobDescription?: string;
+    durationMin?: number;
+    durationMax?: number;
   };
 };
 
@@ -31,9 +41,16 @@ export async function applyToJob({
   candidateEmail: string;
 }): Promise<ApplyToJobResult> {
   try {
-    // Validate that the job offer exists
+    // Validate that the job offer exists and get the details
     const jobOffer = await prisma.jobOffer.findUnique({
       where: { id: jobOfferId },
+      include: {
+        organization: {
+          select: {
+            name: true,
+          },
+        },
+      },
     });
 
     if (!jobOffer) {
@@ -43,38 +60,43 @@ export async function applyToJob({
       };
     }
 
-    // Start the OpenAI interview
-    const response = await fetch(
-      `${process.env.BETTER_AUTH_URL}/api/interview/realtime`,
-      {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify({
-          jobOfferId,
-          candidateName,
-          candidateEmail,
-        }),
-      },
-    );
+    // Create a thread directly with OpenAI
+    const thread = await openai.beta.threads.create();
 
-    if (!response.ok) {
-      const errorData = await response.json();
-      return {
-        success: false,
-        error: errorData.error ?? "Failed to start interview session.",
-      };
+    // Add an initial message from the candidate
+    await openai.beta.threads.messages.create(thread.id, {
+      role: "user",
+      content: `Hello, I'm ${candidateName} and I'm applying for the ${jobOffer.name} position at ${jobOffer.organization.name}.`,
+    });
+
+    // Create the interview record in the database if the model exists
+    if (prisma.interview) {
+      try {
+        await prisma.interview.create({
+          data: {
+            jobOfferId,
+            candidateName,
+            candidateEmail,
+            threadId: thread.id,
+            status: "active",
+          },
+        });
+      } catch (error) {
+        console.warn("Failed to create interview record:", error);
+        // Continue anyway as this doesn't prevent the WebRTC connection
+      }
     }
-
-    const interviewData = await response.json();
 
     return {
       success: true,
       message: "Application successful. Your interview session is ready.",
       interviewData: {
-        threadId: interviewData.threadId,
-        runId: interviewData.runId,
+        threadId: thread.id,
+        jobTitle: jobOffer.name,
+        companyName: jobOffer.organization.name,
+        jobDescription: jobOffer.description || "",
+        durationMin: jobOffer.durationMin || 15,
+        durationMax: jobOffer.durationMax || 20,
       },
     };
   } catch (error) {

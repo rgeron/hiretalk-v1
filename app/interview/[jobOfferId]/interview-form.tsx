@@ -17,7 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { applyToJob } from "./actions";
-import { InterviewChat } from "./interview-chat";
+import { RealtimeVoiceChat } from "./realtime-voice-chat";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -34,8 +34,14 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
   const [interviewData, setInterviewData] = useState<{
     threadId: string;
-    runId: string;
     candidateName: string;
+    jobInfo: {
+      jobTitle: string;
+      companyName: string;
+      jobDescription: string;
+      durationMin: number;
+      durationMax: number;
+    };
   } | null>(null);
 
   const form = useForm<FormValues>({
@@ -58,10 +64,17 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
 
       if (result.success && result.interviewData) {
         toast.success(result.message);
+
         setInterviewData({
           threadId: result.interviewData.threadId,
-          runId: result.interviewData.runId,
           candidateName: values.name,
+          jobInfo: {
+            jobTitle: result.interviewData.jobTitle || "Position",
+            companyName: result.interviewData.companyName || "Company",
+            jobDescription: result.interviewData.jobDescription || "",
+            durationMin: result.interviewData.durationMin || 15,
+            durationMax: result.interviewData.durationMax || 20,
+          },
         });
       } else {
         toast.error(
@@ -80,18 +93,18 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
       <div className="space-y-6">
         <div className="bg-muted/20 rounded-lg p-4 text-center">
           <h3 className="mb-2 text-lg font-semibold">
-            Your Interview Is Ready
+            Your Voice Interview Is Ready
           </h3>
           <p className="text-muted-foreground">
-            You'll now be interviewed by our AI assistant. Answer the questions
-            as you would in a real interview.
+            You'll now have a real-time voice conversation with our AI
+            interviewer. Make sure your microphone is enabled in your browser.
           </p>
         </div>
 
-        <InterviewChat
+        <RealtimeVoiceChat
           threadId={interviewData.threadId}
-          runId={interviewData.runId}
           candidateName={interviewData.candidateName}
+          jobInfo={interviewData.jobInfo}
         />
       </div>
     );
@@ -132,7 +145,7 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
       />
 
       <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Starting Interview..." : "Start Interview"}
+        {isSubmitting ? "Starting Interview..." : "Start Voice Interview"}
       </Button>
     </Form>
   );

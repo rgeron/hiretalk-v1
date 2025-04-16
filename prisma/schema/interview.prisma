@@ -5,9 +5,10 @@ model Interview {
   candidateEmail String
 
   // Interview Session Data
-  threadId String? // OpenAI thread ID
-  runId    String? // OpenAI run ID
-  status   String // "pending", "in_progress", "completed", "failed"
+  threadId         String? // OpenAI thread ID
+  runId            String? // OpenAI run ID
+  realtimeSessionId String? // OpenAI realtime session ID for WebRTC
+  status           String // "pending", "in_progress", "active", "completed", "failed"
 
   // Recording & Analysis
   recordingUrl String? // URL to the stored audio recording
