@@ -19,9 +19,11 @@ export default function InterviewLayout({
 }) {
   return (
     <html lang="en" suppressHydrationWarning>
-      <body className={inter.className}>
+      <body
+        className={`${inter.className} bg-background h-full font-sans antialiased`}
+      >
         <Providers>
-          <div className="bg-background flex min-h-screen flex-col">
+          <div className="flex min-h-screen flex-col">
             <header className="bg-card/40 border-b backdrop-blur-sm">
               <div className="container flex justify-center py-3">
                 <Link href="/" className="text-xl font-bold">
