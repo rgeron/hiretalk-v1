@@ -3,7 +3,6 @@
 import { Tabs, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { BarChart, Briefcase, Users } from "lucide-react";
 import Link from "next/link";
-import { usePathname } from "next/navigation";
 
 type JobOfferTabsProps = {
   orgSlug: string;
@@ -16,8 +15,6 @@ export function JobOfferTabs({
   jobOfferId,
   activeTab,
 }: JobOfferTabsProps) {
-  const pathname = usePathname();
-
   const tabs = [
     {
       id: "job-offer",
