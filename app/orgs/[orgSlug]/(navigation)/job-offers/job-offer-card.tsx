@@ -10,7 +10,7 @@ import {
   CardTitle,
 } from "@/components/ui/card";
 import { format } from "date-fns";
-import { Calendar, Clock, Users } from "lucide-react";
+import { Bot, Calendar, Clock, MessageSquare, Users } from "lucide-react";
 import Link from "next/link";
 import type { JobOfferSchemaType } from "./job-offer.schema";
 
@@ -57,23 +57,50 @@ export function JobOfferCard({ jobOffer, orgSlug }: JobOfferCardProps) {
           {jobOffer.description}
         </p>
 
+        <div className="mb-4 flex flex-wrap gap-2">
+          <Badge
+            variant="outline"
+            className="border-stone-300 bg-stone-100 text-stone-800 hover:bg-stone-200"
+          >
+            <Clock className="mr-1 h-3 w-3" />
+            {getDurationText(jobOffer.durationMin, jobOffer.durationMax)}
+          </Badge>
+
+          <Badge
+            variant="outline"
+            className="border-amber-200 bg-amber-100 text-amber-900 hover:bg-amber-200"
+          >
+            <MessageSquare className="mr-1 h-3 w-3" />
+            {jobOffer.interviewType}
+          </Badge>
+
+          <Badge
+            variant="outline"
+            className="border-yellow-200 bg-yellow-50 text-yellow-800 hover:bg-yellow-100"
+          >
+            <Bot className="mr-1 h-3 w-3" />
+            {jobOffer.interviewerStyle}
+          </Badge>
+
+          <Badge
+            variant="outline"
+            className="border-orange-200 bg-orange-50 text-orange-800 hover:bg-orange-100"
+          >
+            <MessageSquare className="mr-1 h-3 w-3" />
+            {5} questions
+          </Badge>
+
+          <Badge
+            variant="outline"
+            className="border-slate-200 bg-slate-50 text-slate-800 hover:bg-slate-100"
+          >
+            <Users className="mr-1 h-3 w-3" />
+            {jobOffer.applicationCount ?? 0} application
+            {jobOffer.applicationCount !== 1 ? "s" : ""}
+          </Badge>
+        </div>
+
         <div className="space-y-2">
-          <div className="text-muted-foreground flex items-center gap-2 text-xs">
-            <Users className="h-3 w-3" />
-            <span>
-              {jobOffer.applicationCount ?? 0} application
-              {jobOffer.applicationCount !== 1 ? "s" : ""}
-            </span>
-          </div>
-
-          <div className="text-muted-foreground flex items-center gap-2 text-xs">
-            <Clock className="h-3 w-3" />
-            <span>
-              {getDurationText(jobOffer.durationMin, jobOffer.durationMax)}{" "}
-              interview
-            </span>
-          </div>
-
           <div className="text-muted-foreground flex items-center gap-2 text-xs">
             <Calendar className="h-3 w-3" />
             <span>
@@ -88,7 +115,7 @@ export function JobOfferCard({ jobOffer, orgSlug }: JobOfferCardProps) {
           className="w-full"
         >
           <Button variant="outline" size="sm" className="w-full">
-            View Details
+            Manage your job offer
           </Button>
         </Link>
       </CardFooter>
