@@ -13,7 +13,6 @@ datasource db {
 }
 
 // The job offers and interview models are defined in separate schema files
-// but they need to be referenced here
 
 model Feedback {
   id      String  @id @default(nanoid(11))
