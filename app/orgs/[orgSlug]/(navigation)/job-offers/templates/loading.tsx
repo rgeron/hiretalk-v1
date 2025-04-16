@@ -1,4 +1,3 @@
-import { Skeleton } from "@/components/ui/skeleton";
 import {
   Layout,
   LayoutActions,
@@ -6,6 +5,8 @@ import {
   LayoutHeader,
   LayoutTitle,
 } from "@/features/page/layout";
+import { Button } from "@/components/ui/button";
+import { LoadingTemplateCards } from "./template-loading";
 
 export default function Loading() {
   return (
@@ -14,10 +15,13 @@ export default function Loading() {
         <LayoutTitle>Interview Templates</LayoutTitle>
       </LayoutHeader>
       <LayoutActions className="flex gap-2">
-        <Skeleton className="h-10 w-32" />
+        <Button variant="default" disabled>
+          Create Template
+        </Button>
       </LayoutActions>
       <LayoutContent className="flex flex-col gap-4 lg:gap-6">
-        <Skeleton className="h-64 w-full rounded-lg" />
+        <h2 className="text-xl font-semibold">Your Templates</h2>
+        <LoadingTemplateCards count={6} />
       </LayoutContent>
     </Layout>
   );
