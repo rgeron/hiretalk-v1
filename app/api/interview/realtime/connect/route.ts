@@ -1,6 +1,7 @@
-import { NextRequest, NextResponse } from "next/server";
-import OpenAI from "openai";
 import { prisma } from "@/lib/prisma";
+import type { NextRequest } from "next/server";
+import { NextResponse } from "next/server";
+import OpenAI from "openai";
 
 const openai = new OpenAI({
   apiKey: process.env.OPENAI_API_KEY,
@@ -13,48 +14,65 @@ export async function POST(req: NextRequest) {
   try {
     console.log("Starting realtime WebRTC connection...");
     const { threadId, candidateName, jobTitle, companyName } = await req.json();
-    console.log("Request data:", { threadId, candidateName, jobTitle, companyName });
+    console.log("Request data:", {
+      threadId,
+      candidateName,
+      jobTitle,
+      companyName,
+    });
 
     if (!threadId) {
-      return NextResponse.json({ error: "Thread ID is required" }, { status: 400 });
+      return NextResponse.json(
+        { error: "Thread ID is required" },
+        { status: 400 },
+      );
     }
 
     console.log("Calling OpenAI Realtime API...");
-    
-    try {
-      // Initialize realtime connection with OpenAI
-      const realtimeSession = await openai.beta.realtime.connect({
-        model: "gpt-4o-realtime-preview", // Realtime model
-        audio: {
-          input: {
-            format: "webm",
-            // Enable Voice Activity Detection by default
-            turn_detection: {
-              mode: "automatic"
-            }
-          },
-          output: {
-            voice: "alloy", // Or any other supported voice
-            format: "mp3"
-          }
-        },
-        text: {
-          enabled: true // Enable text generation alongside audio
-        }
-      });
-      
-      console.log("OpenAI Realtime connection successful:", realtimeSession.id);
 
-      // Check if the prisma interview model exists
+    try {
+      // First, create a Realtime session using the sessions endpoint
+      const sessionResponse = await fetch(
+        "https://api.openai.com/v1/realtime/sessions",
+        {
+          method: "POST",
+          headers: {
+            Authorization: `Bearer ${process.env.OPENAI_API_KEY}`,
+            "Content-Type": "application/json",
+          },
+          body: JSON.stringify({
+            model: "gpt-4o-realtime-preview-2024-12-17",
+            voice: "alloy",
+          }),
+        },
+      );
+
+      if (!sessionResponse.ok) {
+        const errorData = await sessionResponse.json();
+        console.error("Error creating realtime session:", errorData);
+        throw new Error(
+          `Failed to create realtime session: ${sessionResponse.status} ${JSON.stringify(errorData)}`,
+        );
+      }
+
+      const sessionData = await sessionResponse.json();
+      console.log("Session created successfully:", sessionData);
+
+      // Get the ephemeral key from the session
+      const ephemeralKey = sessionData.client_secret.value;
+
+      // Store the session details in the database
+      const realtimeSessionId = sessionData.id;
+
+      // Update the interview record if it exists
       if (prisma.interview) {
         try {
-          // Store the session information in the database
           await prisma.interview.update({
             where: { threadId },
             data: {
               status: "active",
-              realtimeSessionId: realtimeSession.id,
-            }
+              realtimeSessionId,
+            },
           });
           console.log("Database updated with session ID");
         } catch (dbError) {
@@ -63,10 +81,10 @@ export async function POST(req: NextRequest) {
         }
       }
 
-      // Return the SDP offer from OpenAI to the client
-      return NextResponse.json({ 
-        sdp: realtimeSession.connection.offer.sdp,
-        sessionId: realtimeSession.id
+      // Return the ephemeral key to the client
+      return NextResponse.json({
+        ephemeralKey,
+        sessionId: realtimeSessionId,
       });
     } catch (openaiError) {
       // Log the specific OpenAI error details
@@ -75,15 +93,15 @@ export async function POST(req: NextRequest) {
         type: openaiError.type,
         code: openaiError.code,
         param: openaiError.param,
-        stack: openaiError.stack
+        stack: openaiError.stack,
       });
       throw openaiError; // Re-throw to be caught by the outer catch
     }
   } catch (error) {
     console.error("Error initiating realtime session:", error);
     return NextResponse.json(
-      { error: "Failed to initiate realtime session: " + error.message },
-      { status: 500 }
+      { error: `Failed to initiate realtime session: ${error.message}` },
+      { status: 500 },
     );
   }
-} 
+}

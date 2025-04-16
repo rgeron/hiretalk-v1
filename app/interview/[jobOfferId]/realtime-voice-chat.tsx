@@ -33,6 +33,7 @@ export function RealtimeVoiceChat({
   const [isCompleted, setIsCompleted] = useState(false);
   const [isRecording, setIsRecording] = useState(false);
   const [recordingData, setRecordingData] = useState<Blob[]>([]);
+  const [ephemeralKey, setEphemeralKey] = useState<string | null>(null);
 
   const pcRef = useRef<RTCPeerConnection | null>(null);
   const dataChannelRef = useRef<RTCDataChannel | null>(null);
@@ -83,25 +84,52 @@ export function RealtimeVoiceChat({
       mediaStreamRef.current = mediaStream;
       console.log("Microphone access granted");
 
-      // 1. Create WebRTC peer connection
+      // 1. Get ephemeral key from server
+      console.log("Getting ephemeral key from server...");
+      const response = await fetch("/api/interview/realtime/connect", {
+        method: "POST",
+        headers: { "Content-Type": "application/json" },
+        body: JSON.stringify({
+          threadId,
+          candidateName,
+          jobTitle: jobInfo.jobTitle,
+          companyName: jobInfo.companyName,
+        }),
+      });
+
+      console.log("Response status:", response.status);
+      if (!response.ok) {
+        const errorText = await response.text();
+        console.error("API error response:", errorText);
+        throw new Error(
+          `Failed to initialize WebRTC connection: ${response.status} ${errorText}`,
+        );
+      }
+
+      const responseData = await response.json();
+      console.log("Response data:", responseData);
+      const { ephemeralKey: key, sessionId } = responseData;
+      setEphemeralKey(key);
+
+      // 2. Create WebRTC peer connection
       console.log("Creating WebRTC peer connection...");
       const pc = new RTCPeerConnection({
         iceServers: [{ urls: "stun:stun.l.google.com:19302" }],
       });
       pcRef.current = pc;
 
-      // 2. Set up data channel for signaling
+      // 3. Set up data channel for signaling
       console.log("Creating data channel...");
-      const dataChannel = pc.createDataChannel("events");
+      const dataChannel = pc.createDataChannel("oai-events");
       dataChannelRef.current = dataChannel;
 
-      // 3. Add audio track from microphone
+      // 4. Add audio track from microphone
       console.log("Adding audio track to peer connection...");
       mediaStream.getAudioTracks().forEach((track) => {
         pc.addTrack(track, mediaStream);
       });
 
-      // 4. Set up to play remote audio from the model
+      // 5. Set up to play remote audio from the model
       pc.ontrack = (event) => {
         console.log("Received remote track:", event);
         if (audioRef.current) {
@@ -127,7 +155,7 @@ export function RealtimeVoiceChat({
         console.log("ICE connection state:", pc.iceConnectionState);
       };
 
-      // 5. Set up data channel handlers
+      // 6. Set up data channel handlers
       dataChannel.onopen = () => {
         console.log("Data channel opened");
         setIsConnecting(false);
@@ -168,50 +196,49 @@ export function RealtimeVoiceChat({
         console.log("Data channel closed");
       };
 
-      // 6. Connect to OpenAI's Realtime API
-      console.log("Connecting to OpenAI's Realtime API...");
-      const response = await fetch("/api/interview/realtime/connect", {
-        method: "POST",
-        headers: { "Content-Type": "application/json" },
-        body: JSON.stringify({
-          threadId,
-          candidateName,
-          jobTitle: jobInfo.jobTitle,
-          companyName: jobInfo.companyName,
-        }),
-      });
+      // 7. Create an offer and set as local description
+      const offer = await pc.createOffer();
+      await pc.setLocalDescription(offer);
 
-      console.log("Response status:", response.status);
-      if (!response.ok) {
-        const errorText = await response.text();
-        console.error("API error response:", errorText);
+      // 8. Connect to OpenAI's Realtime API with the ephemeral key
+      console.log("Connecting to OpenAI's Realtime API with ephemeral key...");
+      const model = "gpt-4o-realtime-preview-2024-12-17";
+      const sdpResponse = await fetch(
+        `https://api.openai.com/v1/realtime?model=${model}`,
+        {
+          method: "POST",
+          body: offer.sdp,
+          headers: {
+            Authorization: `Bearer ${key}`,
+            "Content-Type": "application/sdp",
+          },
+        },
+      );
+
+      if (!sdpResponse.ok) {
+        const errorText = await sdpResponse.text();
+        console.error("SDP error response:", errorText);
         throw new Error(
-          `Failed to initialize WebRTC connection: ${response.status} ${errorText}`,
+          `Failed to get SDP answer: ${sdpResponse.status} ${errorText}`,
         );
       }
 
-      const responseData = await response.json();
-      console.log("Response data:", responseData);
-      const { sdp: remoteSdp } = responseData;
-
-      // 7. Set remote description (OpenAI's SDP offer)
+      // 9. Set remote description (OpenAI's SDP answer)
+      const remoteSdp = await sdpResponse.text();
       console.log("Setting remote description...");
       await pc.setRemoteDescription(
         new RTCSessionDescription({
-          type: "offer",
+          type: "answer",
           sdp: remoteSdp,
         }),
       );
 
-      // 8. Create and set local answer
-      console.log("Creating answer...");
+      // After setting the remote description
       const answer = await pc.createAnswer();
-      console.log("Setting local description...");
       await pc.setLocalDescription(answer);
 
-      // 9. Send our answer back to OpenAI
-      console.log("Sending answer to OpenAI...");
-      const answerResponse = await fetch("/api/interview/realtime/answer", {
+      // Send the answer to OpenAI via your server
+      await fetch("/api/interview/realtime/answer", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
@@ -220,19 +247,14 @@ export function RealtimeVoiceChat({
         }),
       });
 
-      console.log("Answer response status:", answerResponse.status);
-      if (!answerResponse.ok) {
-        const errorText = await answerResponse.text();
-        console.error("Answer API error response:", errorText);
-        throw new Error(
-          `Failed to complete WebRTC handshake: ${answerResponse.status} ${errorText}`,
-        );
-      }
-
       console.log("WebRTC connection established");
     } catch (error) {
       console.error("Error starting real-time interview:", error);
-      toast.error("Failed to start interview: " + error.message);
+      toast.error(
+        `Failed to start interview: ${
+          error instanceof Error ? error.message : String(error)
+        }`,
+      );
       setIsConnecting(false);
     }
   };

@@ -69,11 +69,11 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
           threadId: result.interviewData.threadId,
           candidateName: values.name,
           jobInfo: {
-            jobTitle: result.interviewData.jobTitle || "Position",
-            companyName: result.interviewData.companyName || "Company",
-            jobDescription: result.interviewData.jobDescription || "",
-            durationMin: result.interviewData.durationMin || 15,
-            durationMax: result.interviewData.durationMax || 20,
+            jobTitle: result.interviewData.jobTitle ?? "Position",
+            companyName: result.interviewData.companyName ?? "Company",
+            jobDescription: result.interviewData.jobDescription ?? "",
+            durationMin: result.interviewData.durationMin ?? 5,
+            durationMax: result.interviewData.durationMax ?? 20,
           },
         });
       } else {
