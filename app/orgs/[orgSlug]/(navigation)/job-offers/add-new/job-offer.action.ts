@@ -48,8 +48,18 @@ export const createJobOfferAction = orgAction
 
       const newJobOffer = result[0];
 
-      // Create a template if questions are provided
-      if (input.questions && input.questions.length > 0) {
+      // Create a template if createTemplate is true and we have questions
+      if (
+        input.createTemplate &&
+        input.questions &&
+        input.questions.length > 0
+      ) {
+        // Use the provided template name and description or fallback to default values
+        const templateName = input.templateName || `Template for ${input.name}`;
+        const templateDescription =
+          input.templateDescription ||
+          `Auto-generated template for job offer: ${input.name}`;
+
         // Create the template
         const templateResult = await prisma.$queryRaw<TemplateResult[]>`
           INSERT INTO "Template" (
@@ -62,8 +72,8 @@ export const createJobOfferAction = orgAction
           )
           VALUES (
             gen_random_uuid(),
-            ${`Template for ${input.name}`},
-            ${`Auto-generated template for job offer: ${input.name}`},
+            ${templateName},
+            ${templateDescription},
             ${ctx.id},
             now(),
             now()

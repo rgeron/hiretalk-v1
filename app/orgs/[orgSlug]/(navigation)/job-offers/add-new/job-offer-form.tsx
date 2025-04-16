@@ -71,6 +71,9 @@ export function JobOfferForm({
       durationMax: 15,
       interviewType: "motivation",
       interviewerStyle: "friendly",
+      createTemplate: false,
+      templateName: "",
+      templateDescription: "",
       questions: [],
     },
   });
@@ -84,6 +87,11 @@ export function JobOfferForm({
         createJobOfferAction({
           ...data,
           questions: allQuestions,
+          // Only include template fields if createTemplate is true
+          templateName: data.createTemplate ? data.templateName : undefined,
+          templateDescription: data.createTemplate
+            ? data.templateDescription
+            : undefined,
         }),
       );
     },
@@ -401,6 +409,67 @@ export function JobOfferForm({
               </div>
             </div>
           </div>
+        </div>
+
+        {/* Section 4: Template Creation */}
+        <div className="rounded-lg border p-6">
+          <h2 className="mb-4 text-xl font-semibold">Template</h2>
+
+          <FormField
+            control={form.control}
+            name="createTemplate"
+            render={({ field }) => (
+              <FormItem className="flex flex-row items-start space-y-0 space-x-3 rounded-md">
+                <FormControl>
+                  <Checkbox
+                    checked={field.value}
+                    onCheckedChange={field.onChange}
+                  />
+                </FormControl>
+                <div className="space-y-1 leading-none">
+                  <FormLabel>
+                    Create a template based on this job offer
+                  </FormLabel>
+                </div>
+              </FormItem>
+            )}
+          />
+
+          {form.watch("createTemplate") && (
+            <div className="mt-4 space-y-4">
+              <FormField
+                control={form.control}
+                name="templateName"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Template Name</FormLabel>
+                    <FormControl>
+                      <Input placeholder="Enter template name" {...field} />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+
+              <FormField
+                control={form.control}
+                name="templateDescription"
+                render={({ field }) => (
+                  <FormItem>
+                    <FormLabel>Template Description</FormLabel>
+                    <FormControl>
+                      <Textarea
+                        placeholder="Enter template description"
+                        className="min-h-[80px]"
+                        {...field}
+                      />
+                    </FormControl>
+                    <FormMessage />
+                  </FormItem>
+                )}
+              />
+            </div>
+          )}
         </div>
 
         <div className="flex justify-end">

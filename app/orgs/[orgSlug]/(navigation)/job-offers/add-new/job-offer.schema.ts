@@ -8,6 +8,9 @@ export const CreateJobOfferSchema = z.object({
   durationMax: z.coerce.number().min(1, "Maximum duration is required"),
   interviewType: z.string().min(1, "Interview type is required"),
   interviewerStyle: z.string().min(1, "Interviewer style is required"),
+  createTemplate: z.boolean().default(false),
+  templateName: z.string().optional(),
+  templateDescription: z.string().optional(),
   templateId: z.string().optional(),
   questions: z.array(z.string()).optional(),
 });
