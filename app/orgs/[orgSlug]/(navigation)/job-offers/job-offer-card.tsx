@@ -9,7 +9,6 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
-import { cn } from "@/lib/utils";
 import { format } from "date-fns";
 import { Calendar, Clock, Users } from "lucide-react";
 import Link from "next/link";
@@ -43,16 +42,6 @@ export function JobOfferCard({ jobOffer, orgSlug }: JobOfferCardProps) {
 
   return (
     <Card className="flex h-full flex-col overflow-hidden transition-shadow hover:shadow-md">
-      <div
-        className={cn(
-          "h-2",
-          jobOffer.status.toLowerCase() === "ongoing"
-            ? "bg-blue-500"
-            : jobOffer.status.toLowerCase() === "closed"
-              ? "bg-gray-500"
-              : "bg-green-500",
-        )}
-      />
       <CardHeader className="pb-2">
         <div className="flex items-start justify-between">
           <CardTitle className="line-clamp-1 text-lg">
