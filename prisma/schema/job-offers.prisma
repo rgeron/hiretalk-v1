@@ -1,61 +1,61 @@
 model JobOffer {
-  id                String      @id @default(cuid())
-  name              String
-  description       String
-  interviewType     String      // e.g., "technical", "motivational"
-  durationMin       Int
-  durationMax       Int
-  interviewerStyle  String      // e.g., "friendly", "direct", "formal"
-  status            String      // e.g., "active", "closed"
-  templateId        String?     // Optionally reference a Template
-  createdAt         DateTime    @default(now())
-  updatedAt         DateTime    @updatedAt
-  organizationId    String
-  
+  id               String   @id @default(cuid())
+  name             String
+  description      String
+  interviewType    String // e.g., "technical", "motivational"
+  durationMin      Int
+  durationMax      Int
+  interviewerStyle String // e.g., "friendly", "direct", "formal"
+  status           String // e.g., "active", "closed"
+  templateId       String? // Optionally reference a Template
+  createdAt        DateTime @default(now())
+  updatedAt        DateTime @updatedAt
+  organizationId   String
+
   // Relations
-  template          Template?    @relation(fields: [templateId], references: [id])
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  interviews        Interview[]
+  template     Template?    @relation(fields: [templateId], references: [id])
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  interviews   Interview[]
 }
 
 model Template {
-  id                String           @id @default(cuid())
-  name              String
-  description       String?
-  questions         Json?            // Embed questions as JSON
-  createdAt         DateTime         @default(now())
-  updatedAt         DateTime         @updatedAt
-  organizationId    String
-  
+  id             String   @id @default(cuid())
+  name           String
+  description    String?
+  questions      Json? // Embed questions as JSON
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  organizationId String
+
   // Relations
-  jobOffers         JobOffer[]
-  questionsRel      TemplateQuestion[]
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobOffers    JobOffer[]
+  questionsRel TemplateQuestion[]
+  organization Organization       @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 }
 
 model TemplateQuestion {
-  id                String    @id @default(cuid())
-  templateId        String
-  question          String
-  category          String    // e.g., "technical", "behavioural", etc.
-  order             Int
-  weight            Float?    // Optional weighting
+  id         String @id @default(cuid())
+  templateId String
+  question   String
+  category   String // e.g., "technical", "behavioural", etc.
+  order      Int
+  weight     Float? // Optional weighting
 
-  createdAt         DateTime  @default(now())
-  updatedAt         DateTime  @updatedAt
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 
   // Relations
-  template          Template  @relation(fields: [templateId], references: [id], onDelete: Cascade)
+  template Template @relation(fields: [templateId], references: [id], onDelete: Cascade)
 }
 
 model QuestionBank {
-  id                String   @id @default(cuid())
-  text              String
-  category          String   // e.g., "technical", "communication"
-  createdAt         DateTime @default(now())
-  updatedAt         DateTime @updatedAt
-  organizationId    String
-  
+  id             String   @id @default(cuid())
+  text           String
+  category       String // e.g., "technical", "communication"
+  createdAt      DateTime @default(now())
+  updatedAt      DateTime @updatedAt
+  organizationId String
+
   // Relations
-  organization      Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
 }

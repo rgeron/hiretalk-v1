@@ -80,11 +80,11 @@ model Organization {
   members     Member[]
   invitations Invitation[]
   email       String?
-  
+
   // Added relations for job offer features
-  jobOffers   JobOffer[]
-  templates   Template[]
-  questionBank QuestionBank[]
+  jobOffers        JobOffer[]
+  templates        Template[]
+  questionBank     QuestionBank[]
   interviewResults InterviewResult[]
 
   @@unique([slug])

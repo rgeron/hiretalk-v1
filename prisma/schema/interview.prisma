@@ -1,57 +1,57 @@
 model Interview {
-  id                String    @id @default(cuid())
-  jobOfferId        String
-  candidateName     String
-  candidateEmail    String
-  
+  id             String @id @default(cuid())
+  jobOfferId     String
+  candidateName  String
+  candidateEmail String
+
   // Interview Session Data
-  threadId          String?    // OpenAI thread ID
-  runId             String?    // OpenAI run ID
-  status            String     // "pending", "in_progress", "completed", "failed"
-  
+  threadId String? // OpenAI thread ID
+  runId    String? // OpenAI run ID
+  status   String // "pending", "in_progress", "completed", "failed"
+
   // Recording & Analysis
-  recordingUrl      String?    // URL to the stored audio recording
-  transcript        String?    // Full conversation transcript
-  summary           String?    // AI-generated summary
-  
+  recordingUrl String? // URL to the stored audio recording
+  transcript   String? // Full conversation transcript
+  summary      String? // AI-generated summary
+
   // AI Analysis
-  technicalScore    Float?     // Technical skills score
-  communicationScore Float?    // Communication skills score
-  problemSolvingScore Float?   // Problem solving ability score
-  overallScore      Float?     // Overall candidate evaluation score
-  strengths         String?    // Key strengths identified
-  improvements      String?    // Areas for improvement
-  recommendation    String?    // e.g., "Hire", "Consider", "Reject"
-  
+  technicalScore      Float? // Technical skills score
+  communicationScore  Float? // Communication skills score
+  problemSolvingScore Float? // Problem solving ability score
+  overallScore        Float? // Overall candidate evaluation score
+  strengths           String? // Key strengths identified
+  improvements        String? // Areas for improvement
+  recommendation      String? // e.g., "Hire", "Consider", "Reject"
+
   // Recruiter Review
-  isReviewed        Boolean    @default(false)
-  reviewerNotes     String?    // Notes added by the recruiter
-  recruiterRating   Int?       // Rating given by recruiter (e.g., 1-5)
-  
+  isReviewed      Boolean @default(false)
+  reviewerNotes   String? // Notes added by the recruiter
+  recruiterRating Int? // Rating given by recruiter (e.g., 1-5)
+
   // Timestamps
-  createdAt         DateTime   @default(now())
-  updatedAt         DateTime   @updatedAt
-  startedAt         DateTime?  // When interview started
-  completedAt       DateTime?  // When interview completed
-  reviewedAt        DateTime?  // When reviewed by recruiter
-  
+  createdAt   DateTime  @default(now())
+  updatedAt   DateTime  @updatedAt
+  startedAt   DateTime? // When interview started
+  completedAt DateTime? // When interview completed
+  reviewedAt  DateTime? // When reviewed by recruiter
+
   // Relations
-  jobOffer          JobOffer   @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
-  result            InterviewResult?
+  jobOffer JobOffer         @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
+  result   InterviewResult?
 }
 
 // Represent the final interview results after review
 // This separates the interview session from the formal results
 model InterviewResult {
-  id              String    @id @default(cuid())
-  organizationId  String
-  interviewId     String    @unique  // One-to-one with Interview
-  status          String    // "published", "archived"
-  
-  createdAt       DateTime  @default(now())
-  updatedAt       DateTime  @updatedAt
-  
+  id             String @id @default(cuid())
+  organizationId String
+  interviewId    String @unique // One-to-one with Interview
+  status         String // "published", "archived"
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
   // Relations
-  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
-  interview       Interview    @relation(fields: [interviewId], references: [id], onDelete: Cascade)
-} 
+  organization Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  interview    Interview    @relation(fields: [interviewId], references: [id], onDelete: Cascade)
+}
