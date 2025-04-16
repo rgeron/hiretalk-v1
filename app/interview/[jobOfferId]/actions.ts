@@ -11,62 +11,77 @@ const applyToJobSchema = z.object({
 
 type ApplyToJobInput = z.infer<typeof applyToJobSchema>;
 
-export async function applyToJob(input: ApplyToJobInput) {
-  try {
-    // Validate input
-    const validated = applyToJobSchema.safeParse(input);
-    if (!validated.success) {
-      return {
-        success: false,
-        error: "Invalid input data",
-      };
-    }
+type ApplyToJobResult = {
+  success: boolean;
+  message?: string;
+  error?: string;
+  interviewData?: {
+    threadId: string;
+    runId: string;
+  };
+};
 
-    // Check if the job offer exists
+export async function applyToJob({
+  jobOfferId,
+  candidateName,
+  candidateEmail,
+}: {
+  jobOfferId: string;
+  candidateName: string;
+  candidateEmail: string;
+}): Promise<ApplyToJobResult> {
+  try {
+    // Validate that the job offer exists
     const jobOffer = await prisma.jobOffer.findUnique({
-      where: { id: input.jobOfferId },
+      where: { id: jobOfferId },
     });
 
     if (!jobOffer) {
       return {
         success: false,
-        error: "Job offer not found",
+        error: "Job offer not found.",
       };
     }
 
-    // Check if the candidate has already applied to this job offer
-    const existingApplication = await prisma.candidateApplication.findFirst({
-      where: {
-        jobOfferId: input.jobOfferId,
-        candidateEmail: input.candidateEmail,
+    // Start the OpenAI interview
+    const response = await fetch(
+      `${process.env.BETTER_AUTH_URL}/api/interview/realtime`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+        },
+        body: JSON.stringify({
+          jobOfferId,
+          candidateName,
+          candidateEmail,
+        }),
       },
-    });
+    );
 
-    if (existingApplication) {
+    if (!response.ok) {
+      const errorData = await response.json();
       return {
         success: false,
-        error: "You have already applied to this job offer",
+        error: errorData.error ?? "Failed to start interview session.",
       };
     }
 
-    // Create a new candidate application
-    await prisma.candidateApplication.create({
-      data: {
-        jobOfferId: input.jobOfferId,
-        candidateName: input.candidateName,
-        candidateEmail: input.candidateEmail,
-      },
-    });
+    const interviewData = await response.json();
 
     return {
       success: true,
-      message: "Your application has been submitted successfully",
+      message: "Application successful. Your interview session is ready.",
+      interviewData: {
+        threadId: interviewData.threadId,
+        runId: interviewData.runId,
+      },
     };
   } catch (error) {
     console.error("Error applying to job:", error);
     return {
       success: false,
-      error: "An unexpected error occurred",
+      error: "An unexpected error occurred. Please try again.",
     };
   }
 }

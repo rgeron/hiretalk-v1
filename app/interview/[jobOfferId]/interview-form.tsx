@@ -17,6 +17,7 @@ import {
 import { Input } from "@/components/ui/input";
 import { toast } from "sonner";
 import { applyToJob } from "./actions";
+import { InterviewChat } from "./interview-chat";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -31,7 +32,11 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
-  const [isSuccess, setIsSuccess] = useState(false);
+  const [interviewData, setInterviewData] = useState<{
+    threadId: string;
+    runId: string;
+    candidateName: string;
+  } | null>(null);
 
   const form = useForm<FormValues>({
     resolver: zodResolver(formSchema),
@@ -51,10 +56,13 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
         candidateEmail: values.email,
       });
 
-      if (result.success) {
+      if (result.success && result.interviewData) {
         toast.success(result.message);
-        setIsSuccess(true);
-        form.reset();
+        setInterviewData({
+          threadId: result.interviewData.threadId,
+          runId: result.interviewData.runId,
+          candidateName: values.name,
+        });
       } else {
         toast.error(
           result.error ?? "Failed to submit application. Please try again.",
@@ -67,20 +75,24 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
     }
   }
 
-  if (isSuccess) {
+  if (interviewData) {
     return (
-      <div className="bg-muted/20 rounded-lg border p-6 text-center">
-        <h3 className="mb-2 text-lg font-semibold">Application Submitted!</h3>
-        <p className="text-muted-foreground">
-          Thank you for your application. We will be in touch soon.
-        </p>
-        <Button
-          onClick={() => setIsSuccess(false)}
-          variant="outline"
-          className="mt-4"
-        >
-          Apply Again
-        </Button>
+      <div className="space-y-6">
+        <div className="bg-muted/20 rounded-lg p-4 text-center">
+          <h3 className="mb-2 text-lg font-semibold">
+            Your Interview Is Ready
+          </h3>
+          <p className="text-muted-foreground">
+            You'll now be interviewed by our AI assistant. Answer the questions
+            as you would in a real interview.
+          </p>
+        </div>
+
+        <InterviewChat
+          threadId={interviewData.threadId}
+          runId={interviewData.runId}
+          candidateName={interviewData.candidateName}
+        />
       </div>
     );
   }
@@ -120,7 +132,7 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
       />
 
       <Button type="submit" className="w-full" disabled={isSubmitting}>
-        {isSubmitting ? "Submitting..." : "Submit Application"}
+        {isSubmitting ? "Starting Interview..." : "Start Interview"}
       </Button>
     </Form>
   );

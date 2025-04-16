@@ -1,0 +1,37 @@
+model Interview {
+  id              String    @id @default(cuid())
+  jobOfferId      String
+  candidateName   String
+  candidateEmail  String
+  threadId        String    // OpenAI thread ID
+  runId           String    // OpenAI run ID
+  status          String    // "active", "completed", "failed"
+  transcript      String?   // Full conversation transcript
+  summary         String?   // AI-generated summary
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  completedAt     DateTime?
+  
+  // Relations
+  jobOffer        JobOffer  @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
+}
+
+model InterviewResult {
+  id              String    @id @default(cuid())
+  organizationId  String
+  jobOfferId      String
+  candidateName   String
+  candidateEmail  String
+  transcript      String    // Full conversation transcript
+  summary         String    // AI-generated summary
+  status          String    // "pending_review", "reviewed", "archived"
+  reviewerNotes   String?   // Notes added by the recruiter
+  rating          Int?      // Optional rating given by the recruiter (e.g., 1-5)
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+  reviewedAt      DateTime?
+  
+  // Relations
+  organization    Organization @relation(fields: [organizationId], references: [id], onDelete: Cascade)
+  jobOffer        JobOffer     @relation(fields: [jobOfferId], references: [id], onDelete: Cascade)
+} 

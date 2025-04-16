@@ -85,6 +85,7 @@ model Organization {
   jobOffers   JobOffer[]
   templates   Template[]
   questionBank QuestionBank[]
+  interviewResults InterviewResult[]
 
   @@unique([slug])
   @@map("organization")

@@ -12,9 +12,8 @@ datasource db {
   directUrl = env("DATABASE_URL_UNPOOLED")
 }
 
-// Include job offers schema
-// This is important to make the job offer models available
-include = "./job-offers.prisma"
+// The job offers and interview models are defined in separate schema files
+// but they need to be referenced here
 
 model Feedback {
   id      String  @id @default(nanoid(11))
@@ -32,3 +31,4 @@ model Feedback {
 // jobOffers   JobOffer[]
 // templates   Template[]
 // questionBank QuestionBank[]
+// interviews  InterviewResult[]
