@@ -22,6 +22,7 @@ import {
 import { Textarea } from "@/components/ui/textarea";
 import { LoadingButton } from "@/features/form/submit-button";
 import { resolveActionResult } from "@/lib/actions/actions-utils";
+import type { QuestionCategory } from "@/lib/questions";
 import { useMutation } from "@tanstack/react-query";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -29,14 +30,6 @@ import { toast } from "sonner";
 import { createJobOfferAction } from "./job-offer.action";
 import type { CreateJobOfferSchemaType } from "./job-offer.schema";
 import { CreateJobOfferSchema } from "./job-offer.schema";
-
-const DEFAULT_QUESTIONS = [
-  "Tell me about your relevant experience for this position.",
-  "Why are you interested in this role?",
-  "What are your salary expectations?",
-  "When would you be available to start?",
-  "Do you have any questions about the position or company?",
-];
 
 const INTERVIEW_TYPES = [
   { value: "motivation", label: "Motivation" },
@@ -51,12 +44,21 @@ const INTERVIEWER_STYLES = [
   { value: "humorous", label: "Humorous" },
 ];
 
-export function JobOfferForm({ orgSlug }: { orgSlug: string }) {
+export function JobOfferForm({
+  orgSlug,
+  questionCategories,
+}: {
+  orgSlug: string;
+  questionCategories: QuestionCategory[];
+}) {
   const [customQuestions, setCustomQuestions] = useState<string[]>([]);
   const [newQuestion, setNewQuestion] = useState("");
   const [selectedDefaultQuestions, setSelectedDefaultQuestions] = useState<
     string[]
   >([]);
+  const [selectedCategory, setSelectedCategory] = useState<string | null>(
+    questionCategories.length > 0 ? questionCategories[0].id : null,
+  );
 
   const router = useRouter();
 
@@ -263,26 +265,93 @@ export function JobOfferForm({ orgSlug }: { orgSlug: string }) {
             <div>
               <h3 className="font-medium">Standard Questions</h3>
               <p className="text-muted-foreground mb-2 text-sm">
-                Select common questions
+                Select questions by category
               </p>
 
-              <div className="grid grid-cols-1 gap-2 md:grid-cols-2">
-                {DEFAULT_QUESTIONS.map((question, index) => (
-                  <div key={index} className="flex items-start space-x-2">
-                    <Checkbox
-                      id={`question-${index}`}
-                      checked={selectedDefaultQuestions.includes(question)}
-                      onCheckedChange={() => toggleDefaultQuestion(question)}
-                    />
-                    <label
-                      htmlFor={`question-${index}`}
-                      className="text-sm leading-tight"
+              {questionCategories.length > 0 ? (
+                <>
+                  <div className="mb-4">
+                    <Select
+                      value={selectedCategory ?? undefined}
+                      onValueChange={setSelectedCategory}
                     >
-                      {question}
-                    </label>
+                      <SelectTrigger>
+                        <SelectValue placeholder="Select a category" />
+                      </SelectTrigger>
+                      <SelectContent>
+                        {questionCategories.map((category) => (
+                          <SelectItem key={category.id} value={category.id}>
+                            {category.name}
+                          </SelectItem>
+                        ))}
+                      </SelectContent>
+                    </Select>
                   </div>
-                ))}
-              </div>
+
+                  <div className="max-h-[300px] overflow-y-auto rounded border p-4">
+                    {selectedCategory && (
+                      <div className="space-y-2">
+                        {questionCategories
+                          .find((cat) => cat.id === selectedCategory)
+                          ?.questions.map((question, index) => (
+                            <div
+                              key={`${selectedCategory}-${index}`}
+                              className="flex items-start space-x-2"
+                            >
+                              <Checkbox
+                                id={`question-${selectedCategory}-${index}`}
+                                checked={selectedDefaultQuestions.includes(
+                                  question,
+                                )}
+                                onCheckedChange={() =>
+                                  toggleDefaultQuestion(question)
+                                }
+                              />
+                              <label
+                                htmlFor={`question-${selectedCategory}-${index}`}
+                                className="text-sm leading-tight"
+                              >
+                                {question}
+                              </label>
+                            </div>
+                          ))}
+                      </div>
+                    )}
+                  </div>
+                </>
+              ) : (
+                <p className="text-muted-foreground">
+                  No question categories available
+                </p>
+              )}
+
+              {selectedDefaultQuestions.length > 0 && (
+                <div className="mt-4">
+                  <h4 className="mb-2 text-sm font-medium">
+                    Selected questions:
+                  </h4>
+                  <div className="rounded border p-3">
+                    <ul className="space-y-2 text-sm">
+                      {selectedDefaultQuestions.map((q, i) => (
+                        <li
+                          key={i}
+                          className="flex items-center justify-between gap-2"
+                        >
+                          <span className="flex-1">{q}</span>
+                          <Button
+                            type="button"
+                            variant="ghost"
+                            size="sm"
+                            onClick={() => toggleDefaultQuestion(q)}
+                          >
+                            Remove
+                          </Button>
+                        </li>
+                      ))}
+                    </ul>
+                  </div>
+                </div>
+              )}
             </div>
 
             {/* Custom Questions */}

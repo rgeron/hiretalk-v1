@@ -1,14 +1,14 @@
 import { Button } from "@/components/ui/button";
 import {
-    Layout,
-    LayoutContent,
-    LayoutHeader,
-    LayoutTitle,
+  Layout,
+  LayoutContent,
+  LayoutHeader,
+  LayoutTitle,
 } from "@/features/page/layout";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import type { PageParams } from "@/types/next";
 import Link from "next/link";
-import { JobOfferForm } from "./job-offer-form";
+import { InterviewQuestionsProvider } from "./interview-questions-provider";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Create Job Offer",
@@ -31,7 +31,7 @@ export default async function AddNewJobOfferPage(
         </Button>
       </LayoutHeader>
       <LayoutContent>
-        <JobOfferForm orgSlug={params.orgSlug} />
+        <InterviewQuestionsProvider orgSlug={params.orgSlug} />
       </LayoutContent>
     </Layout>
   );

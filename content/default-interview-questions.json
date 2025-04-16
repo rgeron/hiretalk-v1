@@ -1,0 +1,35 @@
+{
+  "generalQuestions": [
+    "Tell me about your relevant experience for this position.",
+    "Why are you interested in this role?",
+    "What are your salary expectations?",
+    "When would you be available to start?",
+    "Do you have any questions about the position or company?",
+    "What do you know about our company?",
+    "Where do you see yourself in 5 years?",
+    "What are your strengths and weaknesses?",
+    "Describe a challenging work situation and how you handled it.",
+    "Why are you leaving your current job?"
+  ],
+  "technicalQuestions": [
+    "Describe your experience with [specific technology].",
+    "How do you keep your technical skills up-to-date?",
+    "Explain a complex technical concept in simple terms.",
+    "How do you approach troubleshooting technical issues?",
+    "Tell me about a technical project you're proud of."
+  ],
+  "teamworkQuestions": [
+    "How do you handle conflicts within a team?",
+    "Describe your ideal work environment.",
+    "How do you prioritize tasks when working on multiple projects?",
+    "Tell me about a time you had to collaborate with a difficult teammate.",
+    "How do you communicate technical concepts to non-technical colleagues?"
+  ],
+  "leadershipQuestions": [
+    "Describe your leadership style.",
+    "Tell me about a time you led a team through a challenging project.",
+    "How do you motivate team members?",
+    "How do you delegate tasks?",
+    "How do you handle feedback and criticism?"
+  ]
+}
