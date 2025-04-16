@@ -13,6 +13,7 @@ import Link from "next/link";
 import { Suspense } from "react";
 import { JobOfferCardsLoading } from "./job-offer-loading";
 import { JobOffersContent } from "./job-offers-content";
+import { JobOffersFilters } from "./job-offers-filters";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Job Offers",
@@ -25,17 +26,25 @@ export default async function JobOffersPage(
   }>,
 ) {
   const params = await props.params;
+  const searchParams = await props.searchParams;
+
+  // Get search and filter parameters from the URL
+  const search = searchParams.search as string | undefined;
+  const status = searchParams.status as string | undefined;
 
   return (
     <Layout size="lg">
       <LayoutHeader>
         <LayoutTitle>Job Offers</LayoutTitle>
       </LayoutHeader>
-      <LayoutActions className="flex gap-2">
+      <LayoutActions className="flex flex-col items-center gap-3 sm:flex-row">
+        <div className="w-full sm:flex-1">
+          <JobOffersFilters />
+        </div>
         {(await hasPermission({
           organization: ["update"],
         })) && (
-          <Button variant="default" asChild>
+          <Button variant="default" asChild className="w-full sm:w-auto">
             <Link href={`/orgs/${params.orgSlug}/job-offers/add-new`}>
               New offer
             </Link>
@@ -44,7 +53,11 @@ export default async function JobOffersPage(
       </LayoutActions>
       <LayoutContent className="flex flex-col gap-4 lg:gap-6">
         <Suspense fallback={<JobOfferCardsLoading count={3} />}>
-          <JobOffersContent orgSlug={params.orgSlug} />
+          <JobOffersContent
+            orgSlug={params.orgSlug}
+            search={search}
+            status={status}
+          />
         </Suspense>
       </LayoutContent>
     </Layout>
