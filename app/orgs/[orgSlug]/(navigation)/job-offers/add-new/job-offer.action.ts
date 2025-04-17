@@ -8,6 +8,13 @@ import { CreateJobOfferSchema } from "./job-offer.schema";
 type JobOfferResult = { id: string };
 type TemplateResult = { id: string };
 
+// Additional metadata we might receive in the future
+type QuestionMetadata = {
+  type: string;
+  categoryId?: string;
+  categoryName?: string;
+};
+
 export const createJobOfferAction = orgAction
   .metadata({
     roles: ["owner", "admin"],
@@ -15,6 +22,16 @@ export const createJobOfferAction = orgAction
   .schema(CreateJobOfferSchema)
   .action(async ({ parsedInput: input, ctx }) => {
     try {
+      // Format questions as JSON array with order
+      const formattedQuestions = input.questions
+        ? input.questions.map((question, index) => ({
+            text: question,
+            order: index,
+            // In the future, we could parse metadata from the form here
+            // but for now we'll just store the order and text
+          }))
+        : [];
+
       // We'll use a simpler approach with direct SQL
       const result = await prisma.$queryRaw<JobOfferResult[]>`
         INSERT INTO "JobOffer" (
@@ -27,6 +44,7 @@ export const createJobOfferAction = orgAction
           "interviewerStyle", 
           status, 
           "organizationId", 
+          questions,
           "createdAt", 
           "updatedAt"
         ) 
@@ -40,6 +58,7 @@ export const createJobOfferAction = orgAction
           ${input.interviewerStyle}, 
           'to be launched', 
           ${ctx.id}, 
+          ${JSON.stringify(formattedQuestions)}::jsonb,
           now(), 
           now()
         )
@@ -55,9 +74,9 @@ export const createJobOfferAction = orgAction
         input.questions.length > 0
       ) {
         // Use the provided template name and description or fallback to default values
-        const templateName = input.templateName || `Template for ${input.name}`;
+        const templateName = input.templateName ?? `Template for ${input.name}`;
         const templateDescription =
-          input.templateDescription ||
+          input.templateDescription ??
           `Auto-generated template for job offer: ${input.name}`;
 
         // Create the template

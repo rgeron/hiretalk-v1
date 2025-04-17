@@ -80,13 +80,40 @@ export function JobOfferForm({
 
   const createJobOfferMutation = useMutation({
     mutationFn: async (data: CreateJobOfferSchemaType) => {
-      // Combine default and custom questions
-      const allQuestions = [...selectedDefaultQuestions, ...customQuestions];
+      // Prepare questions with metadata about their type and source
+      const formattedQuestions = [
+        // Standard questions with category info
+        ...selectedDefaultQuestions.map((questionText) => {
+          // Find which category this question belongs to
+          const category = questionCategories.find((cat) =>
+            cat.questions.includes(questionText),
+          );
+
+          return {
+            text: questionText,
+            type: "standard",
+            categoryId: category?.id ?? "unknown",
+            categoryName: category?.name ?? "Unknown Category",
+          };
+        }),
+
+        // Custom questions
+        ...customQuestions.map((questionText) => ({
+          text: questionText,
+          type: "custom",
+        })),
+      ];
+
+      // Extract just the text for the API
+      const questionTexts = formattedQuestions.map((q) =>
+        typeof q === "string" ? q : q.text,
+      );
 
       return resolveActionResult(
         createJobOfferAction({
           ...data,
-          questions: allQuestions,
+          // Send the question texts to the API
+          questions: questionTexts,
           // Only include template fields if createTemplate is true
           templateName: data.createTemplate ? data.templateName : undefined,
           templateDescription: data.createTemplate
