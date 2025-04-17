@@ -1,7 +1,7 @@
 "use client";
 
 import { zodResolver } from "@hookform/resolvers/zod";
-import { useState } from "react";
+import { useRef, useState } from "react";
 import { useForm } from "react-hook-form";
 import { z } from "zod";
 
@@ -21,6 +21,7 @@ import { applyToJob } from "./actions";
 import { RealtimeVoiceChat } from "./realtime-voice-chat";
 
 // Import the correctly generated UploadDropzone
+import { cn } from "@/lib/utils";
 import { UploadDropzone } from "@/utils/uploadthing";
 
 const formSchema = z.object({
@@ -39,6 +40,12 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
   const [cvUrl, setCvUrl] = useState<string | null>(null);
   const [isUploading, setIsUploading] = useState(false);
   const [uploadError, setUploadError] = useState<string | null>(null);
+  const [uploadAttempts, setUploadAttempts] = useState(0);
+  const [selectedFile, setSelectedFile] = useState<{
+    name: string;
+    size: number;
+  } | null>(null);
+  const uploadingTimeoutRef = useRef<NodeJS.Timeout | null>(null);
   const [interviewData, setInterviewData] = useState<{
     threadId: string;
     candidateName: string;
@@ -95,6 +102,34 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
       setIsSubmitting(false);
     }
   }
+
+  // Handle upload timeouts
+  const handleUploadTimeout = () => {
+    if (isUploading) {
+      setIsUploading(false);
+      setUploadError("Upload timed out. Please try again.");
+      toast.error("Upload timed out", {
+        description: "The server took too long to respond. Please try again.",
+      });
+    }
+  };
+
+  // Reset upload state for retry
+  const resetUpload = () => {
+    setCvUrl(null);
+    setUploadError(null);
+    setIsUploading(false);
+    if (uploadingTimeoutRef.current) {
+      clearTimeout(uploadingTimeoutRef.current);
+    }
+  };
+
+  // Format file size to human readable format
+  const formatFileSize = (bytes: number): string => {
+    if (bytes < 1024) return `${bytes} bytes`;
+    else if (bytes < 1048576) return `${(bytes / 1024).toFixed(1)} KB`;
+    else return `${(bytes / 1048576).toFixed(1)} MB`;
+  };
 
   if (interviewData) {
     return (
@@ -161,79 +196,214 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
               <div className="flex items-center space-x-2">
                 <FileIcon className="text-primary h-5 w-5" />
                 <span className="text-sm font-medium">
-                  CV Uploaded Successfully
+                  {selectedFile
+                    ? selectedFile.name
+                    : "CV Uploaded Successfully"}
                 </span>
               </div>
               <Button
                 type="button"
                 variant="ghost"
                 size="sm"
-                onClick={() => {
-                  setCvUrl(null);
-                  setUploadError(null);
-                }}
+                onClick={resetUpload}
               >
                 Remove
               </Button>
             </div>
           </div>
         ) : isUploading ? (
-          <div className="flex h-32 flex-col items-center justify-center rounded-md border border-dashed p-4">
+          <div className="flex h-32 flex-col items-center justify-center rounded-md border-8 p-4">
             <Loader2 className="text-primary h-8 w-8 animate-spin" />
             <p className="text-muted-foreground mt-2 text-sm">
-              Uploading CV...
+              Uploading {selectedFile?.name} (
+              {formatFileSize(selectedFile?.size ?? 0)})...
             </p>
+            <div className="mt-2 h-2.5 w-full max-w-xs rounded-full bg-gray-200">
+              <div className="bg-primary h-2.5 w-full animate-pulse rounded-full"></div>
+            </div>
+            <Button
+              type="button"
+              variant="ghost"
+              size="sm"
+              className="mt-2"
+              onClick={() => {
+                if (uploadingTimeoutRef.current) {
+                  clearTimeout(uploadingTimeoutRef.current);
+                }
+                setIsUploading(false);
+                setUploadError("Upload cancelled");
+              }}
+            >
+              Cancel
+            </Button>
           </div>
         ) : (
-          <div className="rounded-md border border-dashed">
+          <div
+            className={cn(
+              "border-amber-200",
+              uploadError
+                ? "border-red-300"
+                : "hover:border-primary/50 border-gray-200",
+              "rounded-md",
+            )}
+          >
             <UploadDropzone
               endpoint="resumeUploader"
               onBeforeUploadBegin={(files) => {
-                // Check file size manually as a backup to server validation
-                const file = files[0];
-                if (file.size > 8 * 1024 * 1024) {
-                  toast.error("File too large", {
-                    description: "Maximum file size is 8MB",
-                  });
-                  throw new Error("File too large");
-                }
+                try {
+                  // Reset errors
+                  setUploadError(null);
 
-                // Verify it's a PDF
-                if (file.type !== "application/pdf") {
-                  toast.error("Invalid file type", {
-                    description: "Only PDF files are accepted",
-                  });
-                  throw new Error("Invalid file type");
-                }
+                  if (files.length === 0) {
+                    throw new Error("No file selected");
+                  }
 
-                setIsUploading(true);
-                setUploadError(null);
-                return files;
+                  // Check file size manually as a backup to server validation
+                  const file = files[0];
+                  console.log("Processing file:", {
+                    name: file.name,
+                    size: file.size,
+                    type: file.type,
+                  });
+                  setSelectedFile({ name: file.name, size: file.size });
+
+                  if (file.size > 8 * 1024 * 1024) {
+                    toast.error("File too large", {
+                      description: "Maximum file size is 8MB",
+                    });
+                    throw new Error("File too large (max 8MB)");
+                  }
+
+                  // Verify it's a PDF
+                  if (file.type !== "application/pdf") {
+                    toast.error("Invalid file type", {
+                      description: "Only PDF files are accepted",
+                    });
+                    throw new Error("Invalid file type (only PDF accepted)");
+                  }
+
+                  setIsUploading(true);
+                  setUploadAttempts((prev) => prev + 1);
+
+                  // Set a shorter timeout for small files (10 seconds)
+                  if (uploadingTimeoutRef.current) {
+                    clearTimeout(uploadingTimeoutRef.current);
+                  }
+                  // Calculate timeout based on file size:
+                  // Base 10s + 1s per 100KB up to 2 minutes max
+                  const baseTimeout = 10000; // 10 seconds base
+                  const sizeTimeout = Math.min(file.size / 100000, 110) * 1000; // 1s per 100KB up to 110s
+                  const timeoutPeriod = Math.min(
+                    baseTimeout + sizeTimeout,
+                    120000,
+                  ); // Max 2 minutes
+
+                  uploadingTimeoutRef.current = setTimeout(
+                    handleUploadTimeout,
+                    timeoutPeriod,
+                  );
+
+                  // Toast notification when upload starts
+                  toast.info(`Uploading ${file.name}`, {
+                    description: `Size: ${formatFileSize(file.size)}`,
+                  });
+
+                  return files;
+                } catch (error) {
+                  if (error instanceof Error) {
+                    setUploadError(error.message);
+                  } else {
+                    setUploadError("Unknown error occurred");
+                  }
+                  throw error;
+                }
               }}
               onClientUploadComplete={(res) => {
+                if (uploadingTimeoutRef.current) {
+                  clearTimeout(uploadingTimeoutRef.current);
+                  uploadingTimeoutRef.current = null;
+                }
+
                 setIsUploading(false);
-                if (res.length > 0 && res[0].url) {
+                if (res.length > 0 && res[0].ufsUrl) {
+                  setCvUrl(res[0].ufsUrl);
+                  toast.success(`${selectedFile?.name} uploaded successfully`, {
+                    description: `Size: ${formatFileSize(selectedFile?.size ?? 0)}`,
+                  });
+                } else if (res.length > 0 && res[0].url) {
+                  // Fallback to url for compatibility
                   setCvUrl(res[0].url);
-                  toast.success("CV uploaded successfully");
+                  toast.success(`${selectedFile?.name} uploaded successfully`, {
+                    description: `Size: ${formatFileSize(selectedFile?.size ?? 0)}`,
+                  });
                 } else {
+                  console.error("Upload response:", res);
                   setUploadError("Upload completed but no URL was returned");
-                  toast.error("Error getting file URL");
+                  toast.error("Error getting file URL", {
+                    description:
+                      "Please try again or contact support if the problem persists.",
+                  });
                 }
               }}
               onUploadError={(error) => {
+                console.error("Upload error:", error);
+
+                if (uploadingTimeoutRef.current) {
+                  clearTimeout(uploadingTimeoutRef.current);
+                  uploadingTimeoutRef.current = null;
+                }
+
                 setIsUploading(false);
-                setUploadError(error.message);
-                toast.error(`Error uploading CV: ${error.message}`);
+                const errorMessage = error.message || "Unknown upload error";
+                setUploadError(errorMessage);
+                toast.error(`Error uploading CV`, {
+                  description: errorMessage,
+                });
               }}
-              className="ut-label:text-sm ut-allowed-content:ut-uploading:text-red-300"
+              className="ut-label:text-sm ut-allowed-content:ut-uploading:text-red-300 ut-button:bg-primary ut-button:hover:bg-primary/90 w-full"
+              config={{ mode: "auto" }}
+              content={{
+                allowedContent({ ready, isUploading }) {
+                  if (isUploading) return "Uploading...";
+                  if (ready) return "Release to upload";
+                  return "PDF files only, up to 8MB";
+                },
+              }}
             />
           </div>
         )}
 
         {uploadError && (
-          <p className="text-xs text-red-500">
-            Error: {uploadError}. Please try again.
-          </p>
+          <div className="flex flex-col gap-1 rounded-md bg-red-50 p-2 text-sm text-red-500">
+            <p className="font-semibold">Error: {uploadError}</p>
+            <div className="flex gap-2">
+              <Button
+                type="button"
+                variant="outline"
+                size="sm"
+                onClick={resetUpload}
+                className="h-7 text-xs"
+              >
+                Try Again
+              </Button>
+              {uploadAttempts >= 2 && (
+                <Button
+                  type="submit"
+                  variant="outline"
+                  size="sm"
+                  className="h-7 text-xs"
+                  onClick={() => {
+                    toast.info("Proceeding without CV", {
+                      description:
+                        "You can continue without uploading a CV if you're having technical issues.",
+                    });
+                  }}
+                >
+                  Continue Without CV
+                </Button>
+              )}
+            </div>
+          </div>
         )}
 
         <p className="text-muted-foreground text-xs">
