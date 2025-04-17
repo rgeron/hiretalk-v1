@@ -17,9 +17,9 @@ export const Hero = () => {
               variant="h1"
               className="text-5xl font-semibold tracking-tight text-balance sm:text-7xl lg:text-7xl"
             >
-              Write the best content and Grow your{" "}
+              Remplacez les lettres de motivation par des{" "}
               <span className="relative inline-block">
-                <span>business</span>
+                <span>entretiens IA</span>
                 <CircleSvg className="fill-primary absolute inset-0" />
               </span>
             </Typography>
@@ -27,8 +27,9 @@ export const Hero = () => {
               variant="large"
               className="text-muted-foreground mt-8 text-lg font-medium text-pretty sm:text-xl/8"
             >
-              Build for Thread, create, schedule and publish your content to
-              your account with AI.
+              À l'ère de ChatGPT, seuls les candidats vraiment motivés passeront
+              un entretien oral. Filtrez naturellement les candidatures et
+              gagnez du temps grâce à notre IA.
             </Typography>
             <div className="mt-10 flex items-center justify-center gap-x-6">
               <ShimmerButton
@@ -36,18 +37,18 @@ export const Hero = () => {
                 background="hsl(var(--primary))"
                 className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
               >
-                Get started
+                Commencer gratuitement
               </ShimmerButton>
               <Link
                 href="#pricing"
                 className={buttonVariants({ variant: "link" })}
               >
-                Learn more <span aria-hidden="true">→</span>
+                En savoir plus <span aria-hidden="true">→</span>
               </Link>
             </div>
           </div>
           <Image
-            alt="App screenshot"
+            alt="Talk2Apply - Interface d'entretien IA"
             src="/images/screenshot.png"
             width={1280}
             height={720}

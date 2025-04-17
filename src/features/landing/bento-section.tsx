@@ -266,10 +266,11 @@ const Skeleton5 = () => {
 
 const items = [
   {
-    title: "AI Content Generation",
+    title: "Entretiens IA personnalisés",
     description: (
       <span className="text-sm">
-        Experience the power of AI in generating unique content.
+        Notre IA pose des questions ciblées sur la motivation et les compétences
+        des candidats.
       </span>
     ),
     header: <Skeleton1 />,
@@ -277,10 +278,11 @@ const items = [
     icon: <Sparkles size={20} />,
   },
   {
-    title: "Schedule with ease",
+    title: "Gain de temps considérable",
     description: (
       <span className="text-sm">
-        We help you schedule your threads with ease.
+        Fini la lecture des lettres de motivation, recevez directement une
+        synthèse structurée.
       </span>
     ),
     header: <Skeleton2 />,
@@ -288,10 +290,11 @@ const items = [
     icon: <Calendar size={20} />,
   },
   {
-    title: "Calendar View",
+    title: "Analyse des soft skills",
     description: (
       <span className="text-sm">
-        See what you have planned for the day with our calendar view.
+        Évaluez la clarté d'expression, la structuration des idées et l'aisance
+        à l'oral dès le début.
       </span>
     ),
     header: <Skeleton3 />,
@@ -299,22 +302,23 @@ const items = [
     icon: <CalendarCheck size={20} />,
   },
   {
-    title: "Threads Analysis",
+    title: "Authentification garantie",
     description: (
       <span className="text-sm">
-        Understand your threads with our powerful analytics.
+        Un filtre naturel : seuls les candidats vraiment motivés complèteront
+        l'entretien.
       </span>
     ),
     header: <Skeleton4 />,
     className: "md:col-span-2",
     icon: <BarChart3 size={20} />,
   },
-
   {
-    title: "See what works",
+    title: "Intégration ATS",
     description: (
       <span className="text-sm">
-        Understand the hype and trends with our powerful research tools.
+        S'intègre parfaitement à votre système de suivi des candidatures
+        existant.
       </span>
     ),
     header: <Skeleton5 />,

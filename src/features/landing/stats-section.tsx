@@ -12,24 +12,24 @@ type StatProps = {
 
 const stats: StatProps[] = [
   {
-    number: 476,
-    suffix: "K",
-    text: "Threads scheduled every month.",
+    number: 40,
+    suffix: "%",
+    text: "Réduction du temps consacré au tri des candidatures.",
   },
   {
-    number: 1.44,
-    suffix: "K",
-    text: "Users that use our platform.",
+    number: 72,
+    suffix: "%",
+    text: "Des recruteurs constatent une meilleure qualité de candidats.",
   },
   {
-    number: 1.5,
-    suffix: "M+",
-    text: "Interactions with posts created by our users.",
+    number: 15,
+    suffix: "K+",
+    text: "Entretiens IA réalisés chaque mois via notre plateforme.",
   },
   {
-    number: 192,
-    suffix: "K",
-    text: "Users impacted by our published posts.",
+    number: 30,
+    suffix: "%",
+    text: "Augmentation du taux de conversion candidat → embauche.",
   },
 ];
 

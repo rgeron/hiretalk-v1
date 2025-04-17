@@ -39,20 +39,20 @@ export default function HomePage() {
           {
             image: "https://i.pravatar.cc/300?u=a1",
             name: "Sophie",
-            review: `Threader **has completely transformed the way I manage my social media** content. The ability to schedule posts and use AI for content suggestions has saved me hours each week.`,
-            role: "Digital Marketer",
+            review: `Talk2Apply **a complètement transformé notre processus de recrutement**. Grâce aux entretiens IA, nous n'avons plus à lire des dizaines de lettres de motivation génériques et pouvons rapidement identifier les candidats motivés.`,
+            role: "Directrice RH, Tech Corp",
           },
           {
             image: "https://i.pravatar.cc/300?u=a2",
-            name: "Alex",
-            review: `Using Threader has significantly boosted my online engagement. **The analytics tool helps me understand what works**, allowing me to refine my strategy and grow my follower base.`,
-            role: "Social Media Influencer",
+            name: "Alexandre",
+            review: `Talk2Apply nous a permis de **réduire de 40% le temps consacré au tri des candidatures**. Les synthèses fournies sont précises et pertinentes, ce qui facilite grandement notre prise de décision.`,
+            role: "Responsable Recrutement, Finance SA",
           },
           {
             image: "https://i.pravatar.cc/300?u=a3",
-            name: "Jordan",
-            review: `The ease of scheduling and the AI-generated content features are game-changers. **Threader's user-friendly interface** makes it perfect for anyone looking to enhance their online presence.`,
-            role: "Entrepreneur",
+            name: "Camille",
+            review: `L'analyse des soft skills dès la première étape est un atout majeur. **Talk2Apply nous aide à repérer immédiatement les candidats qui correspondent à notre culture d'entreprise**.`,
+            role: "Talent Acquisition, StartupLab",
           },
         ]}
       />
@@ -61,23 +61,24 @@ export default function HomePage() {
 
       <ReviewSingle
         image="https://i.pravatar.cc/300?u=5"
-        name="Michel"
-        review={`Threader **has completely transformed** the way I manage my social media content. The ability to schedule posts and use AI for content suggestions **has saved me hours each week.**`}
-        role="Digital Marketer"
-        compagnyImage="https://1000logos.net/wp-content/uploads/2017/03/McDonalds-Logo-2003.png"
+        name="Thomas"
+        review={`Talk2Apply **a révolutionné notre façon de recruter**. Les entretiens IA nous permettent d'évaluer l'authenticité et la motivation des candidats dès le début du processus, ce qui **a augmenté de 30% la qualité de nos embauches**.`}
+        role="DRH"
+        compagnyImage="https://1000logos.net/wp-content/uploads/2016/10/Amazon-Logo.png"
         key={1}
       />
 
       <FeaturesSection
         features={[
           {
-            badge: "⏰ Schedule",
-            title: "Schedule your post",
-            description: "Schedule your post on the Threader in a few clicks.",
+            badge: "🎙️ Entretien IA",
+            title: "Entretiens oraux automatisés",
+            description:
+              "Notre IA pose des questions personnalisées aux candidats sur leur motivation et leurs compétences.",
             component: (
               <Image
-                src="/images/placeholder1.gif"
-                alt=""
+                src="/images/ai-interview.gif"
+                alt="Démonstration d'un entretien IA"
                 width={200}
                 height={100}
                 className="h-auto w-full object-cover"
@@ -86,14 +87,14 @@ export default function HomePage() {
             ),
           },
           {
-            badge: "📅 Calendar",
-            title: "See what you scheduled",
+            badge: "📊 Analyse",
+            title: "Analyse détaillée des réponses",
             description:
-              "With the calendar view, you can see what you scheduled and when.",
+              "Recevez une synthèse structurée des réponses et une évaluation des soft skills du candidat.",
             component: (
               <Image
-                src="/images/placeholder1.gif"
-                alt=""
+                src="/images/analysis-dashboard.gif"
+                alt="Dashboard d'analyse des entretiens"
                 width={200}
                 height={100}
                 className="h-auto w-full object-cover"
@@ -101,14 +102,14 @@ export default function HomePage() {
             ),
           },
           {
-            badge: "👁️ Preview",
-            title: "Preview your post",
+            badge: "⏱️ Gain de temps",
+            title: "Filtrage naturel des candidats",
             description:
-              "Preview your post before scheduling it to see how it will look like.",
+              "Seuls les candidats réellement motivés iront jusqu'au bout du processus d'entretien.",
             component: (
               <Image
-                src="/images/placeholder1.gif"
-                alt=""
+                src="/images/time-saving.gif"
+                alt="Démonstration du gain de temps"
                 width={200}
                 height={100}
                 className="h-auto w-full object-cover"
@@ -117,14 +118,14 @@ export default function HomePage() {
             ),
           },
           {
-            badge: "🔄 Repost",
-            title: "Schedule repost",
+            badge: "🔄 Intégration",
+            title: "Intégration avec votre ATS",
             description:
-              "Automatically repost your post after a certain amount of time.",
+              "Talk2Apply s'intègre facilement avec vos systèmes de suivi des candidatures existants.",
             component: (
               <Image
-                src="/images/placeholder1.gif"
-                alt=""
+                src="/images/ats-integration.gif"
+                alt="Intégration avec les systèmes ATS"
                 width={200}
                 height={100}
                 className="h-auto w-full object-cover"
@@ -146,39 +147,42 @@ export default function HomePage() {
       <FAQSection
         faq={[
           {
-            question: "What is Threader?",
+            question: "Qu'est-ce que Talk2Apply ?",
             answer:
-              "Threader is an innovative platform designed to help you write, schedule, and publish content to your account with the assistance of AI, enhancing your business's online presence.",
+              "Talk2Apply est une plateforme B2B qui révolutionne le processus de recrutement en remplaçant les lettres de motivation traditionnelles par des entretiens oraux instantanés avec une IA.",
           },
           {
-            question: "How does AI Content Generation work?",
+            question: "Comment fonctionne l'entretien IA ?",
             answer:
-              "Our AI Content Generation feature leverages the power of artificial intelligence to create unique and engaging content for your Threads, making content creation easier and more efficient.",
+              "Lorsqu'un candidat postule, il reçoit un lien pour effectuer un entretien automatisé. L'IA lui pose des questions personnalisées sur sa motivation et ses compétences. L'entretien est enregistré, transcrit et analysé en temps réel.",
           },
           {
-            question: "Can I schedule my threads in advance?",
+            question: "Quelles informations reçoit le recruteur ?",
             answer:
-              "Yes, with Threader, you can schedule your threads for a specific time, allowing you to maintain a consistent online presence without the need to manually post every day.",
+              "Le recruteur reçoit une synthèse structurée des réponses du candidat, un score d'engagement et de soft skills (basé sur la clarté, la fluidité et la structure du discours), ainsi que la transcription complète et l'audio si nécessaire.",
           },
           {
-            question: "What is the Now.TS project?",
+            question:
+              "En quoi Talk2Apply est-il meilleur que les lettres de motivation ?",
             answer:
-              "Now.TS is a new project announced on our platform that enables users to create professional Next.js applications in days, streamlining the development process.",
+              "Avec ChatGPT, une lettre de motivation se génère en 5 minutes, ce qui a fait disparaître le filtre naturel. Talk2Apply réintroduit l'authenticité et la friction dans le processus de candidature - seuls les candidats réellement motivés iront jusqu'au bout, ce qui constitue un filtre naturel.",
           },
           {
-            question: "How can I get more followers?",
+            question:
+              "Talk2Apply peut-il s'intégrer à notre système ATS actuel ?",
             answer:
-              "To gain more followers, focus on creating content related to Next.js, as our analysis shows it's highly engaging. Utilize our research tools to understand trends and improve your content strategy.",
+              "Oui, Talk2Apply s'intègre facilement avec les principaux systèmes ATS du marché pour une expérience fluide et sans friction pour vos équipes RH.",
           },
           {
-            question: "What are the benefits of posting with Threader?",
+            question:
+              "Est-ce que Talk2Apply est compatible avec tous les types de postes ?",
             answer:
-              "Posting with Threader allows you to schedule posts, avoid daily manual postings, track your scheduled content easily, and maintain consistency in your online activity.",
+              "Absolument ! Talk2Apply peut être personnalisé pour tous types de postes, des profils techniques aux fonctions support. L'IA adapte ses questions en fonction du poste concerné.",
           },
           {
-            question: "What pricing plans does Threader offer?",
+            question: "Quels sont les avantages pour les candidats ?",
             answer:
-              "Threader offers two pricing plans: THREADER FREE, perfect for tiny creators, allowing you to schedule 1 post in advance; and THREADER PREMIUM, ideal for content creators, offering unlimited scheduling, post previews, and auto-reposting features.",
+              "Les candidats bénéficient d'une expérience moderne et interactive qui leur permet de mettre en valeur leurs compétences orales et leur personnalité, éléments difficiles à exprimer dans une lettre de motivation écrite.",
           },
         ]}
       />
@@ -189,73 +193,73 @@ export default function HomePage() {
         reviews={[
           {
             image: "https://i.pravatar.cc/300?u=b1",
-            name: "Eva",
+            name: "Émilie",
             review:
-              "Since I started using Threader, my content creation process has been streamlined. The AI suggestions are spot on, helping me to connect better with my audience. Highly recommend for anyone looking to elevate their content game.",
-            role: "Content Creator",
+              "Depuis que nous utilisons Talk2Apply, le taux de candidats qui correspondent réellement à nos attentes a considérablement augmenté. L'IA pose exactement les bonnes questions pour évaluer l'adéquation avec notre culture d'entreprise.",
+            role: "Directrice des Ressources Humaines",
           },
           {
             image: "https://i.pravatar.cc/300?u=b2",
             name: "Lucas",
             review:
-              "Threader's scheduling feature is a lifesaver. It allows me to plan my content calendar efficiently, ensuring I never miss posting on the optimal days and times. Fantastic tool for social media managers.",
-            role: "Social Media Manager",
+              "La fonction d'analyse des soft skills de Talk2Apply est impressionnante. Elle nous permet d'identifier rapidement les candidats qui ont non seulement les compétences techniques, mais aussi les qualités humaines que nous recherchons.",
+            role: "Responsable Recrutement IT",
           },
           {
             image: "https://i.pravatar.cc/300?u=b3",
-            name: "Mia",
+            name: "Marie",
             review:
-              "The analytics provided by Threader are invaluable. They've given me insights into what my audience loves, helping me double my engagement rate in just a few months.",
-            role: "Digital Marketer",
+              "L'intégration de Talk2Apply à notre ATS existant a été d'une simplicité remarquable. Notre équipe RH a pu l'adopter sans formation complexe, et les résultats ont été immédiats.",
+            role: "Responsable SIRH",
           },
           {
             image: "https://i.pravatar.cc/300?u=b4",
-            name: "Noah",
+            name: "Nicolas",
             review:
-              "I was skeptical about AI-generated content, but Threader changed my mind. The content feels personal and has significantly increased my interaction rates.",
-            role: "Blogger",
+              "Au début, j'étais sceptique quant à l'utilisation de l'IA pour les entretiens, mais Talk2Apply m'a convaincu. La qualité des synthèses et la pertinence des analyses sont impressionnantes.",
+            role: "Consultant RH",
           },
           {
             image: "https://i.pravatar.cc/300?u=b5",
-            name: "Isabella",
+            name: "Isabelle",
             review:
-              "Threader's user interface is incredibly user-friendly. I was able to onboard my team in no time, and we've seen a marked improvement in our social media performance.",
-            role: "Team Leader",
+              "L'interface utilisateur de Talk2Apply est incroyablement intuitive. Nos recruteurs ont pu se l'approprier en un temps record, ce qui a accéléré l'ensemble de notre processus de recrutement.",
+            role: "Chief People Officer",
           },
           {
             image: "https://i.pravatar.cc/300?u=b6",
-            name: "Oliver",
+            name: "Olivier",
             review:
-              "Auto-reposting with Threader is a feature I didn't know I needed. It's great for getting more mileage out of your best content without any extra effort.",
-            role: "Freelancer",
+              "La fonctionnalité de personnalisation des questions selon le poste est un véritable atout. Elle nous permet d'adapter précisément les entretiens IA à chaque type de profil recherché.",
+            role: "Talent Acquisition Manager",
           },
           {
             image: "https://i.pravatar.cc/300?u=b7",
-            name: "Sophia",
+            name: "Sophie",
             review:
-              "Joining the Threader community has opened up networking opportunities with fellow content creators. It's more than just a tool; it's a platform for growth.",
-            role: "Influencer",
+              "Rejoindre la communauté Talk2Apply nous a ouvert des opportunités de networking avec d'autres professionnels RH. C'est plus qu'un outil ; c'est une plateforme d'échange et d'innovation en recrutement.",
+            role: "DRH",
           },
           {
             image: "https://i.pravatar.cc/300?u=b8",
-            name: "Elijah",
+            name: "Éric",
             review:
-              "The calendar view in Threader helps me visualize my content strategy for the entire month. It's been a game changer for my planning process.",
-            role: "Strategist",
+              "La visualisation des données dans Talk2Apply nous aide à avoir une vue d'ensemble sur nos campagnes de recrutement. C'est un game changer pour notre processus d'analyse et de reporting.",
+            role: "Data Analyst RH",
           },
           {
             image: "https://i.pravatar.cc/300?u=b9",
             name: "Charlotte",
             review:
-              "I appreciate the flexibility in Threader's pricing plans. It's accessible for creators at any stage of their journey, from beginners to established influencers.",
-            role: "Entrepreneur",
+              "J'apprécie la flexibilité des formules tarifaires de Talk2Apply. Elles sont accessibles pour les entreprises de toute taille, des startups aux grands groupes.",
+            role: "CEO",
           },
           {
             image: "https://i.pravatar.cc/300?u=b10",
-            name: "James",
+            name: "Jean",
             review:
-              "The customer support team at Threader is fantastic. They've been quick to respond and helpful with any questions I've had. Great service overall.",
-            role: "Customer",
+              "L'équipe de support client de Talk2Apply est fantastique. Ils ont été rapides à répondre et très utiles pour toutes les questions que nous avons posées. Un service client de grande qualité.",
+            role: "Responsable de la transformation digitale",
           },
         ]}
       />

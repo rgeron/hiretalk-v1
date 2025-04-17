@@ -16,18 +16,18 @@ export const FeaturesSection = ({
     <SectionLayout size="sm" className="relative" id="features">
       <div className="relative flex flex-col gap-16 lg:gap-28">
         <div className="flex flex-col items-center gap-2">
-          <Badge>The features you NEED.</Badge>
+          <Badge>Les fonctionnalités dont vous avez BESOIN</Badge>
           <Typography variant="h2" className="m-auto max-w-xl text-center">
-            More than a post schedulure, we will help you <u>grow</u>.
+            Bien plus qu'un ATS, nous <u>révolutionnons</u> votre processus de
+            recrutement.
           </Typography>
           <Typography
             variant="muted"
             className="m-auto max-w-lg text-center text-base"
           >
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Voluptates,
-            consequuntur! Similique, nulla placeat in expedita omnis ab error
-            eaque esse a doloremque, iusto libero eligendi, animi minus
-            architecto. Modi, consectetur?
+            Talk2Apply remplace les lettres de motivation traditionnelles par
+            des entretiens oraux IA, créant un filtre naturel qui améliore la
+            qualité des candidatures tout en réduisant votre charge de travail.
           </Typography>
         </div>
         {features.map((f, i) => {

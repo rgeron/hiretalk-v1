@@ -11,16 +11,19 @@ export function Pricing() {
   const [isYearly, setIsYearly] = useState(false);
 
   return (
-    <section className="from-background to-muted/20 w-full bg-gradient-to-b py-12 md:py-24 lg:py-32">
+    <section
+      className="from-background to-muted/20 w-full bg-gradient-to-b py-12 md:py-24 lg:py-32"
+      id="pricing"
+    >
       <div className="container px-4 md:px-6">
         <div className="flex flex-col items-center justify-center space-y-4 text-center">
           <div className="space-y-2">
             <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-              Choose Your Plan
+              Choisissez votre formule
             </h2>
             <p className="text-muted-foreground max-w-[700px] md:text-xl/relaxed lg:text-base/relaxed xl:text-xl/relaxed">
-              Select the perfect plan for your needs. Upgrade or downgrade at
-              any time.
+              Sélectionnez la formule parfaite pour vos besoins. Possibilité
+              d'évoluer à tout moment.
             </p>
           </div>
 
@@ -33,7 +36,7 @@ export function Pricing() {
                   : "text-muted-foreground",
               )}
             >
-              Monthly
+              Mensuel
             </span>
             <Switch
               checked={isYearly}
@@ -48,12 +51,12 @@ export function Pricing() {
                   : "text-muted-foreground",
               )}
             >
-              <span className="text-sm font-medium">Yearly</span>
+              <span className="text-sm font-medium">Annuel</span>
               <Badge
                 variant="outline"
                 className="border-primary/20 bg-primary/10 text-primary ml-2"
               >
-                Save 20%
+                -20%
               </Badge>
             </div>
           </div>
@@ -72,13 +75,13 @@ export function Pricing() {
 
         <div className="mt-16 text-center">
           <p className="text-muted-foreground">
-            All plans include basic features like unlimited access and community
-            support.
+            Toutes les formules incluent les fonctionnalités de base comme les
+            entretiens IA et le support client.
           </p>
           <p className="text-muted-foreground mt-2">
-            Need a custom plan?{" "}
+            Besoin d'une formule personnalisée ?{" "}
             <a href="#" className="text-primary font-medium hover:underline">
-              Contact us
+              Contactez-nous
             </a>
           </p>
         </div>

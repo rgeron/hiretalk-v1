@@ -13,21 +13,22 @@ export const EmailFormSection = () => {
           variant="small"
           className="text-primary font-extrabold uppercase"
         >
-          Be the first to use Threader
+          Révolutionnez votre recrutement
         </Typography>
         <Typography variant="h2" className="text-center text-4xl lg:text-5xl">
-          Join the waiting list of{" "}
+          Rejoignez les entreprises qui utilisent{" "}
           <span className="text-gradient from-primary to-secondary bg-gradient-to-r font-mono font-extrabold uppercase">
-            Threader
+            Talk2Apply
           </span>
         </Typography>
         <Typography variant="h3">
-          Get early access, exclusive content and more.
+          Obtenez une démo personnalisée et découvrez comment remplacer
+          efficacement vos lettres de motivation.
         </Typography>
         <div className="mx-auto mt-6 w-full max-w-md">
           <EmailForm
-            submitButtonLabel="Join"
-            successMessage="Thank you for joining the waiting list"
+            submitButtonLabel="Demander une démo"
+            successMessage="Merci pour votre intérêt ! Un membre de notre équipe vous contactera prochainement."
           />
         </div>
       </div>

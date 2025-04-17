@@ -7,7 +7,7 @@ import { Providers } from "../providers";
 const inter = Inter({ subsets: ["latin"] });
 
 export const metadata: Metadata = {
-  title: "HireTalk - AI-Powered Interview",
+  title: "Talk2Apply - AI-Powered Interview",
   description:
     "Complete your job application with an AI-powered voice interview",
 };
