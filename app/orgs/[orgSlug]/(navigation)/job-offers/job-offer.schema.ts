@@ -10,6 +10,7 @@ export const JobOfferSchema = z.object({
   durationMax: z.number(),
   interviewerStyle: z.string(),
   status: z.string(),
+  questions: z.any().optional(), // JSONB field for questions
   createdAt: z.date(),
   updatedAt: z.date(),
   organizationId: z.string(),

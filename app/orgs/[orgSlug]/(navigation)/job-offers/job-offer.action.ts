@@ -67,6 +67,20 @@ export const getJobOfferByIdAction = orgAction
           id: jobOfferId,
           organizationId: ctx.id,
         },
+        select: {
+          id: true,
+          name: true,
+          description: true,
+          interviewType: true,
+          durationMin: true,
+          durationMax: true,
+          interviewerStyle: true,
+          status: true,
+          createdAt: true,
+          updatedAt: true,
+          organizationId: true,
+          templateId: true,
+        },
       });
 
       if (!jobOffer) {
@@ -81,10 +95,24 @@ export const getJobOfferByIdAction = orgAction
         },
       });
 
+      // Try to get questions using a raw query
+      let questions = null;
+      try {
+        const result = await prisma.$queryRaw`
+          SELECT questions FROM "JobOffer" WHERE id = ${jobOfferId}
+        `;
+        if (result && Array.isArray(result) && result.length > 0) {
+          questions = result[0].questions;
+        }
+      } catch (error) {
+        console.error("Failed to fetch questions:", error);
+      }
+
       // Return job offer with application count
       return {
         ...jobOffer,
         applicationCount,
+        questions,
       };
     } catch (error) {
       if (error instanceof Error) {

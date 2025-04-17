@@ -10,7 +10,7 @@ import { resolveActionResult } from "@/lib/actions/actions-utils";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import type { PageParams } from "@/types/next";
 import { format } from "date-fns";
-import { ArrowLeft, Calendar, Clock, Users } from "lucide-react";
+import { ArrowLeft, Calendar, Clock, HelpCircle, Users } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getJobOfferByIdAction } from "../job-offer.action";
@@ -22,6 +22,12 @@ export const generateMetadata = combineWithParentMetadata({
   title: "Job Offer Details",
   description: "View details of your job offer",
 });
+
+// Define question type
+type Question = {
+  text: string;
+  order?: number;
+};
 
 export default async function JobOfferDetailsPage(
   props: PageParams<{
@@ -63,6 +69,28 @@ export default async function JobOfferDetailsPage(
       };
       return styles[style.toLowerCase()] || style;
     };
+
+    // Parse the questions from the JSON
+    const questions: Question[] = [];
+    if (jobOffer.questions) {
+      if (Array.isArray(jobOffer.questions)) {
+        jobOffer.questions.forEach((q) => {
+          if (typeof q === "string") {
+            questions.push({ text: q });
+          } else if (q && typeof q === "object" && "text" in q) {
+            questions.push(q as Question);
+          }
+        });
+      } else if (typeof jobOffer.questions === "object") {
+        Object.values(jobOffer.questions).forEach((q) => {
+          if (typeof q === "string") {
+            questions.push({ text: q });
+          } else if (q && typeof q === "object" && "text" in q) {
+            questions.push(q as Question);
+          }
+        });
+      }
+    }
 
     return (
       <Layout>
@@ -131,6 +159,28 @@ export default async function JobOfferDetailsPage(
                     {jobOffer.applicationCount !== 1 ? "s" : ""}
                   </div>
                 </div>
+              </CardContent>
+            </Card>
+
+            <Card>
+              <CardHeader>
+                <CardTitle>Interview Questions</CardTitle>
+              </CardHeader>
+              <CardContent>
+                {questions.length > 0 ? (
+                  <ul className="space-y-3">
+                    {questions.map((question, index) => (
+                      <li key={index} className="flex gap-2">
+                        <HelpCircle className="text-muted-foreground h-5 w-5 flex-shrink-0" />
+                        <span>{question.text}</span>
+                      </li>
+                    ))}
+                  </ul>
+                ) : (
+                  <div className="text-muted-foreground italic">
+                    No questions defined for this job offer.
+                  </div>
+                )}
               </CardContent>
             </Card>
           </div>
