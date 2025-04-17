@@ -133,24 +133,6 @@ export default async function JobOfferDetailsPage(
                 </div>
               </CardContent>
             </Card>
-
-            <Card>
-              <CardHeader>
-                <CardTitle>Job Settings</CardTitle>
-              </CardHeader>
-              <CardContent className="flex flex-col gap-4">
-                <p className="text-muted-foreground">
-                  Manage settings and configuration for this job offer.
-                </p>
-                <Button variant="outline" asChild>
-                  <Link
-                    href={`/orgs/${params.orgSlug}/job-offers/${jobOffer.id}/edit`}
-                  >
-                    Edit Job Offer
-                  </Link>
-                </Button>
-              </CardContent>
-            </Card>
           </div>
         </LayoutContent>
       </Layout>
