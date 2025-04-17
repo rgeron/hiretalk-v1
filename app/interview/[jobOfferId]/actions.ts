@@ -72,23 +72,21 @@ export async function applyToJob({
       content: `Hello, I'm ${candidateName} and I'm applying for the ${jobOffer.name} position at ${jobOffer.organization.name}.`,
     });
 
-    // Create the interview record in the database if the model exists
-    if (prisma.interview) {
-      try {
-        await prisma.interview.create({
-          data: {
-            jobOfferId,
-            candidateName,
-            candidateEmail,
-            threadId: thread.id,
-            status: "active",
-            cvUrl,
-          },
-        });
-      } catch (error) {
-        console.warn("Failed to create interview record:", error);
-        // Continue anyway as this doesn't prevent the WebRTC connection
-      }
+    // Create the interview record in the database
+    try {
+      await prisma.interview.create({
+        data: {
+          jobOfferId,
+          candidateName,
+          candidateEmail,
+          threadId: thread.id,
+          status: "active",
+          // cvUrl field removed as it doesn't exist in the schema
+        },
+      });
+    } catch (error) {
+      console.warn("Failed to create interview record:", error);
+      // Continue anyway as this doesn't prevent the WebRTC connection
     }
 
     return {

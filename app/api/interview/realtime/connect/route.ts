@@ -28,6 +28,18 @@ export async function POST(req: NextRequest) {
       );
     }
 
+    // Find the interview and associated job offer
+    const interview = await prisma.interview.findFirst({
+      where: { threadId },
+      include: {
+        jobOffer: true,
+      },
+    });
+
+    if (!interview || !interview.jobOffer) {
+      console.warn("Interview or job offer not found for threadId:", threadId);
+    }
+
     console.log("Calling OpenAI Realtime API...");
 
     try {
@@ -43,6 +55,13 @@ export async function POST(req: NextRequest) {
           body: JSON.stringify({
             model: "gpt-4o-realtime-preview-2024-12-17",
             voice: "alloy",
+            // Add custom instructions to have AI speak first
+            instructions: generateInstructions(
+              candidateName,
+              jobTitle,
+              companyName,
+              interview?.jobOffer,
+            ),
           }),
         },
       );
@@ -79,6 +98,7 @@ export async function POST(req: NextRequest) {
               data: {
                 status: "active",
                 realtimeSessionId,
+                startedAt: new Date(), // Record when the interview starts
               },
             });
             console.log("Database updated with session ID");
@@ -113,4 +133,53 @@ export async function POST(req: NextRequest) {
       { status: 500 },
     );
   }
+}
+
+/**
+ * Generate custom instructions for the AI interviewer
+ */
+function generateInstructions(
+  candidateName: string,
+  jobTitle: string,
+  companyName: string,
+  jobOffer?: any,
+) {
+  // Get job questions if available
+  let questionsText = "";
+  let timeoutInstructions = "";
+
+  if (jobOffer) {
+    // Format questions if they exist
+    if (jobOffer.questions) {
+      const questions =
+        typeof jobOffer.questions === "string"
+          ? JSON.parse(jobOffer.questions)
+          : jobOffer.questions;
+
+      if (Array.isArray(questions)) {
+        questionsText =
+          "You must ask the following questions in this exact order:\n";
+        questions.forEach((q: any, index: number) => {
+          const questionText = typeof q === "string" ? q : q.text || q.question;
+          questionsText += `${index + 1}. ${questionText}\n`;
+        });
+      }
+    }
+
+    // Add timeout instructions
+    const durationMax = jobOffer.durationMax || 20;
+    timeoutInstructions = `This interview must be completed within ${durationMax} minutes. After ${durationMax} minutes, you must wrap up the interview by saying "Thank you for your time, our interview is now complete."`;
+  }
+
+  return `You are conducting an interview for a ${jobTitle} position at ${companyName}.
+  
+You must ALWAYS introduce yourself first at the beginning of the conversation. Start by saying: "Hello ${candidateName}, I'm the AI interviewer for ${companyName}. Thank you for applying to the ${jobTitle} position. I'll be asking you some questions about your experience and skills."
+
+${questionsText}
+
+Be conversational, engaging, and professional. Listen carefully to the candidate's responses and ask follow-up questions when appropriate.
+
+${timeoutInstructions}
+
+After all questions have been asked, conclude by thanking the candidate for their time and informing them that the interview is complete.`;
 }

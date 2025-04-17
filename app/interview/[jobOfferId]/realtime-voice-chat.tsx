@@ -172,22 +172,21 @@ export function RealtimeVoiceChat({
         // Start recording the entire conversation
         startRecording();
 
-        // Initialize the session
-        const sessionConfig = {
-          type: "session.update",
-          session: {
-            instructions: `You are conducting an interview for a ${jobInfo.jobTitle} position at ${jobInfo.companyName}. 
-            Ask relevant questions about the candidate's experience, skills, and motivation for this role. 
-            The job description is: ${jobInfo.jobDescription}.
-            This interview should take between ${jobInfo.durationMin}-${jobInfo.durationMax} minutes.
-            Be conversational and professional. Proceed step by step through different aspects of the job requirements.
-            Introduce yourself as the AI interviewer for ${jobInfo.companyName}.
-            The candidate's name is ${candidateName}.`,
-          },
-        };
+        // Setup a timer to enforce the maximum time limit
+        if (jobInfo.durationMax > 0) {
+          const timeLimit = jobInfo.durationMax * 60 * 1000; // convert minutes to milliseconds
 
-        console.log("Sending session config:", sessionConfig);
-        dataChannel.send(JSON.stringify(sessionConfig));
+          console.log(
+            `Setting interview time limit: ${jobInfo.durationMax} minutes`,
+          );
+
+          setTimeout(() => {
+            if (isConnected && !isCompleted) {
+              console.log("Interview time limit reached, auto-completing");
+              completeInterview();
+            }
+          }, timeLimit);
+        }
       };
 
       dataChannel.onmessage = (event) => {
@@ -284,11 +283,27 @@ export function RealtimeVoiceChat({
 
             // If last message is from assistant, update it
             if (lastMessage && lastMessage.role === "assistant") {
+              const updatedContent =
+                lastMessage.content + serverEvent.delta.text;
               const updatedMessages = [...prevMessages];
               updatedMessages[updatedMessages.length - 1] = {
                 ...lastMessage,
-                content: lastMessage.content + serverEvent.delta.text,
+                content: updatedContent,
               };
+
+              // Check if the assistant has indicated the interview is complete
+              if (
+                updatedContent.includes("our interview is now complete") ||
+                updatedContent.includes("interview is complete")
+              ) {
+                // Auto-complete the interview after a short delay to let the last message finish
+                setTimeout(() => {
+                  if (isConnected && !isCompleted) {
+                    completeInterview();
+                  }
+                }, 3000);
+              }
+
               return updatedMessages;
             } else {
               // Otherwise add new assistant message
