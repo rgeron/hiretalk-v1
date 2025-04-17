@@ -10,14 +10,7 @@ import { resolveActionResult } from "@/lib/actions/actions-utils";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import type { PageParams } from "@/types/next";
 import { format } from "date-fns";
-import {
-  ArrowLeft,
-  Calendar,
-  Clock,
-  HelpCircle,
-  Pencil,
-  Users,
-} from "lucide-react";
+import { ArrowLeft, Calendar, Clock, Pencil, Users } from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getJobOfferByIdAction } from "../job-offer.action";
@@ -178,7 +171,9 @@ export default async function JobOfferDetailsPage(
                   <ul className="space-y-3">
                     {questions.map((question, index) => (
                       <li key={index} className="flex gap-2">
-                        <HelpCircle className="text-muted-foreground h-5 w-5 flex-shrink-0" />
+                        <div className="text-muted-foreground flex h-5 w-5 flex-shrink-0 items-center justify-center font-medium">
+                          {index + 1}
+                        </div>
                         <span>{question.text}</span>
                       </li>
                     ))}
