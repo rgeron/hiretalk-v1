@@ -10,7 +10,14 @@ import { resolveActionResult } from "@/lib/actions/actions-utils";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import type { PageParams } from "@/types/next";
 import { format } from "date-fns";
-import { ArrowLeft, Calendar, Clock, HelpCircle, Users } from "lucide-react";
+import {
+  ArrowLeft,
+  Calendar,
+  Clock,
+  HelpCircle,
+  Pencil,
+  Users,
+} from "lucide-react";
 import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getJobOfferByIdAction } from "../job-offer.action";
@@ -183,6 +190,17 @@ export default async function JobOfferDetailsPage(
                 )}
               </CardContent>
             </Card>
+          </div>
+
+          <div className="mt-6 flex justify-end">
+            <Button asChild>
+              <Link
+                href={`/orgs/${params.orgSlug}/job-offers/${jobOffer.id}/edit`}
+              >
+                <Pencil className="mr-2 h-4 w-4" />
+                Edit Job Offer
+              </Link>
+            </Button>
           </div>
         </LayoutContent>
       </Layout>
