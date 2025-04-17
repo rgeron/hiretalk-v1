@@ -15,6 +15,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getJobOfferByIdAction } from "../../job-offer.action";
 import { JobOfferTabs } from "../job-offer-tabs";
+import { CopyLinkButton } from "./copy-link-button";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Job Applications",
@@ -71,7 +72,7 @@ export default async function JobOfferApplicationsPage(
                     Share your job offer link with candidates to start receiving
                     applications.
                   </p>
-                  <Button className="mt-4">Get Invitation Link</Button>
+                  <CopyLinkButton jobOfferId={jobOffer.id} />
                 </div>
               )}
             </CardContent>
@@ -79,7 +80,7 @@ export default async function JobOfferApplicationsPage(
         </LayoutContent>
       </Layout>
     );
-  } catch (error) {
+  } catch {
     notFound();
   }
 }
