@@ -9,9 +9,19 @@ import {
   CardHeader,
   CardTitle,
 } from "@/components/ui/card";
+import { dialogManager } from "@/features/dialog-manager/dialog-manager-store";
+import { resolveActionResult } from "@/lib/actions/actions-utils";
+import { useMutation } from "@tanstack/react-query";
 import { format } from "date-fns";
 import { Bot, Calendar, Clock, MessageSquare, Users } from "lucide-react";
 import Link from "next/link";
+import { useRouter } from "next/navigation";
+import { toast } from "sonner";
+import {
+  closeJobOfferAction,
+  deleteJobOfferAction,
+  launchJobOfferAction,
+} from "../job-offers/[jobOfferId]/job-offer-actions.action";
 import type { JobOfferSchemaType } from "./job-offer.schema";
 
 type JobOfferCardProps = {
@@ -20,24 +30,98 @@ type JobOfferCardProps = {
 };
 
 export function JobOfferCard({ jobOffer, orgSlug }: JobOfferCardProps) {
-  // Define badge colors based on status
-  const getBadgeVariant = (status: string) => {
-    switch (status.toLowerCase()) {
-      case "to be launched":
-        return "outline";
-      case "ongoing":
-        return "default";
-      case "closed":
-        return "secondary";
-      default:
-        return "outline";
-    }
-  };
+  const router = useRouter();
 
   // Get duration text
   const getDurationText = (min: number, max: number) => {
     if (min === max) return `${min} minutes`;
     return `${min}-${max} minutes`;
+  };
+
+  // Launch mutation
+  const launchMutation = useMutation({
+    mutationFn: async (jobOfferId: string) => {
+      return resolveActionResult(launchJobOfferAction({ jobOfferId }));
+    },
+    onSuccess: () => {
+      toast.success("Job offer launched successfully");
+      router.refresh();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  // Close mutation
+  const closeMutation = useMutation({
+    mutationFn: async (jobOfferId: string) => {
+      return resolveActionResult(closeJobOfferAction({ jobOfferId }));
+    },
+    onSuccess: () => {
+      toast.success("Job offer closed successfully");
+      router.refresh();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  // Delete mutation
+  const deleteMutation = useMutation({
+    mutationFn: async (jobOfferId: string) => {
+      return resolveActionResult(deleteJobOfferAction({ jobOfferId }));
+    },
+    onSuccess: () => {
+      toast.success("Job offer deleted successfully");
+      router.refresh();
+    },
+    onError: (error) => {
+      toast.error(error.message);
+    },
+  });
+
+  // Handle status change based on current status
+  const handleStatusChange = () => {
+    const status = jobOffer.status.toLowerCase();
+
+    if (status === "to be launched") {
+      dialogManager.add({
+        title: "Launch Hiring Process",
+        description:
+          "Are you sure you want to launch this job offer? Once launched, candidates will be able to apply.",
+        action: {
+          label: "Launch",
+          onClick: async () => {
+            launchMutation.mutate(jobOffer.id);
+          },
+        },
+      });
+    } else if (status === "ongoing") {
+      dialogManager.add({
+        title: "Close Job Offer",
+        description:
+          "Are you sure you want to close this job offer? Candidates will no longer be able to apply once closed.",
+        action: {
+          label: "Close",
+          onClick: async () => {
+            closeMutation.mutate(jobOffer.id);
+          },
+        },
+      });
+    } else if (status === "closed") {
+      dialogManager.add({
+        title: "Delete Job Offer",
+        description:
+          "Are you sure you want to delete this job offer? This action cannot be undone.",
+        confirmText: "DELETE",
+        action: {
+          label: "Delete",
+          onClick: async () => {
+            deleteMutation.mutate(jobOffer.id);
+          },
+        },
+      });
+    }
   };
 
   return (
@@ -47,9 +131,6 @@ export function JobOfferCard({ jobOffer, orgSlug }: JobOfferCardProps) {
           <CardTitle className="line-clamp-1 text-lg">
             {jobOffer.name}
           </CardTitle>
-          <Badge variant={getBadgeVariant(jobOffer.status)}>
-            {jobOffer.status}
-          </Badge>
         </div>
       </CardHeader>
       <CardContent className="flex-1">
