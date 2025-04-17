@@ -1,12 +1,10 @@
 "use client";
 
-import { LogoSvg } from "@/components/svg/logo-svg";
 import { SiteConfig } from "@/site-config";
 import { motion, useMotionValue, useScroll, useTransform } from "framer-motion";
 import Link from "next/link";
 import { useEffect } from "react";
 import { AuthButtonClient } from "../auth/auth-button-client";
-import { dialogManager } from "../dialog-manager/dialog-manager-store";
 import { ThemeToggle } from "../theme/theme-toggle";
 
 function useBoundedScroll(threshold: number) {
@@ -62,27 +60,6 @@ export function LandingHeader() {
     >
       <div className="mx-auto flex w-full max-w-7xl items-center justify-between px-4 lg:px-8">
         <div className="flex items-center gap-1">
-          <LogoSvg
-            size={24}
-            onClick={() => {
-              dialogManager.add({
-                title: "Rename campaign",
-                description: "Enter a new name for this campaign",
-                input: {
-                  label: "Name",
-                  defaultValue: "Some value",
-                  placeholder: "Enter a new name",
-                },
-                action: {
-                  label: "Rename",
-                  onClick: async (value) => {
-                    if (!value) return;
-                    // TODO
-                  },
-                },
-              });
-            }}
-          />
           <motion.p
             style={{
               scale: useTransform(

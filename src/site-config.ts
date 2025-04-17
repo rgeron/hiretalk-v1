@@ -1,11 +1,11 @@
 export const SiteConfig = {
-  title: "NOW.TS",
-  description: "Collect and showcase powerful video and text testimonials",
+  title: "Talk2Apply",
+  description: "AI-powered interview",
   prodUrl: "https://demo.nowts.app",
   domain: "demo.nowts.app",
   appIcon: "/images/icon.png",
   company: {
-    name: "NowTS",
+    name: "Talk2Apply",
     address: "", // Remove if not needed
   },
   brand: {
