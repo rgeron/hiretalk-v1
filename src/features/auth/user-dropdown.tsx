@@ -37,7 +37,7 @@ export const UserDropdown = ({ children }: PropsWithChildren) => {
   const logout = useMutation({
     mutationFn: async () => signOut(),
     onSuccess: () => {
-      void router.push("/auth/signin");
+      void router.push("/");
     },
   });
   const session = useSession();
