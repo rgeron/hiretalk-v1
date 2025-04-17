@@ -5,13 +5,14 @@ import OpenAI from "openai";
 import { z } from "zod";
 
 const openai = new OpenAI({
-  apiKey: process.env.OPENAI_API_KEY,  
+  apiKey: process.env.OPENAI_API_KEY,
 });
 
 const applyToJobSchema = z.object({
   jobOfferId: z.string(),
   candidateName: z.string().min(2),
   candidateEmail: z.string().email(),
+  cvUrl: z.string().optional(),
 });
 
 type ApplyToJobInput = z.infer<typeof applyToJobSchema>;
@@ -35,10 +36,12 @@ export async function applyToJob({
   jobOfferId,
   candidateName,
   candidateEmail,
+  cvUrl,
 }: {
   jobOfferId: string;
   candidateName: string;
   candidateEmail: string;
+  cvUrl?: string;
 }): Promise<ApplyToJobResult> {
   try {
     // Validate that the job offer exists and get the details
@@ -79,6 +82,7 @@ export async function applyToJob({
             candidateEmail,
             threadId: thread.id,
             status: "active",
+            cvUrl,
           },
         });
       } catch (error) {

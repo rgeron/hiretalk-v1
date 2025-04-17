@@ -34,6 +34,9 @@ export function RealtimeVoiceChat({
   const [isRecording, setIsRecording] = useState(false);
   const [recordingData, setRecordingData] = useState<Blob[]>([]);
   const [ephemeralKey, setEphemeralKey] = useState<string | null>(null);
+  const [isChatActive, setIsChatActive] = useState(false);
+  const [interviewCompleted, setInterviewCompleted] = useState(false);
+  const [transcript, setTranscript] = useState<string[]>([]);
 
   const pcRef = useRef<RTCPeerConnection | null>(null);
   const dataChannelRef = useRef<RTCDataChannel | null>(null);
@@ -42,6 +45,10 @@ export function RealtimeVoiceChat({
   const audioRecorderRef = useRef<MediaRecorder | null>(null);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const audioRef = useRef<HTMLAudioElement | null>(null);
+
+  // For audio recording
+  const mediaRecorderRef = useRef<MediaRecorder | null>(null);
+  const audioChunksRef = useRef<Blob[]>([]);
 
   useEffect(() => {
     return () => {
@@ -408,80 +415,110 @@ export function RealtimeVoiceChat({
     }
   };
 
-  const startRecording = () => {
-    // Set up recording of the entire conversation
-    if (!mediaStreamRef.current) return;
-
+  const startRecording = async () => {
     try {
-      // Create a new audio context
-      const audioContext = new AudioContext();
-      audioContextRef.current = audioContext;
+      const stream = await navigator.mediaDevices.getUserMedia({ audio: true });
+      const mediaRecorder = new MediaRecorder(stream);
 
-      // Create a MediaStream with both local and remote audio
-      const combinedStream = new MediaStream();
+      mediaRecorderRef.current = mediaRecorder;
+      audioChunksRef.current = [];
 
-      // Add local audio tracks
-      mediaStreamRef.current.getAudioTracks().forEach((track) => {
-        combinedStream.addTrack(track);
-      });
-
-      // Add remote audio (if available)
-      if (
-        audioRef.current &&
-        audioRef.current.srcObject instanceof MediaStream
-      ) {
-        audioRef.current.srcObject.getAudioTracks().forEach((track) => {
-          combinedStream.addTrack(track);
-        });
-      }
-
-      // Create a recorder for the combined stream
-      const recorder = new MediaRecorder(combinedStream);
-      audioRecorderRef.current = recorder;
-
-      recorder.ondataavailable = (event) => {
+      mediaRecorder.ondataavailable = (event) => {
         if (event.data.size > 0) {
-          setRecordingData((prev) => [...prev, event.data]);
+          audioChunksRef.current.push(event.data);
         }
       };
 
-      recorder.start(1000); // Collect data in 1-second chunks
+      mediaRecorder.onstop = async () => {
+        const audioBlob = new Blob(audioChunksRef.current, {
+          type: "audio/webm",
+        });
+        await uploadInterviewRecording(audioBlob);
+      };
+
+      mediaRecorder.start();
+      setIsRecording(true);
     } catch (error) {
-      console.error("Error setting up recording:", error);
-      toast.error("Failed to start recording the interview.");
+      console.error("Error starting recording:", error);
+      toast.error("Could not access microphone. Please check permissions.");
     }
   };
 
-  const downloadRecording = () => {
-    if (recordingData.length === 0) {
-      toast.error("No recording available to download.");
-      return;
-    }
+  const stopRecording = () => {
+    if (
+      mediaRecorderRef.current &&
+      mediaRecorderRef.current.state !== "inactive"
+    ) {
+      mediaRecorderRef.current.stop();
 
+      // Stop all audio tracks
+      if (mediaRecorderRef.current.stream) {
+        mediaRecorderRef.current.stream
+          .getTracks()
+          .forEach((track) => track.stop());
+      }
+
+      setIsRecording(false);
+    }
+  };
+
+  const uploadInterviewRecording = async (audioBlob: Blob) => {
     try {
-      // Combine all chunks into a single blob
-      const recordingBlob = new Blob(recordingData, { type: "audio/webm" });
+      // Create a FormData object to send the audio file
+      const formData = new FormData();
+      formData.append("file", audioBlob, `interview-${threadId}.webm`);
+      formData.append("threadId", threadId);
 
-      // Create a URL for the blob
-      const url = URL.createObjectURL(recordingBlob);
+      // Upload to server (create an API endpoint for this)
+      const response = await fetch("/api/interviews/recording", {
+        method: "POST",
+        body: formData,
+      });
 
-      // Create a download link
-      const a = document.createElement("a");
-      a.style.display = "none";
-      a.href = url;
-      a.download = `interview-${threadId}-${Date.now()}.webm`;
+      if (!response.ok) {
+        throw new Error("Failed to upload recording");
+      }
 
-      // Add to document, trigger click, and clean up
-      document.body.appendChild(a);
-      a.click();
-
-      // Clean up
-      window.URL.revokeObjectURL(url);
-      document.body.removeChild(a);
+      toast.success("Interview recording saved successfully");
     } catch (error) {
-      console.error("Error downloading recording:", error);
-      toast.error("Failed to download recording.");
+      console.error("Error uploading recording:", error);
+      toast.error("Failed to save interview recording");
     }
+  };
+
+  // Simulate connecting to OpenAI's WebRTC service
+  useEffect(() => {
+    // In a real implementation, you would initialize your WebRTC connection here
+    const timer = setTimeout(() => {
+      setIsConnecting(false);
+      setIsChatActive(true);
+
+      // Add mock transcript messages
+      const messages = [
+        `AI: Hello ${candidateName}, thanks for applying to the ${jobInfo.jobTitle} position at ${jobInfo.companyName}. I'm going to ask you a few questions to get to know you better.`,
+        `AI: Can you tell me a bit about your background and why you're interested in this role?`,
+        // Add more simulated conversation as needed
+      ];
+
+      setTranscript(messages);
+    }, 2000);
+
+    return () => clearTimeout(timer);
+  }, [candidateName, jobInfo]);
+
+  // Simulate interview completion
+  const handleEndInterview = () => {
+    if (isRecording) {
+      stopRecording();
+    }
+
+    setIsChatActive(false);
+    setInterviewCompleted(true);
+
+    // In a real implementation, you would end the WebRTC connection
+    // and finalize any recordings/transcripts here
+
+    toast.success("Interview completed. Thank you for your time!");
   };
 
   if (isCompleted) {
@@ -496,14 +533,40 @@ export function RealtimeVoiceChat({
           We'll be in touch soon regarding next steps.
         </p>
         {recordingData.length > 0 && (
-          <Button
-            onClick={downloadRecording}
-            className="mt-4 flex items-center gap-2"
-          >
+          <Button onClick={() => {}} className="mt-4 flex items-center gap-2">
             <DownloadIcon size={16} />
             Download Recording
           </Button>
         )}
+      </div>
+    );
+  }
+
+  if (interviewCompleted) {
+    return (
+      <div className="space-y-6 py-6 text-center">
+        <div className="flex flex-col items-center rounded-lg bg-green-50 p-4 text-green-700 dark:bg-green-950/20 dark:text-green-300">
+          <svg
+            xmlns="http://www.w3.org/2000/svg"
+            width="24"
+            height="24"
+            viewBox="0 0 24 24"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className="mb-2"
+          >
+            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14" />
+            <polyline points="22 4 12 14.01 9 11.01" />
+          </svg>
+          <h3 className="text-lg font-semibold">Interview Completed</h3>
+          <p className="text-sm">
+            Thank you for completing your interview. The hiring team will review
+            your responses.
+          </p>
+        </div>
       </div>
     );
   }
@@ -602,7 +665,7 @@ export function RealtimeVoiceChat({
 
           <Button
             variant="outline"
-            onClick={completeInterview}
+            onClick={handleEndInterview}
             className="mt-2"
           >
             Complete Interview

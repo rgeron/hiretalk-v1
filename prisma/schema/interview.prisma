@@ -3,6 +3,7 @@ model Interview {
   jobOfferId     String
   candidateName  String
   candidateEmail String
+  cvUrl          String? // URL to the candidate's uploaded CV
 
   // Interview Session Data
   threadId         String? // OpenAI thread ID

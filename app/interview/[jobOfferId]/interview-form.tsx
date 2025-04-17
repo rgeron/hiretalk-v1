@@ -15,9 +15,13 @@ import {
   FormMessage,
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
+import { FileIcon, Loader2 } from "lucide-react";
 import { toast } from "sonner";
 import { applyToJob } from "./actions";
 import { RealtimeVoiceChat } from "./realtime-voice-chat";
+
+// Import the correctly generated UploadDropzone
+import { UploadDropzone } from "@/utils/uploadthing";
 
 const formSchema = z.object({
   name: z.string().min(2, {
@@ -32,6 +36,9 @@ type FormValues = z.infer<typeof formSchema>;
 
 export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
   const [isSubmitting, setIsSubmitting] = useState(false);
+  const [cvUrl, setCvUrl] = useState<string | null>(null);
+  const [isUploading, setIsUploading] = useState(false);
+  const [uploadError, setUploadError] = useState<string | null>(null);
   const [interviewData, setInterviewData] = useState<{
     threadId: string;
     candidateName: string;
@@ -60,6 +67,7 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
         jobOfferId,
         candidateName: values.name,
         candidateEmail: values.email,
+        cvUrl: cvUrl ?? undefined,
       });
 
       if (result.success && result.interviewData) {
@@ -144,7 +152,101 @@ export function InterviewForm({ jobOfferId }: { jobOfferId: string }) {
         )}
       />
 
-      <Button type="submit" className="w-full" disabled={isSubmitting}>
+      <div className="space-y-2">
+        <FormLabel htmlFor="cv">Resume/CV (PDF)</FormLabel>
+
+        {cvUrl ? (
+          <div className="rounded-md border p-4">
+            <div className="flex items-center justify-between">
+              <div className="flex items-center space-x-2">
+                <FileIcon className="text-primary h-5 w-5" />
+                <span className="text-sm font-medium">
+                  CV Uploaded Successfully
+                </span>
+              </div>
+              <Button
+                type="button"
+                variant="ghost"
+                size="sm"
+                onClick={() => {
+                  setCvUrl(null);
+                  setUploadError(null);
+                }}
+              >
+                Remove
+              </Button>
+            </div>
+          </div>
+        ) : isUploading ? (
+          <div className="flex h-32 flex-col items-center justify-center rounded-md border border-dashed p-4">
+            <Loader2 className="text-primary h-8 w-8 animate-spin" />
+            <p className="text-muted-foreground mt-2 text-sm">
+              Uploading CV...
+            </p>
+          </div>
+        ) : (
+          <div className="rounded-md border border-dashed">
+            <UploadDropzone
+              endpoint="resumeUploader"
+              onBeforeUploadBegin={(files) => {
+                // Check file size manually as a backup to server validation
+                const file = files[0];
+                if (file.size > 8 * 1024 * 1024) {
+                  toast.error("File too large", {
+                    description: "Maximum file size is 8MB",
+                  });
+                  throw new Error("File too large");
+                }
+
+                // Verify it's a PDF
+                if (file.type !== "application/pdf") {
+                  toast.error("Invalid file type", {
+                    description: "Only PDF files are accepted",
+                  });
+                  throw new Error("Invalid file type");
+                }
+
+                setIsUploading(true);
+                setUploadError(null);
+                return files;
+              }}
+              onClientUploadComplete={(res) => {
+                setIsUploading(false);
+                if (res.length > 0 && res[0].url) {
+                  setCvUrl(res[0].url);
+                  toast.success("CV uploaded successfully");
+                } else {
+                  setUploadError("Upload completed but no URL was returned");
+                  toast.error("Error getting file URL");
+                }
+              }}
+              onUploadError={(error) => {
+                setIsUploading(false);
+                setUploadError(error.message);
+                toast.error(`Error uploading CV: ${error.message}`);
+              }}
+              className="ut-label:text-sm ut-allowed-content:ut-uploading:text-red-300"
+            />
+          </div>
+        )}
+
+        {uploadError && (
+          <p className="text-xs text-red-500">
+            Error: {uploadError}. Please try again.
+          </p>
+        )}
+
+        <p className="text-muted-foreground text-xs">
+          Upload your resume to help our AI interviewer better understand your
+          background. Accepted format: PDF (max 8MB).
+        </p>
+      </div>
+
+      <Button
+        type="submit"
+        className="w-full"
+        disabled={isSubmitting || isUploading}
+      >
         {isSubmitting ? "Starting Interview..." : "Start Voice Interview"}
       </Button>
     </Form>
