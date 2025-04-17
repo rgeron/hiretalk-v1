@@ -35,7 +35,7 @@ export const Hero = () => {
               <ShimmerButton
                 href="/signin"
                 background="hsl(var(--primary))"
-                className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-white shadow-sm hover:bg-indigo-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
+                className="rounded-md px-3.5 py-2.5 text-sm font-semibold text-gray-700 shadow-sm hover:bg-gray-200 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-400"
               >
                 Commencer gratuitement
               </ShimmerButton>
