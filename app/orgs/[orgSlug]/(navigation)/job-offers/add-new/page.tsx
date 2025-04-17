@@ -7,6 +7,7 @@ import {
 } from "@/features/page/layout";
 import { combineWithParentMetadata } from "@/lib/metadata";
 import type { PageParams } from "@/types/next";
+import { ArrowLeft } from "lucide-react";
 import Link from "next/link";
 import { InterviewQuestionsProvider } from "./interview-questions-provider";
 
@@ -25,10 +26,13 @@ export default async function AddNewJobOfferPage(
   return (
     <Layout size="lg">
       <LayoutHeader className="flex items-center justify-between">
-        <LayoutTitle>Create New Job Offer</LayoutTitle>
-        <Button variant="outline" asChild>
-          <Link href={`/orgs/${params.orgSlug}/job-offers`}>Cancel</Link>
+        <Button variant="outline" size="sm" asChild className="mr-auto">
+          <Link href={`/orgs/${params.orgSlug}/job-offers`}>
+            <ArrowLeft className="mr-2 h-4 w-4" />
+            Go back
+          </Link>
         </Button>
+        <LayoutTitle>Create New Job Offer</LayoutTitle>
       </LayoutHeader>
       <LayoutContent>
         <InterviewQuestionsProvider orgSlug={params.orgSlug} />
