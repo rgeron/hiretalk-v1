@@ -1,4 +1,3 @@
-/* eslint-disable @typescript-eslint/prefer-nullish-coalescing */
 "use client";
 
 import { Button } from "@/components/ui/button";
@@ -13,6 +12,7 @@ import {
 } from "@/components/ui/form";
 import { Input } from "@/components/ui/input";
 import { authClient } from "@/lib/auth-client";
+import { getCallbackUrl } from "@/lib/auth/auth-utils";
 import { unwrapSafePromise } from "@/lib/promises";
 import { useMutation } from "@tanstack/react-query";
 import { useSearchParams } from "next/navigation";
@@ -25,7 +25,6 @@ export const SignUpCredentialsForm = () => {
     schema: LoginCredentialsFormScheme,
   });
   const searchParams = useSearchParams();
-  const callbackURL = searchParams.get("callbackUrl") || "/orgs";
 
   const submitMutation = useMutation({
     mutationFn: async (values: LoginCredentialsFormType) => {
@@ -42,8 +41,9 @@ export const SignUpCredentialsForm = () => {
       toast.error(error.message);
     },
     onSuccess: () => {
-      // Process full-refresh
-      const newUrl = window.location.origin + callbackURL;
+      // Utiliser getCallbackUrl pour gérer correctement la redirection
+      const callbackUrl = getCallbackUrl(undefined, "/");
+      const newUrl = window.location.origin + callbackUrl;
       window.location.href = newUrl;
     },
   });
