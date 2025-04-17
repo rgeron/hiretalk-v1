@@ -16,6 +16,7 @@ import { notFound } from "next/navigation";
 import { getJobOfferByIdAction } from "../../job-offer.action";
 import { JobOfferTabs } from "../job-offer-tabs";
 import { CopyLinkButton } from "./copy-link-button";
+import { InterviewList } from "./interview-list";
 
 export const generateMetadata = combineWithParentMetadata({
   title: "Job Applications",
@@ -59,12 +60,16 @@ export default async function JobOfferApplicationsPage(
           />
 
           <Card>
-            <CardHeader>
+            <CardHeader className="flex flex-row items-center justify-between">
               <CardTitle>Applications</CardTitle>
+              <CopyLinkButton jobOfferId={jobOffer.id} />
             </CardHeader>
             <CardContent>
               {jobOffer.applicationCount > 0 ? (
-                <p>Displaying application list would go here</p>
+                <InterviewList
+                  jobOfferId={jobOffer.id}
+                  orgSlug={params.orgSlug}
+                />
               ) : (
                 <div className="flex flex-col items-center justify-center py-12 text-center">
                   <h3 className="text-lg font-medium">No applications yet</h3>
