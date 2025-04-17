@@ -67,14 +67,24 @@ export async function POST(req: NextRequest) {
       // Update the interview record if it exists
       if (prisma.interview) {
         try {
-          await prisma.interview.update({
+          // First find the interview by threadId
+          const interview = await prisma.interview.findFirst({
             where: { threadId },
-            data: {
-              status: "active",
-              realtimeSessionId,
-            },
           });
-          console.log("Database updated with session ID");
+
+          if (interview) {
+            // Then update using the id
+            await prisma.interview.update({
+              where: { id: interview.id },
+              data: {
+                status: "active",
+                realtimeSessionId,
+              },
+            });
+            console.log("Database updated with session ID");
+          } else {
+            console.warn(`No interview found with threadId: ${threadId}`);
+          }
         } catch (dbError) {
           console.warn("Failed to update database with session info:", dbError);
           // Continue anyway as this doesn't prevent the connection
@@ -86,21 +96,20 @@ export async function POST(req: NextRequest) {
         ephemeralKey,
         sessionId: realtimeSessionId,
       });
-    } catch (openaiError) {
+    } catch (openaiError: unknown) {
       // Log the specific OpenAI error details
+      const error = openaiError as Error;
       console.error("OpenAI Realtime API error details:", {
-        message: openaiError.message,
-        type: openaiError.type,
-        code: openaiError.code,
-        param: openaiError.param,
-        stack: openaiError.stack,
+        message: error.message,
+        stack: error.stack,
       });
       throw openaiError; // Re-throw to be caught by the outer catch
     }
-  } catch (error) {
-    console.error("Error initiating realtime session:", error);
+  } catch (error: unknown) {
+    const err = error as Error;
+    console.error("Error initiating realtime session:", err);
     return NextResponse.json(
-      { error: `Failed to initiate realtime session: ${error.message}` },
+      { error: `Failed to initiate realtime session: ${err.message}` },
       { status: 500 },
     );
   }
