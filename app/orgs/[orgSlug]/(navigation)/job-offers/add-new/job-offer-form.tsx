@@ -133,15 +133,15 @@ export function JobOfferForm({
     <Form form={form} onSubmit={handleSubmit}>
       <div className="space-y-8">
         {/* Section 1: General Information */}
-        <div className="rounded-lg border p-6">
-          <h2 className="mb-4 text-xl font-semibold">General Information</h2>
+        <div className="rounded-lg border p-4">
+          <h2 className="mb-3 text-lg font-semibold">General Information</h2>
 
           <div className="grid grid-cols-1 gap-4">
             <FormField
               control={form.control}
               name="name"
               render={({ field }) => (
-                <FormItem>
+                <FormItem className="max-w-md">
                   <FormLabel>Job Title</FormLabel>
                   <FormControl>
                     <Input placeholder="Frontend Developer" {...field} />
@@ -172,10 +172,10 @@ export function JobOfferForm({
         </div>
 
         {/* Section 2: Interview Configuration */}
-        <div className="rounded-lg border p-6">
-          <h2 className="mb-4 text-xl font-semibold">Interview Setup</h2>
+        <div className="rounded-lg border p-4">
+          <h2 className="mb-3 text-lg font-semibold">Interview Setup</h2>
 
-          <div className="mb-4 grid grid-cols-1 gap-4 md:grid-cols-2">
+          <div className="grid grid-cols-1 gap-4 md:grid-cols-4">
             <FormField
               control={form.control}
               name="durationMin"
@@ -183,7 +183,7 @@ export function JobOfferForm({
                 <FormItem>
                   <FormLabel>Min Duration (min)</FormLabel>
                   <FormControl>
-                    <Input type="number" min="1" {...field} />
+                    <Input type="number" min="1" className="w-20" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
@@ -197,15 +197,13 @@ export function JobOfferForm({
                 <FormItem>
                   <FormLabel>Max Duration (min)</FormLabel>
                   <FormControl>
-                    <Input type="number" min="1" {...field} />
+                    <Input type="number" min="1" className="w-20" {...field} />
                   </FormControl>
                   <FormMessage />
                 </FormItem>
               )}
             />
-          </div>
 
-          <div className="grid grid-cols-1 gap-4 md:grid-cols-2">
             <FormField
               control={form.control}
               name="interviewType"
@@ -265,8 +263,8 @@ export function JobOfferForm({
         </div>
 
         {/* Section 3: Questions */}
-        <div className="rounded-lg border p-6">
-          <h2 className="mb-4 text-xl font-semibold">Interview Questions</h2>
+        <div className="rounded-lg border p-4">
+          <h2 className="mb-3 text-lg font-semibold">Interview Questions</h2>
 
           <div className="space-y-6">
             {/* Standard Questions */}
@@ -412,8 +410,8 @@ export function JobOfferForm({
         </div>
 
         {/* Section 4: Template Creation */}
-        <div className="rounded-lg border p-6">
-          <h2 className="mb-4 text-xl font-semibold">Template</h2>
+        <div className="rounded-lg border p-4">
+          <h2 className="mb-3 text-lg font-semibold">Template</h2>
 
           <FormField
             control={form.control}
