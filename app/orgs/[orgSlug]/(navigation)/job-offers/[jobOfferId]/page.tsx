@@ -4,7 +4,6 @@ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import {
   Layout,
   LayoutContent,
-  LayoutDescription,
   LayoutHeader,
   LayoutTitle,
 } from "@/features/page/layout";
@@ -17,6 +16,7 @@ import Link from "next/link";
 import { notFound } from "next/navigation";
 import { getJobOfferByIdAction } from "../job-offer.action";
 import { ActionButton } from "./action-button";
+import { CollapsibleDescription } from "./collapsible-description";
 import { JobOfferTabs } from "./job-offer-tabs";
 
 export const generateMetadata = combineWithParentMetadata({
@@ -154,7 +154,7 @@ export default async function JobOfferDetailsPage(
               {jobOffer.status}
             </Badge>
           </div>
-          <LayoutDescription>{jobOffer.description}</LayoutDescription>
+          <CollapsibleDescription description={jobOffer.description} />
         </LayoutHeader>
 
         <LayoutContent className="flex flex-col gap-6">
@@ -231,7 +231,7 @@ export default async function JobOfferDetailsPage(
         </LayoutContent>
       </Layout>
     );
-  } catch (error) {
+  } catch {
     notFound();
   }
 }
