@@ -17,9 +17,9 @@ export const Hero = () => {
               variant="h1"
               className="text-5xl font-semibold tracking-tight text-balance sm:text-7xl lg:text-7xl"
             >
-              Remplacez les lettres de motivation par des{" "}
+              Améliorez vos processus de recrutement{" "}
               <span className="relative inline-block">
-                <span>entretiens IA</span>
+                <span>avec des entretiens IA personnalisés</span>
                 <CircleSvg className="fill-primary absolute inset-0" />
               </span>
             </Typography>
